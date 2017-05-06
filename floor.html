@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>floor</title>
+    <style>
+        body,div{padding:0;margin:0;}
+        .fix{
+            position:fixed;
+            top:40%;
+            right:10px;
+        }
+        .fix div{
+            text-align:center;
+            background-color:#0a9dc7;
+            border:1px solid #0c60ee;
+            padding:5px 10px;
+        }
+        .fix div:first-child{
+            color:#fff;
+            background-color:#6b46e5;
+        }
+        .fix div:hover{
+            cursor:pointer;
+            color:#fff;
+            background-color:#6b46e5;
+        }
+        .content{
+            color:#fff;
+        }
+        .div1{
+            background-color:#ddd;
+            height:300px;
+        }
+        .div2{
+            background-color:#4cd964;
+            height:300px;
+        }
+        .div3{
+            background-color:#0a9dc7;
+            height:300px;
+        }
+        .div4{
+            background-color:#e42112;
+            height:300px;
+        }
+    </style>
+</head>
+<body>
+<div class="fix">
+    <div class="floor1">floor1</div>
+    <div class="floor2">floor2</div>
+    <div class="floor3">floor3</div>
+    <div class="floor4">floor4</div>
+</div>
+<div class="content">
+    <div class="div1">first</div>
+    <div class="div2">second</div>
+    <div class="div3">third</div>
+    <div class="div4">fourth</div>
+</div>
+<script src="jquery-2.1.4.min.js"></script>
+<script>
+    function scrollTT(inner,top) {
+        if(e.target.innerHTML == inner){
+            /*var top = document.documentElement.scrollTop || document.body.scrollTop;*/
+            $("html,body").animate({scrollTop:top},300);
+        }
+    }
+    $(window).scroll(function(){
+        var top =document.documentElement.scrollTop || document.body.scrollTop;
+        if(top >=0 && top <200){
+            $(".floor1").css({"color":"#fff","backgroundColor":"#6b46e5"}).siblings().css("backgroundColor","#0a9dc7");
+        }else if(top >= 200 && top<500){
+            $(".floor2").css({"color":"#fff","backgroundColor":"#6b46e5"}).siblings().css("backgroundColor","#0a9dc7");
+        }else if(top >= 500 && top<562){
+            $(".floor3").css({"color":"#fff","backgroundColor":"#6b46e5"}).siblings().css("backgroundColor","#0a9dc7");
+        }else{
+            $(".floor4").css({"color":"#fff","backgroundColor":"#6b46e5"}).siblings().css("backgroundColor","#0a9dc7");
+        }
+    });
+    $(".fix div").click(function(e){
+        if(e.target.nodeName == "DIV"){
+            $(this).css({"color":"#fff","backgroundColor":"#6b46e5"});
+            $(this).siblings().css("backgroundColor","#0a9dc7");
+        }
+        if(e.target.innerHTML == "floor1"){
+            /*var top = document.documentElement.scrollTop || document.body.scrollTop;*/
+            $("html,body").animate({scrollTop:0},300);
+        }
+        if(e.target.innerHTML == "floor2"){
+            /*var top = document.documentElement.scrollTop || document.body.scrollTop;*/
+            $("html,body").animate({scrollTop:300},300);
+        }
+        if(e.target.innerHTML == "floor3"){
+            /*var top = document.documentElement.scrollTop || document.body.scrollTop;*/
+            $("html,body").animate({scrollTop:600},300);
+        }if(e.target.innerHTML == "floor4"){
+            /*var top = document.documentElement.scrollTop || document.body.scrollTop;*/
+            $("html,body").animate({scrollTop:900},300);
+        }
+
+    });
+</script>
+</body>
+</html>

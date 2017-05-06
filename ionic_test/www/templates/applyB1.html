@@ -1,0 +1,37 @@
+<ion-view view-title="业务申请">
+  <div style="margin-top:49px;padding-left:10px;padding-right:10px;">
+    <div class="apply">
+      <span class="apply-span">您的姓名</span>
+      <input type="text"  ng-model="data.name" placeholder="请选择用户" readonly ng-click="openUserModal()"/>
+    </div>
+    <div class="apply">
+      <span class="apply-span">您的住址</span>
+      <select ng-change="setAddress(userMessage.add)" ng-model="userMessage.add" ng-options="item.id as item.type for item in data.address" style="height:30px;"></select>
+    </div>
+    <div class="apply">
+      <input type="text"  ng-model="userMessage.realAdd" placeholder="地址结果" style="margin-left:53px;height:30px;padding-left:6px;"/>
+    </div>
+    <div class="apply">
+      <span>联系电话</span>
+      <select ng-change="selTel(userMessage.tel)" ng-model="userMessage.tel" ng-options="item.id as item.name for item in data.tel" style="height:30px;"></select>
+    </div>
+    <div class="apply">
+      <input type="text"  ng-model="userMessage.realTe" placeholder="电话结果" style="margin-left:53px;height:30px;padding-left:6px;"/>
+    </div>
+    <div class="apply">
+      <span>申请类型</span>
+      <input type="text" ng-model="userMessage.type"  style="height:30px;" readonly>
+    </div>
+    <div class="apply" style="margin-bottom:30px;">
+      <span style="align-self: flex-start;">申请内容</span>
+      <div class="offer_content" style="width:82%;">
+        <ion-list>
+          <ion-checkbox ng-repeat="item in content" ng-model="this.state" ng-click="contentClick(item)">{{item}}</ion-checkbox>
+        </ion-list>
+      </div>
+    </div>
+    </div>
+
+    <button class="button button-positive" ng-click="submit()" style="margin-left: 50%;transform: translateX(-50%);margin-top:10px;width:33%;">提交</button>
+  </div>
+</ion-view>

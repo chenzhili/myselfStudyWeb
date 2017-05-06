@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ch-ZN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<div id="aa" style="width:100px;height:100px;border:1px solid #ddd;">
+	暂停定时器
+</div>
+<!-- <script type="text/javascript" src="1.js"></script> -->
+<script type="text/javascript">
+    var state = false;
+    var n = 10;
+    var timeEnd;
+    document.getElementById("aa").onclick = function(){
+      console.log("开始");
+      clearTimeout(timeEnd);
+      state = !state;
+      timeEnd = null;
+      if(!state){
+          n=10;
+          time();
+      }
+    };
+    function method(){
+        if(n){
+            console.log(n);
+        }else{
+            state = true;
+            n = 11;
+        }
+        n--;
+    }
+    function time(){
+        if(state)return;
+        method();
+        timeEnd=setTimeout(time,1000);
+    }
+    window.onload = function(){
+        time();
+    }
+</script>
+</body>
+</html>

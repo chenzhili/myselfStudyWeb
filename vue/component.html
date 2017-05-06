@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ch_zn">
+<head>
+    <meta charset="UTF-8">
+    <title>局部组件注册没懂机智</title>
+</head>
+<body>
+<!--<div class="try">{{name}}</div>
+<div class="aa">
+    <child></child>
+</div>
+<div class="bb">
+    <child-first my-message="1"></child-first>
+</div>-->
+<div class="cc">
+    <input type="text" v-model="userMessage">
+    <child :my-message="userMessage"></child>
+</div>
+<div class="aa">
+    <second-child :message="1"></second-child>
+</div>
+<script src="vue.js"></script>
+<script>
+    Vue.component("secondChild",{
+        props:["message"],
+        template:"<span>{{message}}{{typeof message}}</span>"
+    });
+    var newVue = new Vue({
+        el:".aa"
+    });
+    /*var vueExample = new Vue({
+        el:".try",
+        data:{
+            name:"tom"
+        }
+    });
+    Vue.component("child",{
+        template:"<h1>{{message}}</h1>",
+        data:function(){
+            return {message:"tom"}
+        }
+    });
+    var aa1 = new Vue({
+        el:".aa"
+    });
+    Vue.component("childFirst",{
+        template:"<h1>{{myMessage}}</h1>",
+        props:["myMessage"]
+    });*/
+    /*var bb1 = new Vue({
+        el:".bb"
+    });*/
+    /*Vue.component("child",{
+        template:"<h1>{{myMessage}}</h1>",
+        props:["myMessage"]
+    });
+    var cc1 = new Vue({
+        el:".cc",
+        data:{
+            userMessage:""
+        },
+        computed:{
+            get:function(){
+                console.log(this.data);
+            }
+        }
+    });*/
+</script>
+</body>
+</html>

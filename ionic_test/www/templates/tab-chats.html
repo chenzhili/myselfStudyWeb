@@ -1,0 +1,53 @@
+<ion-view view-title="开户中心" id="open-user">
+  <ion-content>
+       <div class="list">
+         <label class="item item-input">
+           <span class="input-label">申请人姓名</span>
+           <input type="text" placeholder="请输入姓名" ng-model="userMessage.userName">
+         </label>
+         <label class="item item-input">
+           <span class="input-label">联系电话</span>
+           <input type="text" placeholder="请输入手机号" ng-model="userMessage.userTel">
+         </label>
+         <label class="item item-input">
+           <span class="input-label">开户地址</span>
+           <input type="text" placeholder="请输入开户地址" ng-model="userMessage.userAddress">
+         </label>
+         <div class="item item-input">
+           <span class="pick-img">房屋产权证</span>
+           <a href="javascript:;" class="file pick-btn">{{userMessage.userHome? "修改":"上传"}}
+             <input type="file" accept="image/*" class="userHome" id="file1" name="file">
+           </a>
+         </div>
+         <div class="item item-input">
+           <span class="pick-img">户主身份证</span>
+           <a href="javascript:;" class="file pick-btn">{{userMessage.userId? "修改":"上传"}}
+             <input type="file" accept="image/*" class="userId">
+           </a>
+         </div>
+         <div class="item item-input bottom-no-border">
+           <span class="pick-img">用气点大图</span>
+           <a href="javascript:;" class="file pick-btn">{{userMessage.userGas? "修改":"上传"}}
+             <input type="file" accept="image/*" class="userGas">
+           </a>
+         </div>
+       </div>
+        <div class="img-list row row-wrap">
+          <div class="col col-33">
+            <img ng-src="{{userMessage.userHome || 'img/bg-img.jpg'}}" alt="" id="homeImg">
+          </div>
+          <div class="col col-33">
+            <img ng-src="{{userMessage.userId || 'img/bg-img.jpg'}}" alt="" id="idImg">
+          </div>
+          <div class="col col-33">
+            <img ng-src="{{userMessage.userGas || 'img/bg-img.jpg'}}" alt="" id="gasImg">
+          </div>
+        </div>
+        <div class="open-document">
+          <p class="open-detail">开户说明</p>
+        </div>
+        <p class="open-offer">
+          <button ng-click="submitData()">提交申请</button>
+        </p>
+  </ion-content>
+</ion-view>

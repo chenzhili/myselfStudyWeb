@@ -1,0 +1,102 @@
+<ion-view view-title="开户中心" id="open-user">
+  <ion-content>
+       <div class="list">
+         <label class="item" style="padding-top:6px;padding-bottom:5px;">
+           <span class="input-label" style="display:inline-block;">产权人人数</span>
+           <select ng-change="changeNum(userMessage.userNum)" ng-model="userMessage.userNum" ng-options="item.id as item.id for item in openContent.userNum" id="sele">
+           </select>
+         </label>
+         <label class="item item-input">
+           <span class="input-label">房屋产权人</span>
+           <input type="text" placeholder="多个产权人请用逗号隔开" ng-model="userMessage.propertyUser">
+         </label>
+         <label class="item item-input">
+           <span class="input-label">联系电话</span>
+           <input type="text" placeholder="请输入手机号" ng-model="userMessage.userTel">
+         </label>
+         <label class="item item-input">
+           <span class="input-label">开户地址</span>
+           <input type="text" placeholder="请输入开户地址" ng-model="userMessage.userAddress">
+         </label>
+         <label class="item" style="padding-top:6px;padding-bottom:5px;">
+           <span class="input-label" style="display:inline-block;">用户类型</span>
+           <select ng-change="changeType(userMessage.userType)" ng-model="userMessage.userType" ng-options="item.value as item.name for item in openContent.type">
+           </select>
+         </label>
+       </div>
+        <div class="list" style="border-top:4px solid #E7E0E1;width:100%;margin-left:0;">
+          <label class="item" style="border-top:none;margin-left:10px;" ng-click="testaa()">
+            <span class="input-label" style="display:inline-block;">房屋产权证</span>
+            <a href="javascript:;" class="file pick-btn">
+              <img ng-src="{{userMessage.homeProperty || 'img/bg-img.jpg'}}" alt="" style="width:50%;">
+              <input type="file" accept="image/*" class="userGas" id="homeProperty" style="display:none;">
+            </a>
+          </label>
+          <label class="item" style="margin-left:10px;">
+            <span class="input-label">产权人身份证</span>
+            <div class="row row-wrap" style="vertical-align:top;text-align:center;">
+              <div class="col col-50">
+                <a href="javascript:;" class="file pick-btn">
+                  <img ng-src="{{userMessage.propertyOwner1 || 'img/bg-img.jpg'}}" alt="" style="width:100%;">
+                  <input type="file" accept="image/*" id="propertyOwner1">
+                </a>
+              </div>
+              <div class="col col-50">
+                <a href="javascript:;" class="file pick-btn">
+                  <img ng-src="{{userMessage.propertyOwner2 || 'img/bg-img.jpg'}}" alt="" style="width:100%;">
+                  <input type="file" accept="image/*" id="propertyOwner2">
+                </a>
+              </div>
+            </div>
+            <div class="row row-wrap" style="vertical-align:top;text-align:center;" ng-show="userMessage.userNum >=2">
+              <div class="col col-50">
+                <a href="javascript:;" class="file pick-btn">
+                  <img ng-src="{{userMessage.propertyOwner3 || 'img/bg-img.jpg'}}" alt="" style="width:100%;">
+                  <input type="file" accept="image/*" id="propertyOwner3">
+                </a>
+              </div>
+              <div class="col col-50">
+                <a href="javascript:;" class="file pick-btn">
+                  <img ng-src="{{userMessage.propertyOwner4 || 'img/bg-img.jpg'}}" alt="" style="width:100%;">
+                  <input type="file" accept="image/*" id="propertyOwner4">
+                </a>
+              </div>
+            </div>
+          <div class="row row-wrap" style="vertical-align:top;text-align:center;" ng-show="userMessage.userNum >=3">
+            <div class="col col-50">
+              <a href="javascript:;" class="file pick-btn">
+                <img ng-src="{{userMessage.propertyOwner5 || 'img/bg-img.jpg'}}" alt="" style="width:100%;">
+                <input type="file" accept="image/*" id="propertyOwner5">
+              </a>
+            </div>
+            <div class="col col-50">
+              <a href="javascript:;" class="file pick-btn">
+                <img ng-src="{{userMessage.propertyOwner6 || 'img/bg-img.jpg'}}" alt="" style="width:100%;">
+                <input type="file" accept="image/*" id="propertyOwner6">
+              </a>
+            </div>
+          </div>
+          </label>
+          <label class="item" style="margin-left:10px;" ng-hide="userMessage.userType == 2">
+            <span class="input-label" style="display:inline-block;">营业执照图</span>
+            <a href="javascript:;" class="file pick-btn">
+              <img ng-src="{{userMessage.businessLicence || 'img/bg-img.jpg'}}" alt="" style="width:50%;">
+              <input type="file" accept="image/*" class="userGas" id="businessLicence">
+            </a>
+          </label>
+          <label class="item" style="margin-left:10px;" ng-hide="userMessage.userType == 2">
+            <span class="input-label" style="display:inline-block;">用气点大图</span>
+            <a href="javascript:;" class="file pick-btn">
+              <img ng-src="{{userMessage.useGas || 'img/bg-img.jpg'}}" alt="" style="width:50%;">
+              <input type="file" accept="image/*" id="userGas" >
+            </a>
+          </label>
+        </div>
+        <div class="open-document">
+          <p class="open-detail">开户说明</p>
+        </div>
+        <p class="open-offer">
+          <button ng-click="submitData()">提交申请</button>
+        </p>
+  </ion-content>
+</ion-view>

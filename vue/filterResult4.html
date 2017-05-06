@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>filter</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body ng-controller="myCtrl">
+    <div>
+        <div class="clearFloat" ng-repeat = "item in selectContent">
+            <ul class="lf">
+                <li style="margin-top:20px;">{{item.name}}</li>
+            </ul>
+            <ul class="clearFloat lf" id="content-filter">
+                <li class="lf" ng-repeat="con in item.content" ng-click="numClick(con,item.name)">
+                    <div class="original" ng-show="con.state == 0">{{con.num}}</div>
+                    <div class="active" ng-show="con.state == 1">{{con.num}}</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div style="margin-top:100px;">
+        <button ng-click="numSelect()">过滤</button>
+    </div>
+<script src="angular.js"></script>
+<script>
+    angular.module("myApp",[])
+        .controller("myCtrl",function($scope){
+            $scope.selectContent = [
+                {name:"万位",content:content(10)},
+                {name:"千位",content:content(10)},
+                {name:"百位",content:content(10)},
+                {name:"十位",content:content(10)}
+            ];
+            function content(num){
+                var arr = [];
+                for(var i=0;i<num;i++){
+                    arr.push({num:i,state:0});
+                }
+                return arr;
+            }
+            /*存储各个位置上被选中的数*/
+            $scope.wNumArr = [];$scope.qNumArr = [];
+            $scope.bNumArr = [];$scope.sNumArr = [];
+            $scope.gNumArr = [];
+            /*对应号码被点击事件的发生*/
+                /*为了寻找对应号码存储的位置的方法*/
+                function queryNum(numArr,num){
+                    for(var i=0;i<numArr.length;i++){
+                        if(numArr[i] == num){
+                            numArr.splice(i,1);
+                            /*只会执行一次没必要i--*/
+                        }
+                    }
+                }
+            $scope.numClick = function(con,position){
+                if(con.state == 0){
+                    con.state = 1;
+                    if(position == "万位"){
+                        $scope.wNumArr.push(con.num);
+                    }else if(position == "千位"){
+                        $scope.qNumArr.push(con.num);
+                    }else if(position == "百位"){
+                        $scope.bNumArr.push(con.num);
+                    }else if(position == "十位"){
+                        $scope.sNumArr.push(con.num);
+                    }else if(position == "个位"){
+                        $scope.gNumArr.push(con.num);
+                    }
+                }else{
+                    con.state = 0;
+                    if(position == "万位"){
+                        queryNum($scope.wNumArr,con.num);
+                    }else if(position == "千位"){
+                        queryNum($scope.qNumArr,con.num);
+                    }else if(position == "百位"){
+                        queryNum($scope.bNumArr,con.num);
+                    }else if(position == "十位"){
+                        queryNum($scope.sNumArr,con.num);
+                    }else if(position == "个位"){
+                        queryNum($scope.gNumArr,con.num);
+                    }
+                }
+            }
+
+            /*四星与其他不同的过滤方法*/
+                /*名字：*//*奇数和*//*偶数和*//*质数和*//*合数合*/
+                var oddSumValue = [2,6],oddSumWeiValue = [3,5];/*用户选择项*/
+                var evenSumValue = [2,6],evenSumWeiValue = [2,4];/*用户选择项*/
+                var primeSumValue = [5,1],primeSumWeiValue = [6,7];/*用户选择项*/
+                var sumSumValue = [0,4],sumSumWeiValue = [6,7];/*用户选择项*/
+                /*奇数和方法*/
+                function oddSumSelect(arr){
+                    var value = 0,tempArr = [],sum = 0;
+                    for(var i=0;i<arr.length;i++){
+                        if(arr[i]%2!=0){
+                            tempArr.push(arr[i]);
+                        }
+                    }
+                    for(var y=0;y<tempArr.length;y++){
+                        sum+=tempArr[y];
+                    }
+                        /*奇数和*/
+                    for(var o=0;o<oddSumValue.length;o++){
+                        if(oddSumValue[o] == sum){
+                            value = 1;
+                        }
+                    }
+                        /*奇数和尾*/
+                    for(var w=0;w<oddSumWeiValue.length;w++){
+                        if(oddSumWeiValue[w] == String(sum)[String(sum).length-1]){
+                            value = 1;
+                        }
+                    }
+                    return value == 1?1:0;
+                }
+                /*偶数和方法*/
+                function evenSumSelect(arr){
+                    var value = 0,tempArr = [],sum = 0;
+                    for(var i=0;i<arr.length;i++){
+                        if(arr[i]%2==0){
+                            tempArr.push(arr[i]);
+                        }
+                    }
+                    for(var y=0;y<tempArr.length;y++){
+                        sum+=tempArr[y];
+                    }
+                    /*偶数和*/
+                    for(var o=0;o<evenSumValue.length;o++){
+                        if(evenSumValue[o] == sum){
+                            value = 1;
+                        }
+                    }
+                    /*偶数和尾*/
+                    for(var w=0;w<evenSumWeiValue.length;w++){
+                        if(evenSumWeiValue[w] == String(sum)[String(sum).length-1]){
+                            value = 1;
+                        }
+                    }
+                    return value == 1?1:0;
+                }
+                /*质数和方法*/
+                function primeSumSelect(arr){
+                    var value = 0,tempArr = [],sum = 0;
+                    for(var i=0;i<arr.length;i++){
+                        if(arr[i] == 1){
+                            tempArr.push(arr[i]);
+                        }
+                        if(arr[i] == 2){
+                            tempArr.push(arr[i]);
+                        }
+                        if(arr[i] >= 3){
+                            if((function(){
+                                    for(var n=2;n<arr[i];n++){
+                                        if(arr[i] % n == 0 ){
+                                            return 0;
+                                        }
+                                    }
+                                    return 1;
+                                })()){
+                                tempArr.push(arr[i]);
+                            }
+                        }
+                    }
+                    for(var p=0;p<tempArr.length;p++){
+                        sum+=tempArr[p];
+                    }
+                    /*质数和*/
+                    for(var o=0;o<primeSumValue.length;o++){
+                        if(primeSumValue[o] == sum){
+                            value = 1;
+                        }
+                    }
+                    /*质数和尾*/
+                    for(var w=0;w<primeSumWeiValue.length;w++){
+                        if(primeSumWeiValue[w] == String(sum)[String(sum).length-1]){
+                            value = 1;
+                        }
+                    }
+                    return value == 1?1:0;
+                }
+                /*合数和方法*/
+                function sumSumSelect(arr) {
+                    var value = 0,tempArr = [],sum = 0;
+                    for(var i=0;i<arr.length;i++){
+                        if(arr[i] == 0){
+                            tempArr.push(arr[i]);
+                        }
+                        if(arr[i] >= 3){
+                            if((function(){
+                                    for(var n=2;n<arr[i];n++){
+                                        if(arr[i] % n == 0 ){
+                                            return 1;
+                                        }
+                                    }
+                                })()){
+                                tempArr.push(arr[i]);
+                            }
+                        }
+                    }
+                    for(var p=0;p<tempArr.length;p++){
+                        sum+=tempArr[p];
+                    }
+                    /*合数和*/
+                    for(var o=0;o<sumSumValue.length;o++){
+                        if(sumSumValue[o] == sum){
+                            value = 1;
+                        }
+                    }
+                    /*合数和尾*/
+                    for(var w=0;w<sumSumWeiValue.length;w++){
+                        if(sumSumWeiValue[w] == String(sum)[String(sum).length-1]){
+                            value = 1;
+                        }
+                    }
+                    return value == 1?1:0;
+                }
+            $scope.numSelect = function(){
+                /*存储满足条件号码的数组*/
+                var selectOddSum = [],selectEvenSum = [],selectPrimSum = [],selectSum = [];
+                for(var w=0;w<$scope.wNumArr.length;w++) {
+                    for (var q = 0; q < $scope.qNumArr.length; q++) {
+                        for (var b = 0; b < $scope.bNumArr.length; b++) {
+                            for (var s = 0; s < $scope.sNumArr.length; s++) {
+                                /*还是要声明一个数组*/
+                                var tempArr = [$scope.wNumArr[w],$scope.qNumArr[q],$scope.bNumArr[b],$scope.sNumArr[s]];
+
+                                /*合数和的判断*/
+                                if(sumSumSelect(tempArr)){
+                                    selectSum.push(tempArr.join(","));
+                                }
+                                /*质数和的判断*/
+                                if(primeSumSelect(tempArr)){
+                                    selectPrimSum.push(tempArr.join(","));
+                                }
+                                /*奇数和的判断*/
+                                if(oddSumSelect(tempArr)){
+                                    selectOddSum.push(tempArr.join(","));
+                                }
+                                /*偶数和的判断*/
+                                if(evenSumSelect(tempArr)){
+                                    selectEvenSum.push(tempArr.join(","));
+                                }
+                            }
+                        }
+                    }
+                }
+                if(selectSum.length == 0){
+                    console.log("合数和不存在");
+                }else{
+                    console.log(selectSum);
+                }
+                if(selectPrimSum.length == 0){
+                    console.log("质数和不存在");
+                }else{
+                    console.log(selectPrimSum);
+                }
+                if(selectEvenSum.length == 0){
+                    console.log("奇数和不存在");
+                }else{
+                    console.log(selectEvenSum);
+                }
+                if(selectOddSum.length == 0){
+                    console.log("奇数和不存在");
+                }else{
+                    console.log(selectOddSum);
+                }
+            }
+        })
+</script>
+</body>
+</html>

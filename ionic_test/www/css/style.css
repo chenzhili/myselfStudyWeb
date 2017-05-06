@@ -1,0 +1,139 @@
+/* Empty. Add your own CSS if you like */
+.bar.bar-stable .title{color:#fff;}
+[nav-bar-transition="ios"] [nav-bar="active"] .bar, [nav-bar-transition="ios"] [nav-bar="entering"] .bar{background-color:#313232;}
+#open-user .list{margin-left:10px;margin-right:10px;margin-bottom:0;}
+#open-user .list .item{border-left:none;border-right:none;}
+#open-user .pick-img{margin-right:20%;padding:7px 0;}
+#open-user .bottom-no-border{border-bottom:none;}
+#open-user .img-list{margin:0 auto;padding:20px;border-top:4px solid #E7E0E1;border-bottom:4px solid #E7E0E1;width:100%;}
+#open-user .img-list img{width:100%;height:auto;}
+#open-user .open-document{margin:20px 10px 30px 10px;}
+#open-user .open-detail{text-decoration:underline;color:#4A79F9;}
+#open-user .open-offer{width:32%;margin:0 auto;}
+#open-user .open-offer button{padding:8px 14px;border-radius:10px;border:1px solid #648DFE;background-color:#648DFE;color:#fff;}
+.file {position: relative;left:-16px;display: inline-block;padding: 4px 12px;overflow: hidden; color: #1E88C7;  text-decoration: none;  text-indent: 0;vertical-align:top;line-height: 20px;}
+.file input {position: absolute;font-size: 100px;right: 0;top: 0;opacity: 0;}
+
+/*页面修改的样式*/
+
+#open-user select{display: inline-block;height:22px;padding-left:5px;width:66%;padding-right:5px;border: 1px solid #C9C5C0;border-radius: 5px;flex: 1;font-size:12px}
+
+
+
+
+
+
+  /*账单查询页面修改*/
+#account_query .bar-header{background:none #479CE8;border-bottom:none;/*background-image:none;*/}
+#account_query .account_title{background:url("../img/account_bg.png") no-repeat 0 0;background-size:100% 100%;border-top:1px solid #479CE8;}
+#account_query .account_log{width:24%;height:auto;margin:40px auto;}
+#account_query .account_log img{width:100%;height:auto;}
+#account_query .account_content{width:74%;height:auto;margin:0 auto 40px auto;color:#2A2A2A;background-color:#fff;box-shadow:0 0 10px #031;border-radius:5px;}
+#account_query .account_company{text-align:center;padding:15px 0;}
+#account_query .inline{width:20%;height:4px;background-color:#00AFFA;margin:0 auto;}
+#account_query .account_img{width:10%;height:auto;margin:0 auto;padding:0 0 20px 0;}
+#account_query .account_img img{width:100%;}
+#account_query .account_submit{margin:40px 0;}
+#account_query .account_btn{width:60%;margin:0 auto 10px auto;}
+#account_query .account_btn button{width:100%;min-height:20px;border-radius:20px;background-color:#009CE6;color:#fff;}
+#account_query .account_bind{text-align:center;color:#D0CCC7;}
+#account_query .account_bind i{color:#009CE6;text-decoration:underline;}
+#account_query .account_user{margin-right:1px;margin-left:1px;border:none;}
+
+
+/*显示隐藏header-bar*/
+.no-display{display:none;}
+
+#swiper .swiper-slide{width:200px;height:100px;background-color:#009CE6;}
+.swiper-container{width:200px;height:100px;}
+
+
+/*对于气量核查的样式的添加*/
+#open-user .img-list .img-second-dev{width:80%;margin:0 auto;}
+
+#moneyQuery{background-color:#ff0;}
+#gasQuery{background-color:#fffeee;}
+
+
+/*业务申请*/
+.apply{
+  display: flex;
+  align-items: center;
+  margin-top:5px;
+}
+.apply span{
+  padding-right:5px;
+  font-size:12px;
+}
+.apply input, .apply select, .apply textarea{
+  display: inline-block;
+  padding-left:5px;
+  padding-right:5px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  flex: 1;
+  font-size:12px;
+}
+
+/*需要*/
+.offer_content .item-checkbox{border-left:none;border-right:none;}
+
+#sele{
+  -webkit-appearance: none;
+  appearance:none;
+  box-sizing:border-box;
+  /*padding-top:50px;*/
+}
+
+@keyframes jello {
+  11.1%{
+    -webkit-transform: none;
+    transform: none;
+  }
+
+  22.2% {
+    -webkit-transform: skewX(-12.5deg) skewY(-12.5deg);
+    transform: skewX(-12.5deg) skewY(-12.5deg);
+  }
+
+  33.3% {
+    -webkit-transform: skewX(6.25deg) skewY(6.25deg);
+    transform: skewX(6.25deg) skewY(6.25deg);
+  }
+
+  44.4% {
+    -webkit-transform: skewX(-3.125deg) skewY(-3.125deg);
+    transform: skewX(-3.125deg) skewY(-3.125deg);
+  }
+
+  55.5% {
+    -webkit-transform: skewX(1.5625deg) skewY(1.5625deg);
+    transform: skewX(1.5625deg) skewY(1.5625deg);
+  }
+
+  66.6% {
+    -webkit-transform: skewX(-0.78125deg) skewY(-0.78125deg);
+    transform: skewX(-0.78125deg) skewY(-0.78125deg);
+  }
+
+  77.7% {
+    -webkit-transform: skewX(0.390625deg) skewY(0.390625deg);
+    transform: skewX(0.390625deg) skewY(0.390625deg);
+  }
+
+  88.8% {
+    -webkit-transform: skewX(-0.1953125deg) skewY(-0.1953125deg);
+    transform: skewX(-0.1953125deg) skewY(-0.1953125deg);
+  }
+}
+
+.jello {
+  -webkit-animation-name: jello;
+  animation-name: jello;
+  animation-duration:.5s;
+  -webkit-transform-origin: center;
+  transform-origin: center;
+}
+.css_active{background-color:#f00;border:1px solid #f00;}
+.css_old{border:1px solid #0a9dc7;}
+

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+<h1>计算属性和method之间在缓存机智上的不同</h1>
+    <div class="app1">名字：{{name}}；年龄：{{age}}</div>
+
+    <div class="app2">
+        <div>{{message}}</div>
+        <div>{{messageGet}}</div>
+    </div>
+    <script>
+        var app2 = new Vue({
+            el:".app2",
+            data:{
+                message:"hello world"
+            },
+            computed:{
+                messageGet:function () {
+                    return this.message.split('').reverse().join('');
+                }
+            }
+
+        });
+        var obj = {
+        name:"tom",
+        age:12
+        };
+        var pp1 = new Vue({
+            el:".app1",
+            data:obj,
+            created:function () {
+                console.log(this.age);
+                var me =this;
+                var n=5;
+                setInterval(function () {
+                    if (n>0){
+                        /*me.obj++*/
+                        this.obj.age++;
+                        console.log(this.obj.age);
+                        n--;
+                    }
+                },1000)
+            }
+        });
+        /*setInterval(function () {
+            obj.age++;
+        },1000);*/
+    </script>
+</body>
+</html>

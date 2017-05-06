@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>filter</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body ng-controller="myCtrl">
+    <div>
+        <div class="clearFloat" ng-repeat = "item in selectContent">
+            <ul class="lf">
+                <li style="margin-top:20px;">{{item.name}}</li>
+            </ul>
+            <ul class="clearFloat lf" id="content-filter">
+                <li class="lf" ng-repeat="con in item.content" ng-click="numClick(con,item.name)">
+                    <div class="original" ng-show="con.state == 0">{{con.num}}</div>
+                    <div class="active" ng-show="con.state == 1">{{con.num}}</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div style="margin-top:100px;">
+        <button ng-click="numSelect()">过滤</button>
+    </div>
+<script src="angular.js"></script>
+<script>
+    angular.module("myApp",[])
+        .controller("myCtrl",function($scope){
+            $scope.selectContent = [
+                {name:"百位",content:content(10)},
+                {name:"十位",content:content(10)},
+                {name:"个位",content:content(10)}
+            ];
+            function content(num){
+                var arr = [];
+                for(var i=0;i<num;i++){
+                    arr.push({num:i,state:0});
+                }
+                return arr;
+            }
+            /*存储各个位置上被选中的数*/
+            $scope.wNumArr = [];$scope.qNumArr = [];
+            $scope.bNumArr = [];$scope.sNumArr = [];
+            $scope.gNumArr = [];
+            /*对应号码被点击事件的发生*/
+                /*为了寻找对应号码存储的位置的方法*/
+                function queryNum(numArr,num){
+                    for(var i=0;i<numArr.length;i++){
+                        if(numArr[i] == num){
+                            numArr.splice(i,1);
+                            /*只会执行一次没必要i--*/
+                        }
+                    }
+                }
+            $scope.numClick = function(con,position){
+                if(con.state == 0){
+                    con.state = 1;
+                    if(position == "万位"){
+                        $scope.wNumArr.push(con.num);
+                    }else if(position == "千位"){
+                        $scope.qNumArr.push(con.num);
+                    }else if(position == "百位"){
+                        $scope.bNumArr.push(con.num);
+                    }else if(position == "十位"){
+                        $scope.sNumArr.push(con.num);
+                    }else if(position == "个位"){
+                        $scope.gNumArr.push(con.num);
+                    }
+                }else{
+                    con.state = 0;
+                    if(position == "万位"){
+                        queryNum($scope.wNumArr,con.num);
+                    }else if(position == "千位"){
+                        queryNum($scope.qNumArr,con.num);
+                    }else if(position == "百位"){
+                        queryNum($scope.bNumArr,con.num);
+                    }else if(position == "十位"){
+                        queryNum($scope.sNumArr,con.num);
+                    }else if(position == "个位"){
+                        queryNum($scope.gNumArr,con.num);
+                    }
+                }
+            }
+
+            /*三星与其他不同的过滤方法*/
+                /*名字*//*直选两码*//*组选两码*//*偏移*/
+                var directBSValue = ["00","01"],directBGValue = ["00","01"],directSGValue = ["00","01"];/*用户选择*//*代表选择的位置*/
+                var groupValue = ["16","11"];/*用户选择*/
+                var skewValue = ["///","\\\\\\"],lastArr = [2,3,3,6,8];/*用户选择*//*模拟上期数字*/
+                /*直选两码的方法*/
+                    /*封装遍历对应不同情况的方法*/
+                    function directPosition(p1,p2,directArr,arr){
+                        var value = 0;
+                        for(var i=0;i<directArr.length;i++){
+                            if(directArr[i][0] == arr[p1] && directArr[i][1] == arr[p2]){
+                                value = 1;
+                            }
+                        }
+                        return value == 1?1:0;
+                    }
+                function directSelect(arr){
+                    var value = 0;
+                    /*百十位*/
+                    if(directPosition(0,1,directBSValue,arr)){
+                        value = 1;
+                    }
+                    /*百个位*/
+                    if(directPosition(0,2,directBGValue,arr)){
+                        value = 1;
+                    }
+                    /*十个位*/
+                    if(directPosition(1,2,directSGValue,arr)){
+                        value = 1;
+                    }
+                    return value == 1?1:0;
+                }
+                /*组选两码的方法*/
+                    /*遍历的数字0-9*/
+                        /*0位*/
+                        function number0(x,y,number){
+                            var tempArr = [];
+                            for(var i=0;i<number+1;i++){
+                                tempArr.push(i+","+x+","+y);
+                            }
+                            return tempArr;
+                        }
+                        /*1位*/
+                        function number1(x,y,number){
+                            var tempArr = [];
+                            for(var i=0;i<number+1;i++){
+                                tempArr.push(x+","+i+","+y);
+                            }
+                            return tempArr;
+                        }
+                        /*2位*/
+                        function number2(x,y,number){
+                            var tempArr = [];
+                            for(var i=0;i<number+1;i++){
+                                tempArr.push(x+","+y+","+i);
+                            }
+                            return tempArr;
+                        }
+                    /*获取满足条件的所有组号*/
+                    function groupAll(groupArr){
+                        var tempArr = [];
+                        for(var i=0;i<groupArr.length;i++){
+                            if(groupArr[i][0] == groupArr[i][1]){
+                                /*0位*/
+                                tempArr = tempArr.concat(number0(groupArr[i][0],groupArr[i][1],9));
+                                /*1位*/
+                                tempArr = tempArr.concat(number1(groupArr[i][0],groupArr[i][1],9));
+                                /*2位*/
+                                tempArr = tempArr.concat(number2(groupArr[i][0],groupArr[i][1],9));
+                            }else{
+                                /*0位*/
+                                tempArr = tempArr.concat(number0(groupArr[i][0],groupArr[i][1],9));
+                                tempArr = tempArr.concat(number0(groupArr[i][1],groupArr[i][0],9));
+                                /*1位*/
+                                tempArr = tempArr.concat(number1(groupArr[i][0],groupArr[i][1],9));
+                                tempArr = tempArr.concat(number1(groupArr[i][1],groupArr[i][0],9));
+                                /*2位*/
+                                tempArr = tempArr.concat(number2(groupArr[i][0],groupArr[i][1],9));
+                                tempArr = tempArr.concat(number2(groupArr[i][1],groupArr[i][0],9));
+                            }
+                        }
+                        return tempArr;
+                    }
+                function groupSelect(arr){
+                    var value = 0,tempArr = groupAll(groupValue);
+                    for(var i=0;i<tempArr.length;i++){
+                        if(arr == tempArr[i]){
+                            value = 1;
+                        }
+                    }
+                    return value == 1?1:0;
+                }
+                /*/!*偏移的方法*!/
+                    /!*替换当前的/|\的方法*!/
+                    function skewReplace(str){
+                        var tempStr = str,reg1 = /\//g,reg2 = /\|/g,reg3 = /\\/g;
+                        tempStr = tempStr.replace(reg1,0);
+                        tempStr = tempStr.replace(reg2,1);
+                        tempStr = tempStr.replace(reg3,2);
+                        tempStr = tempStr.split("").join(",");
+                        return tempStr;
+                    }
+                function skewSelect(arr){
+                    var value = 0,lastThreeArr = [lastArr[lastArr.length-3],lastArr[lastArr.length-2],lastArr[lastArr.length-1]],str = "";
+                    for(var i=0;i<skewValue.length;i++){
+                        str = skewReplace(skewValue[i]);
+                        if(str[0]){}
+                    }
+                }*/
+
+            $scope.numSelect = function () {
+                /*存储满足条件的数组*/
+                var selectDirect = [],selectGroupTwo = [];
+                for(var b=0;b<$scope.bNumArr.length;b++) {
+                    for (var s = 0; s < $scope.sNumArr.length; s++) {
+                        for (var g = 0; g < $scope.gNumArr.length; g++) {
+                            /*还是要声明一个数组*/
+                            var tempArr = [$scope.bNumArr[b],$scope.sNumArr[s],$scope.gNumArr[g]];
+
+                            /*直选两码的判断*/
+                            if(directSelect(tempArr)){
+                                selectDirect.push(tempArr.join(","));
+                            }
+                            /*组选两码的判断*/
+                            if(groupSelect(tempArr)){
+                                selectGroupTwo.push(tempArr.join(","));
+                            }
+                        }
+                    }
+                }
+                if(selectGroupTwo.length == 0){
+                    console.log("组选两码不存在");
+                }else{
+                    console.log(selectGroupTwo);
+                }
+                if(selectDirect.length == 0){
+                    console.log("直选两码不存在");
+                }else{
+                    console.log(selectDirect);
+                }
+            }
+        })
+</script>
+</body>
+</html>

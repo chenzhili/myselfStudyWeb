@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$emit的事件传播</title>
+</head>
+<body>
+
+<div class="emit">
+    <p>{{total}}</p>
+    <emit-par v-on:aa="totalFun"></emit-par>
+</div>
+
+<script src="vue.js"></script>
+<script>
+    Vue.component("emitPar",{
+        template:"<h2 v-on:click='countFun'>{{count}}</h2>",
+        data:function(){
+            return {count:1}
+        },
+            methods:{
+            countFun:function(){
+                this.count++;
+                this.$emit("aa");
+            }
+        }
+    });
+    var e1 = new Vue({
+        el:".emit",
+        data:{
+            total:1
+        },
+        methods:{
+            totalFun:function(){
+                this.total++;
+            }
+        }
+    });
+</script>
+</body>
+</html>

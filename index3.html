@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>3</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+<div class="app">
+    <template v-if="state == 1">
+        <label >usename</label>
+        <input type="text" placeholder="请输入姓名" v-model="name" key="username">
+    </template>
+    <template v-else>
+        <label>age</label>
+        <input type="text" placeholder="请输入年龄" v-model="age" key="age">
+    </template>
+    <div @click="getMessage">点击改变状态</div><!--v-on:click="getMessage"-->
+
+</div>
+    <div id="aaa">sdfsdfsdfsdf</div>
+<script>
+    aaa.addEventListener("click",function(e){
+        console.log(e.target.nodeName);
+    });
+    var app = new Vue({
+        el:".app",
+        data:{
+            name:"",
+            age:"",
+            state:1
+        },
+        methods:{
+            getMessage:function($event){
+                if(this.state == 1){
+                    this.state = 2;
+                    console.log($event);
+                    console.log($event.target.nodeName == "DIV");
+                }else{
+                    this.state =1;
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>goal</title>
+    <link rel="stylesheet" href="goalProgress/goalProgress.css">
+</head>
+<body>
+<div class="aa" id="0"></div>
+<script src="jquery-2.1.4.min.js"></script>
+<script src="goalProgress/goalProgress.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $(".aa").goalProgress({
+            goalAmount: 100,
+            currentAmount:10,
+            textBefore: '',
+            textAfter: '%'
+        });
+    });
+</script>
+</body>
+</html>

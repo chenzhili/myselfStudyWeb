@@ -1,0 +1,39 @@
+<ion-view id="account_query" hide-back-button="false">
+  <ion-header-bar align-title="center">
+    <button class="button button-clear ion-chevron-left" nav-direction="forward" style="color:#fff;"></button>
+    <h1 class="title" style="color:#fff;">
+      <div class="row row-wrap">
+        <div id="moneyQuery" class="col-50" style="">账单查询</div>
+        <div id="gasQuery" class="col-50" style="">气量查询</div>
+      </div>
+    </h1>
+  </ion-header-bar>
+  <ion-content>
+    <div class="account_title">
+      <div class="account_log"><img src="img/account_log.png"></div>
+      <div class="account_content">
+        <div class="account_company">成都市郫都区兴能燃气公司</div>
+        <div style="text-align:center;">
+          <div class="inline"></div>
+        </div>
+        <div ng-show="false">
+          <div class="account_company">选择用户</div>
+          <div class="account_img"><img src="img/account_select.png"></div>
+        </div>
+        <div class="account_company">您还未绑定用户，点击绑定用户</div>
+        <label class="item item-input account_user" ng-show="false">
+          <span class="input-label">用户</span>
+          <input type="text">
+        </label>
+      </div>
+    </div>
+    <div class="account_submit">
+      <div class="account_btn">
+        <button class="button">我要查询</button>
+      </div>
+      <div class="account_bind">
+        <span>多次查询? 马上 <i>用户绑定</i></span>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

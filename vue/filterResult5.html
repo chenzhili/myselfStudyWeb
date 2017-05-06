@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>filter</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body ng-controller="myCtrl">
+    <div>
+        <div class="clearFloat" ng-repeat = "item in selectContent">
+            <ul class="lf">
+                <li style="margin-top:20px;">{{item.name}}</li>
+            </ul>
+            <ul class="clearFloat lf" id="content-filter">
+                <li class="lf" ng-repeat="con in item.content" ng-click="numClick(con,item.name)">
+                    <div class="original" ng-show="con.state == 0">{{con.num}}</div>
+                    <div class="active" ng-show="con.state == 1">{{con.num}}</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div style="margin-top:100px;">
+        <button ng-click="numSelect()">过滤</button>
+    </div>
+<script src="angular.js"></script>
+<script>
+    angular.module("myApp",[])
+        .controller("myCtrl",function($scope){
+            $scope.selectContent = [
+                {name:"万位",content:content(10)},
+                {name:"千位",content:content(10)},
+                {name:"百位",content:content(10)},
+                {name:"十位",content:content(10)},
+                {name:"个位",content:content(10)}
+            ];
+            function content(num){
+                var arr = [];
+                for(var i=0;i<num;i++){
+                    arr.push({num:i,state:0});
+                }
+                return arr;
+            }
+            /*存储各个位置上被选中的数*/
+            $scope.wNumArr = [];$scope.qNumArr = [];
+            $scope.bNumArr = [];$scope.sNumArr = [];
+            $scope.gNumArr = [];
+            /*对应号码被点击事件的发生*/
+                /*为了寻找对应号码存储的位置的方法*/
+                function queryNum(numArr,num){
+                    for(var i=0;i<numArr.length;i++){
+                        if(numArr[i] == num){
+                            numArr.splice(i,1);
+                            /*只会执行一次没必要i--*/
+                        }
+                    }
+                }
+            $scope.numClick = function(con,position){
+                if(con.state == 0){
+                    con.state = 1;
+                    if(position == "万位"){
+                        $scope.wNumArr.push(con.num);
+                    }else if(position == "千位"){
+                        $scope.qNumArr.push(con.num);
+                    }else if(position == "百位"){
+                        $scope.bNumArr.push(con.num);
+                    }else if(position == "十位"){
+                        $scope.sNumArr.push(con.num);
+                    }else if(position == "个位"){
+                        $scope.gNumArr.push(con.num);
+                    }
+                }else{
+                    con.state = 0;
+                    if(position == "万位"){
+                        queryNum($scope.wNumArr,con.num);
+                    }else if(position == "千位"){
+                        queryNum($scope.qNumArr,con.num);
+                    }else if(position == "百位"){
+                        queryNum($scope.bNumArr,con.num);
+                    }else if(position == "十位"){
+                        queryNum($scope.sNumArr,con.num);
+                    }else if(position == "个位"){
+                        queryNum($scope.gNumArr,con.num);
+                    }
+                }
+            }
+
+            /*过滤方法*/
+            /*
+            * 没做的
+            *
+            *
+            * 冷热温
+            *
+            * 两码和
+            * 两码和尾
+            * 两码差
+            *
+            * 历史排除
+            * 区间
+            * 直选垃圾注
+            *
+            * */
+                /*附加方法，冒泡排序*/
+                function bubble(arr){
+                    var newArr = [],json = {};
+                    for(var n=0;n<arr.length;n++){
+                        if(!json[arr[n]]){
+                            newArr.push(arr[n]);
+                            json[arr[n]] = 1;
+                        }
+                    }
+                    for(var i=0;i<newArr.length;i++){
+                        for(var j=i+1;j<newArr.length;j++){
+                            if(newArr[i]>newArr[j]){
+                                var larger = newArr[i];
+                                newArr[i] = newArr[j];
+                                newArr[j] = larger;
+                            }
+                        }
+                    }
+                    return newArr;
+                }
+            /*用一个数组保留满足筛选的number*/
+                /*求均值*//*求和值*//*求合尾*//*求跨度*//*余数和*//*位积和*//*反位积和*//*最大值*//*中间值*//*最小值*/
+                /*数字累加*//*出号个数*//*位置间距*//*定位*//*连号*//*对子号*//*胆码组*/
+                var heValue = [10,11,20];/*用户选择项*/
+                var junValue = [1,2,0];/*用户选择项*/
+                var heWeiValue =[1,4,6,8];/*用户选择项*/
+                var kuaValue = [3,5,7,8];/*用户选择项*/
+                var yuSumVale = [1,2,4];/*用户选择，可以有3,4,5,6,7的余数和，除数分开传入*/
+                var jiSumValue = [5,100];/*用户选择项*/
+                var fanJiSumValue = [9,120];/*用户选择项*/
+                var maxValue = [0,9];/*用户选择项*/
+                var middleValue = [4,8];/*用户选择项*/
+                var minValue = [0,5];/*用户选择项*/
+                var cumValue = [2,5];/*用户选择项*/
+                var outNumValue = [2,5];/*用户选择项*/
+                var spaceValue = [5,3];/*用户选择项*/
+                var positionWValue = [1,2],positionQValue = [2,5],positionBValue = [6,7,8],positionSValue = [],positionGValue = [];/*用户选择项*//*分开以数组显示万，千，百，十，个*/
+
+                var lianValue = [0,0,0,0,1];/*用户选择项*//*表示对应的位置的状态码，0表示未被选中，1表示选中*/
+                /*分别对应 没有连号、二连号、三连号、四连号、五连号*/
+                var duiZiValue = [1,0,0,0,0,0,0,0];/*用户选择项*//*表示对应的位置的状态码，0表示未被选中，1表示选中*/
+                /*分别对应 没有相同号、两个相同号、三个相同号、四个相同号、五个相同号、一组相同号、两组相同号*/
+                var danMaWValue = [2,3],danMaQValue = [1,5],danMaBValue = [4,3],danMaSValue = [2,3],danMaGValue = [2,3];
+                /*每个位置对应的状态*/
+                var wState = 0,qState = 1,bState = 1,sState = 1,gState = 1;/*判断是定码还是消码*/
+
+                /*余数和的方法*/
+                function yuSumSelect(chuN,arr){
+                    var yuArr = 0;
+                    for(var i=0;i<arr.length;i++){
+                        yuArr = yuArr+(arr[i]%chuN);
+                    }
+                    for(var y=0;y<yuSumVale.length;y++){
+                        if(yuSumVale[y] == yuArr){
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+                /*位积和的方法*/
+                function jiSumSelect(arr){
+                    var sum = 0,value=0;
+                    for(var i=0;i<arr.length;i++){
+                        sum += arr[i]*(i+1);
+                    }
+                    for(var y=0;y<jiSumValue.length;y++){
+                        if(sum == jiSumValue[y]){
+                            value = 1;
+                        }
+                    }
+                    return value == 1?1:0;
+                }
+                /*反位积和的方法*/
+                function fanJiSumSelect(arr){
+                    var sum = 0,value=0;
+                    for(var i=0;i<arr.length;i++){
+                        sum += arr[i]*(6-i-1);
+                    }
+                    for(var y=0;y<fanJiSumValue.length;y++){
+                        if(sum == fanJiSumValue[y]){
+                            value = 1;
+                        }
+                    }
+                    return value == 1?1:0;
+                }
+                /*最大值的方法*/
+                function maxSelect(arr){
+                    var max = -1,value = 0;
+                    if(arr[arr.length-1]-arr[arr.length-2] >= 0){
+                        max = arr[arr.length-1]
+                    }else{
+                        max = arr[arr.length-2];
+                    }
+                    for(var i=0;i<maxValue.length;i++){
+                        if(maxValue[i] == max){
+                            value = 1;
+                        }
+                    }
+                    return value == 1?1:0;
+                }
+                /*中间值的方法*/
+                function middleSelect(arr){
+                    var value = 0,arrTemp = arr.concat();
+                    for(var i=0;i<arrTemp.length;i++){
+                        for(var y=i+1;y<arrTemp.length;y++){
+                            if(arrTemp[i] >= arrTemp[y]){
+                                var temp = arrTemp[i];
+                                arrTemp[i] = arrTemp[y];
+                                arrTemp[y] = temp;
+                            }
+                        }
+                    }
+                    for(var m=0;m<middleValue.length;m++){
+                        if(middleValue[m] == arrTemp[2]){
+                            value = 1;
+                        }
+                    }
+                    return value == 1?1:0;
+                }
+                /*最小值方法*/
+                function minSelect(arr){
+                    var min = -1,value = 0;
+                    if(arr[arr.length-1]-arr[arr.length-2] <= 0){
+                        min = arr[arr.length-1]
+                    }else{
+                        min = arr[arr.length-2];
+                    }
+                    for(var i=0;i<minValue.length;i++){
+                        if(minValue[i] == min){
+                            value = 1;
+                        }
+                    }
+                    return value == 1?1:0;
+                }
+                /*数字累加方法*/
+                function cumSelect(arr){
+                    var sum = 0,value = 0,cum = 0;
+                    for(var i=0;i<arr.length;i++){
+                        sum += arr[i];
+                    }
+                    cum = Number(String(sum)[0])+Number(String(sum)[1]);
+                    for(var y=0;y<cumValue.length;y++){
+                        if(cumValue[y] == cum){
+                            value = 1;
+                        }
+                    }
+                    return value == 1?1:0;
+                }
+                /*出号个数方法*/
+                function outNumSelect(arr){
+                    var value = 0,json = {},tempArr = [];
+                    for(var i=0;i<arr.length;i++){
+                        if(!json[arr[i]]){
+                            tempArr.push(arr[i]);
+                            json[arr[i]] = 1;
+                        }
+                    }
+                    for(var y=0;y<outNumValue.length;y++){
+                        if(outNumValue[y] == tempArr.length){
+                            value = 1;
+                        }
+                    }
+                    return value == 1?1:0;
+                }
+                /*位置间距方法*/
+                function spaceSelect(arr){
+                    var value = 0,first = 0,second = 0,tempValue = 0;
+                    if(arr[0] >= arr[1]){
+                        first = arr[0] - arr[1]
+                    }else{
+                        first = arr[1] - arr[0];
+                    }
+                    if(arr[1] >= arr[2]){
+                        second = arr[1] - arr[2];
+                    }else{
+                        second = arr[2] - arr[1];
+                    }
+                    if(first >= second){
+                        tempValue = first - second;
+                    }else{
+                        tempValue = second - first;
+                    }
+                    for(var i=0;i<spaceValue.length;i++){
+                        if(tempValue == spaceValue[i]){
+                            value = 1;
+                        }
+                    }
+                    return value == 1?1:0;
+                }
+                /*定位方法*/
+                    /*封装各个位置的判断方法*/
+                    function eachPositonJudge(positionValue,arr,p){
+                        var value = 0;
+                        if(positionValue.length == 0){
+                            value = 1;
+                        }else{
+                            for(var i=0;i<positionValue.length;i++){
+                                if(positionValue[i] == arr[p]){
+                                    value = 1;
+                                }
+                            }
+                        }
+                        return value == 1?1:0;
+                    }
+                function positionSelect(arr){
+                    var value = 0;
+                    if(eachPositonJudge(positionWValue,arr,0) && eachPositonJudge(positionQValue,arr,1) && eachPositonJudge(positionBValue,arr,2)
+                        && eachPositonJudge(positionSValue,arr,3) && eachPositonJudge(positionGValue,arr,4)){
+                        value = 1;
+                    }
+                    return value == 1?1:0;
+                }
+                /*连号的方法*/
+                    /*两连号的方法*/
+                    function twoLian(arr){
+                        var value = 0;
+                        if(arr[1]-arr[0]==1 && arr[2]-arr[1]!=1){
+                            value = 1;
+                        }
+                        if(arr[4]-arr[3]==1 && arr[3]-arr[2]!=1){
+                            value = 1;
+                        }
+                        if(arr[2]-arr[1]==1 && arr[1]-arr[0]!=1 && arr[3]-arr[2]!=1){
+                            value = 1;
+                        }
+                        if(arr[3]-arr[2]==1 && arr[2]-arr[1]!=1 && arr[4]-arr[3]!=1){
+                            value = 1;
+                        }
+                        return value == 1?1:0;
+                    }
+                    /*三连号的方法*/
+                    function threeLian(arr){
+                        var value = 0;
+                        if(arr[2]-arr[1]==1 && arr[1]-arr[0]==1 && arr[3]-arr[2]!=1){
+                            value = 1;
+                        }
+                        if(arr[3]-arr[2]==1 && arr[2]-arr[1]==1 && arr[1]-arr[0]!=1 && arr[4]-arr[3]!=1){
+                            value = 1;
+                        }
+                        if(arr[4]-arr[3]==1 && arr[3]-arr[2]==1 && arr[2]-arr[1]!=1){
+                            value = 1;
+                        }
+                        return value == 1?1:0;
+                    }
+                    /*四连号的方法*/
+                    function fourLian(arr){
+                        var value = 0;
+                        if(arr[3]-arr[2]==1 && arr[2]-arr[1]==1 && arr[1]-arr[0]==1 && arr[4]-arr[3]!=1){
+                            value = 1;
+                        }
+                        if(arr[3]-arr[2]==1 && arr[2]-arr[1]==1 && arr[1]-arr[0]!=1 && arr[4]-arr[3]==1){
+                            value = 1;
+                        }
+                        return value == 1?1:0;
+                    }
+                    /*没有连号的方法*/
+                    function noLian(arr){
+                        var value = 0;
+                        if(arr[3]-arr[2]!=1 && arr[2]-arr[1]!=1 && arr[1]-arr[0]!=1 && arr[4]-arr[3]!=1){
+                            value = 1;
+                        }
+                        return value == 1?1:0;
+                    }
+                    /*五连号的方法*/
+                    function fiveLian(arr){
+                        var value = 0;
+                        if(arr[3]-arr[2]==1 && arr[2]-arr[1]==1 && arr[1]-arr[0]==1 && arr[4]-arr[3]==1){
+                            value = 1;
+                        }
+                        return value == 1?1:0;
+                    }
+                function lianSelect(arr){
+                    var value = 0;
+                    if(lianValue[0] == 1){
+                        value = noLian(arr);
+                    }
+                    if(lianValue[1] == 1){
+                        value = twoLian(arr);
+                    }
+                    if(lianValue[2] == 1){
+                        value = threeLian(arr);
+                    }
+                    if(lianValue[3] == 1){
+                        value = fourLian(arr);
+                    }
+                    if(lianValue[4] == 1){
+                        value = fiveLian(arr);
+                    }
+                    return value==1?1:0;
+                }
+                /*对子号的方法*/
+                        /*去重封装一个方法*/
+                        function dupRemove(arr){
+                            var json = {},tempArr = [];
+                            for(var i=0;i<arr.length;i++){
+                                if(!json[arr[i]]){
+                                    tempArr.push(arr[i]);
+                                    json[arr[i]] = 1;
+                                }
+                            }
+                            return tempArr;
+                        }
+                    /*没有相同号*/
+                    function noSame(arr){
+                        var value = 0;
+                        if(dupRemove(arr).length == 5){
+                            value = 1
+                        }
+                        return value==1?1:0;
+                    }
+                    /*两个相同号*/
+                    function twoSame(arr){
+                        var value = 0;
+                        if(dupRemove(arr).length == 4){
+                            value = 1
+                        }
+                        return value==1?1:0;
+                    }
+                    /*三个相同号*/
+                    function threeSame(arr){
+                        var value = 0;
+                        if(dupRemove(arr).length == 3){
+                            value = 1
+                        }
+                        return value==1?1:0;
+                    }
+                    /*四个相同号*/
+                    function foureSame(arr){
+                        var value = 0;
+                        if(dupRemove(arr).length == 2){
+                            value = 1
+                        }
+                        return value==1?1:0;
+                    }
+                    /*五个相同号*/
+                    function fiveSame(arr){
+                        var value = 0;
+                        if(dupRemove(arr).length == 3){
+                            value = 1
+                        }
+                        return value==1?1:0;
+                    }
+                    /*一组相同号*/
+                    function oneGroupSame(arr){
+                        var value = 0;
+                        if(arr[1]-arr[0]==0 && arr[2]-arr[1]!=0){
+                            value = 1;
+                        }
+                        if(arr[4]-arr[3]==0 && arr[3]-arr[2]!=0){
+                            value = 1;
+                        }
+                        if(arr[2]-arr[1]==0 && arr[1]-arr[0]!=0 && arr[3]-arr[2]!=0){
+                            value = 1;
+                        }
+                        if(arr[3]-arr[2]==0 && arr[2]-arr[1]!=0 && arr[4]-arr[3]!=0){
+                            value = 1;
+                        }
+                        return value == 1?1:0;
+                    }
+                    /*两组相同号*/
+                    function twoGroupSame(arr){
+                        var value = 0;
+                        if(arr[1]-arr[0]==0 && arr[3]-arr[2]==0 && arr[2]-arr[1]!=0){
+                            value = 1;
+                        }
+                        if(arr[1]-arr[0]==0 && arr[4]-arr[3]==0 && arr[3]-arr[1]!=0){
+                            value = 1;
+                        }
+                        if(arr[4]-arr[3]==0 && arr[2]-arr[1]==0 && arr[4]-arr[1]!=0){
+                            value = 1;
+                        }
+                        return value == 1?1:0;
+                    }
+                function duiZiSelect(arr){
+                    var value = 0;
+                    if(duiZiValue[0] == 1){
+                        value = noSame(arr);
+                    }
+                    if(duiZiValue[1] == 1){
+                        value = twoSame(arr);
+                    }
+                    if(duiZiValue[2] == 1){
+                        value = threeSame(arr);
+                    }
+                    if(duiZiValue[3] == 1){
+                        value = foureSame(arr);
+                    }
+                    if(duiZiValue[4] == 1){
+                        value = fiveSame(arr);
+                    }
+                    if(duiZiValue[5] == 1){
+                        value = oneGroupSame(arr);
+                    }
+                    if(duiZiValue[6] == 1){
+                        value = twoGroupSame(arr);
+                    }
+                    return value == 1?1:0;
+                }
+
+                /*胆码组的方法*/
+                    /*定码的方法*/
+                    function dingMa(arr,positionArr,position){
+                        var value = 0;
+                        for(var i=0;i<positionArr.length;i++){
+                            if(positionArr[i] == arr[position]){
+                                value = 1;
+                                break;
+                            }
+                        }
+                        return value;
+                    }
+                    /*消码的方法*/
+                    function xiaoMa(arr,positionArr,position){
+                        var value = 0,judgeArr = [];
+                        for(var i=0;i<positionArr.length;i++){
+                            if(positionArr[i] != arr[position]){
+                                judgeArr.push(1);
+                            }
+                        }
+                        if(positionArr.length == judgeArr.length){
+                            value = 1;
+                        }
+                        return value;
+                    }
+                function danMaSelect(arr){
+                        var valueW = 0, valueQ = 0, valueB = 0, valueS = 0, valueG = 0;
+                        /*万位*/
+                        if(wState == 1){
+                            valueW = dingMa(arr,danMaWValue,0);
+                        }else{
+                            valueW = xiaoMa(arr,danMaWValue,0);
+                        }
+                        /*千位*/
+                        if(qState == 1){
+                            valueQ = dingMa(arr,danMaQValue,1);
+                        }else{
+                            valueQ = xiaoMa(arr,danMaQValue,1);
+                        }
+                        /*百位*/
+                        if(bState == 1){
+                            valueB = dingMa(arr,danMaBValue,2);
+                        }else{
+                            valueB = xiaoMa(arr,danMaBValue,2);
+                        }
+                        /*十位*/
+                        if(sState == 1){
+                            valueS = dingMa(arr,danMaSValue,3);
+                        }else{
+                            valueS = xiaoMa(arr,danMaSValue,3);
+                        }
+                        /*个位*/
+                        if(gState == 1){
+                            valueG = dingMa(arr,danMaGValue,4);
+                        }else{
+                            valueG = xiaoMa(arr,danMaGValue,4);
+                        }
+                        return valueW==1 && valueQ==1 && valueB==1 && valueS==1 && valueG==1?1:0;
+                }
+
+                $scope.numSelect = function(){
+                    var selectJun=[] ,selectHe = [],selectHeWei = [],selectKua = [],bubbleArr;/*用于存储冒泡完的数组*/
+                    var selectYuSum = [],selectJiSum = [],selectFanJiSum = [],selectMax = [],selectMiddle = [],selectMin = [],selectCum = [],
+                        selectOutNum = [],selectSpace = [],selectPosition = [],selectLian = [],selectDuiZi = [],selectDanMa = [];
+                    for(var w=0;w<$scope.wNumArr.length;w++) {
+                        for (var q = 0; q < $scope.qNumArr.length; q++) {
+                            for (var b = 0; b < $scope.bNumArr.length; b++) {
+                                for (var s = 0;  s< $scope.sNumArr.length; s++) {
+                                    for (var g = 0; g < $scope.gNumArr.length; g++) {
+                                        /*还是要声明一个函数*/
+                                        var tempArr = [$scope.wNumArr[w],$scope.qNumArr[q],$scope.bNumArr[b],$scope.sNumArr[s],$scope.gNumArr[g]];
+
+
+                                        /*胆码组的判断*/
+                                        if(danMaSelect(tempArr)){
+                                            selectDanMa.push(tempArr.join(","));
+                                        }
+                                        /*对子号的判断*/
+                                        if(duiZiSelect(tempArr)){
+                                            selectDuiZi.push(tempArr.join(","));
+                                        }
+                                        /*连号的判断*/
+                                        if(lianSelect(tempArr)){
+                                            selectLian.push(tempArr.join(","));
+                                        }
+                                        /*定位的判断*/
+                                        if(positionSelect(tempArr)){
+                                            selectPosition.push(tempArr.join(","));
+                                        }
+                                        /*位置间距的判断*/
+                                        if(spaceSelect(tempArr)){
+                                            selectSpace.push(tempArr.join(","));
+                                        }
+                                        /*出号个数的判断*/
+                                        if(outNumSelect(tempArr)){
+                                            selectOutNum.push(tempArr.join(","));
+                                        }
+                                        /*数字累加的判断*/
+                                        if(cumSelect(tempArr)){
+                                            selectCum.push(tempArr.join(","));
+                                        }
+                                        /*最小值的判断*/
+                                        if(minSelect(tempArr)){
+                                            selectMin.push(tempArr.join(","));
+                                        }
+                                        /*中间值的判断*/
+                                        if(middleSelect(tempArr)){
+                                            selectMiddle.push(tempArr.join(","));
+                                        }
+                                        /*最大值的判断*/
+                                        if(maxSelect(tempArr)){
+                                            selectMax.push(tempArr.join(","));
+                                        }
+                                        /*反位积和的判断*/
+                                        if(fanJiSumSelect(tempArr)){
+                                            selectFanJiSum.push(tempArr.join(","));
+                                        }
+                                        /*位积和的判断*/
+                                        if(jiSumSelect(tempArr)){
+                                            selectJiSum.push(tempArr.join(","));
+                                        }
+                                        /*余数和的判断*/  /*这里还要对选中的除数进行条件判断，并且客户筛选的是一个二维数组*/
+                                        if(yuSumSelect(3,tempArr)){
+                                            selectYuSum.push(tempArr.join(","));
+                                        }
+                                        /*均值*/
+                                        for(var j=0;j<junValue.length;j++){
+                                            if(junValue[j] == Math.round(($scope.wNumArr[w] + $scope.qNumArr[q] + $scope.bNumArr[b] + $scope.sNumArr[s] + $scope.gNumArr[g])/5)){
+                                                selectJun.push(tempArr.join(","));
+                                            }
+                                        }
+                                        /*和值*/
+                                        for(var h=0;h<heValue.length;h++){
+                                            if(heValue[h] == Number($scope.wNumArr[w] + $scope.qNumArr[q] + $scope.bNumArr[b] + $scope.sNumArr[s] + $scope.gNumArr[g])){
+                                                selectHe.push(tempArr.join(","));
+                                            }
+                                        }
+                                        /*和尾*/
+                                        for(var hw=0;hw<heWeiValue.length;hw++){
+                                            var heWeiNum = String($scope.wNumArr[w] + $scope.qNumArr[q] + $scope.bNumArr[b] + $scope.sNumArr[s] + $scope.gNumArr[g]);
+                                            if(heWeiValue[hw] == heWeiNum.slice(heWeiNum.length-1)){
+                                                selectHeWei.push(tempArr.join(","));
+                                            }
+                                        }
+                                        /*跨度*/
+                                        bubbleArr = bubble(tempArr);
+                                        for(var kua=0;kua<kuaValue.length;kua++){
+                                            if(kuaValue[kua] == bubbleArr[bubbleArr.length-1]-bubbleArr[0]){
+                                                selectKua.push(tempArr.join(","));
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if(selectDanMa.length == 0){
+                        console.log("胆码组不存在");
+                    }else{
+                        console.log(selectDanMa);
+                    }
+                    if(selectLian.length == 0){
+                        console.log("连号不存在");
+                    }else{
+                        console.log(selectLian);
+                    }
+                    if(selectPosition.length == 0){
+                        console.log("定位不存在");
+                    }else{
+                        console.log(selectPosition);
+                    }
+                    if(selectSpace.length == 0){
+                        console.log("间距位置不存在");
+                    }else{
+                        console.log(selectSpace);
+                    }
+                    if(selectOutNum.length == 0){
+                        console.log("出号个数不存在");
+                    }else{
+                        console.log(selectOutNum);
+                    }
+                    if(selectCum.length == 0){
+                        console.log("数字累加不存在");
+                    }else{
+                        console.log(selectCum);
+                    }
+                    if(selectMin.length == 0){
+                        console.log("最小值不存在");
+                    }else{
+                        console.log(selectMin);
+                    }
+                    if(selectMiddle.length == 0){
+                        console.log("中间值不存在");
+                    }else{
+                        console.log(selectMiddle);
+                    }
+                    if(selectMax.length == 0){
+                        console.log("满足最大值的数组不存在");
+                    }else{
+                        console.log(selectMax);
+                    }
+                    if(selectFanJiSum.length == 0){
+                        console.log("反位积和不存在");
+                    }else{
+                        console.log(selectFanJiSum);
+                    }
+                    if(selectJiSum.length == 0){
+                        console.log("位积和不存在");
+                    }else{
+                        console.log(selectJiSum);
+                    }
+                    if(selectYuSum.length == 0){
+                        console.log("余数和不存在");
+                    }else{
+                        console.log(selectYuSum);
+                    }
+                    if(selectJun.length == 0){
+                        console.log("均值不存在");
+                    }else{
+                        console.log(selectJun);
+                    }
+                    if(selectHe.length == 0){
+                        console.log("和值不存在");
+                    }else{
+                        console.log(selectHe);
+                    }
+                    if(selectHeWei.length == 0){
+                        console.log("和尾不存在");
+                    }else{
+                        console.log(selectHeWei);
+                    }
+                    if(selectKua.length == 0){
+                        console.log("跨度不存在");
+                    }else{
+                        console.log(selectKua);
+                    }
+                };
+
+
+            /*对于比例  2 筛选的做法*/
+                /*奇偶*//*大小*//*质合*/
+                var ps1=[5,0],ps2=[4,1],ps3=[3,2],ps4=[2,3],ps5=[1,4],ps6=[0,5];
+                /*对于比例的判断可以封装成一个函数，函数返回TRUE或者FALSE来判断是否添加，可以简化的*/
+                    /*对于奇偶的封装*/
+                    function oddAndEven(primeN,arr){
+                        var tempArr = arr;
+                        var pushArr = [];
+                        for(var i=0;i<tempArr.length;i++){
+                            if(tempArr[i]%2 != 0){
+                                pushArr.push(1);
+                            }
+                        }
+                        return pushArr.length==primeN?1:0;
+                    }
+                    /*对于大小的封装*/
+                    function bigAndSmall(bigN,arr){
+                        var tempArr = arr;
+                        var pushArr = [];
+                        for(var i=0;i<tempArr.length;i++){
+                            if(tempArr[i] >= 5){
+                                pushArr.push(1);
+                            }
+                        }
+                        return pushArr.length==bigN?1:0;
+                    }
+                    /*对于质合的封装*/
+                    function primeAndSum(primeN,arr){
+                        var tempArr = arr;
+                        var pushArr = [];
+                        for(var i=0;i<tempArr.length;i++){
+                            if(tempArr[i] == 1){
+                                pushArr.push(1);
+                            }
+                            if(tempArr[i] == 2){
+                                pushArr.push(1);
+                            }
+                            if(tempArr[i] >= 3){
+                                (function(){
+                                    for(var n=2;n<tempArr[i];n++){
+                                        if(tempArr[i] % n == 0 ){
+                                            return
+                                        }
+                                    }
+                                    pushArr.push(1);
+                                })();
+                            }
+                        }
+                        return pushArr.length==primeN?1:0;
+                    }
+                $scope.towScaleSelect = function(zuhe){  /*zuhe的参数出形如 [51,42,32]这种来进行不同的操作*/
+                    var select50 = [],select05 = [],select41 = [],select14 = [],select23 = [],select32=[];/*奇偶*/
+                    var dsSelect50 = [],dsSelect05 = [],dsSelect41 = [],dsSelect14 = [],dsSelect23 = [],dsSelect32 = [];
+                    var zhSelect50 = [],zhSelect05 = [],zhSelect41 = [],zhSelect14 = [],zhSelect23 = [],zhSelect32 = [];
+                    for(var w=0;w<$scope.wNumArr.length;w++) {
+                        for (var q = 0; q < $scope.qNumArr.length; q++) {
+                            for (var b = 0; b < $scope.bNumArr.length; b++) {
+                                for (var s = 0;  s< $scope.sNumArr.length; s++) {
+                                    for (var g = 0; g < $scope.gNumArr.length; g++) {
+                                        for(var group=0;group<zuhe.length;group++){
+                                            var tempArr = [$scope.wNumArr[w],$scope.qNumArr[q],$scope.bNumArr[b],$scope.sNumArr[s],$scope.gNumArr[g]];
+                                            if(zuhe[group] == "50"){
+                                                /*奇偶*/
+                                                if(oddAndEven(5,tempArr)){
+                                                    select50.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*大小*/
+                                                if(bigAndSmall(5,tempArr)){
+                                                    dsSelect50.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*质合*/
+                                                if(primeAndSum(5,tempArr)){
+                                                    zhSelect50.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                            }
+                                            if(zuhe[group] == "05"){
+                                                /*奇偶*/
+                                                if(oddAndEven(0,tempArr)){
+                                                    select05.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*大小*/
+                                                if(bigAndSmall(0,tempArr)){
+                                                    dsSelect05.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*质合*/
+                                                if(primeAndSum(0,tempArr)){
+                                                    zhSelect05.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                            }
+                                            if(zuhe[group] == "41"){
+                                                /*奇偶*/
+                                                if(oddAndEven(4,tempArr)){
+                                                    select41.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*大小*/
+                                                if(bigAndSmall(4,tempArr)){
+                                                    dsSelect41.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*质合*/
+                                                if(primeAndSum(4,tempArr)){
+                                                    zhSelect41.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                            }
+                                            if(zuhe[group] == "14"){
+                                                /*奇偶*/
+                                                if(oddAndEven(1,tempArr)){
+                                                    select14.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*大小*/
+                                                if(bigAndSmall(1,tempArr)){
+                                                    dsSelect14.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*质合*/
+                                                if(primeAndSum(1,tempArr)){
+                                                    zhSelect14.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                            }
+                                            if(zuhe[group] == "23"){
+                                                /*奇偶*/
+                                                if(oddAndEven(2,tempArr)){
+                                                    select23.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*大小*/
+                                                if(bigAndSmall(2,tempArr)){
+                                                    dsSelect23.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*质合*/
+                                                if(primeAndSum(2,tempArr)){
+                                                    zhSelect23.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                            }
+                                            if(zuhe[group] == "32"){
+                                                /*奇偶*/
+                                                if(oddAndEven(3,tempArr)){
+                                                    select32.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*大小*/
+                                                if(bigAndSmall(3,tempArr)){
+                                                    dsSelect32.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*质合*/
+                                                if(primeAndSum(3,tempArr)){
+                                                    zhSelect32.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    /*奇偶*/
+                    if(select50.length == 0){
+                        console.log("5:0不存在的");
+                    }else{
+                        console.log(select50);
+                    }
+                    if(select05.length == 0){
+                        console.log("0:5不存在的");
+                    }else{
+                        console.log(select05);
+                    }
+                    if(select41.length == 0){
+                        console.log("4:1不存在的");
+                    }else{
+                        console.log(select41);
+                    }
+                    if(select14.length == 0){
+                        console.log("1:4不存在的");
+                    }else{
+                        console.log(select14);
+                    }
+                    if(select23.length == 0){
+                        console.log("2:3不存在的");
+                    }else{
+                        console.log(select23);
+                    }
+                    if(select32.length == 0){
+                        console.log("2:3不存在的");
+                    }else{
+                        console.log(select32);
+                    }
+                    /*大小*/
+                    if(dsSelect50.length == 0){
+                        console.log("5:0不存在的");
+                    }else{
+                        console.log(dsSelect50);
+                    }
+                    if(dsSelect05.length == 0){
+                        console.log("0:5不存在的");
+                    }else{
+                        console.log(dsSelect05);
+                    }
+                    if(dsSelect41.length == 0){
+                        console.log("4:1不存在的");
+                    }else{
+                        console.log(dsSelect41);
+                    }
+                    if(dsSelect14.length == 0){
+                        console.log("1:4不存在的");
+                    }else{
+                        console.log(dsSelect14);
+                    }
+                    if(dsSelect23.length == 0){
+                        console.log("2:3不存在的");
+                    }else{
+                        console.log(dsSelect23);
+                    }
+                    if(dsSelect32.length == 0){
+                        console.log("2:3不存在的");
+                    }else{
+                        console.log(dsSelect32);
+                    }
+                    /*质合*/
+                    if(zhSelect50.length == 0){
+                        console.log("5:0不存在的");
+                    }else{
+                        console.log(zhSelect50);
+                    }
+                    if(zhSelect05.length == 0){
+                        console.log("0:5不存在的");
+                    }else{
+                        console.log(zhSelect05);
+                    }
+                    if(zhSelect41.length == 0){
+                        console.log("4:1不存在的");
+                    }else{
+                        console.log(zhSelect41);
+                    }
+                    if(zhSelect14.length == 0){
+                        console.log("1:4不存在的");
+                    }else{
+                        console.log(zhSelect14);
+                    }
+                    if(zhSelect23.length == 0){
+                        console.log("2:3不存在的");
+                    }else{
+                        console.log(zhSelect23);
+                    }
+                    if(zhSelect32.length == 0){
+                        console.log("2:3不存在的");
+                    }else{
+                        console.log(zhSelect32);
+                    }
+                }
+
+
+            /*对于比例 3 筛选的做法*/
+                /*形如 [5,0,0]等等*/
+                /*对于比例判断封装的函数*/
+                    /*对于012的封装*/
+                    function numAnd012(num0,num1,arr){
+                        var  temArr = arr;
+                        var pushArr0=[],pushArr1=[];
+                        for(var i=0;i<temArr.length;i++){
+                            if(temArr[i]%3 == 0){
+                                pushArr0.push(1);
+                            }
+                            if(temArr[i]%3 == 1){
+                                pushArr1.push(1);
+                            }
+                        }
+                        return (pushArr0.length == num0 && pushArr1.length == num1)?1:0;
+                    }
+                    /*对于大中小的封装*/
+                    function bigAndMiddleAndSmall(bigN,middleN,arr){
+                        var  temArr = arr;
+                        var pushArr0=[],pushArr1=[];
+                        for(var i=0;i<temArr.length;i++){
+                            if(temArr[i]>=7){
+                                pushArr0.push(1);
+                            }
+                            if(temArr[i]>=3 && temArr[i]<=6){
+                                pushArr1.push(1);
+                            }
+                        }
+                        return (pushArr0.length == bigN && pushArr1.length == middleN)?1:0;
+                    }
+                    /*对于邻弧传的封装*/
+                    var lastResult = [2,3,4,5,6];/*上一期的开奖号码*/
+                    function linAndHuAndChuan(chuanN,linN,arr){
+                        var chuan = [],lin = [],tempLin = [];
+                        for(var last=0;last<lastResult.length;last++){
+                            chuan.push(lastResult[last]);
+                            if((function(){
+                                    for(var y=0;y<lastResult.length;y++){
+                                        if(lastResult[last]-1-lastResult[y] == 0){
+                                            return false;
+                                        }
+                                    }
+                                    return true;
+                                })()){
+                                tempLin.push(lastResult[last]-1);
+                            }
+                            if((function(){
+                                    for(var y=0;y<lastResult.length;y++){
+                                        if(lastResult[last]+1-lastResult[y] == 0){
+                                            return false;
+                                        }
+                                    }
+                                    return true;
+                                })()){
+                                tempLin.push(lastResult[last]+1);
+                            }
+                        }
+                        /*对于邻码的去重 并且筛选出大于等于0的数*/
+                        var json = {};
+                        for(var i=0;i<tempLin.length;i++){
+                            if(!json[tempLin[i]]){
+                                if(tempLin[i] >= 0){
+                                    lin.push(tempLin[i]);
+                                }
+                                json[tempLin[i]]=1;
+                            }
+                        }
+                        console.log(chuan);
+                        console.log(lin);
+                        /*对于满足条件的号码筛选*/
+                        var chuanNum = [],linNum = [];
+                        console.log(arr);
+                        for(var x=0;x<arr.length;x++){
+                            for(var z=0;z<chuan.length;z++){
+                                if(arr[x] == chuan[z]){
+                                    chuanNum.push(1);
+                                }
+                            }
+                            for(var b=0;b<lin.length;b++){
+                                if(arr[x] == lin[b]){
+                                    linNum.push(1);
+                                }
+                            }
+                        }
+                        return (chuanNum.length == chuanN && linNum.length == linN)?1:0;
+                    }
+                    /*对于复隔中的封装*/
+                    var lastR = [2,5,7,8,9],lastLastR = [1,3,5,8,9];
+                    function fuAndGeAndZhong(fuN,geN,arr){
+                        var fu = [], ge = [];
+                        for(var f=0;f<lastR.length;f++){
+                            fu.push(lastR[f]);
+                        }
+                        for(var g=0;g<lastLastR.length;g++){
+                            if((function(){
+                                    for(var f=0;f<lastR.length;f++){
+                                        if(lastLastR[g] == lastR[f]){
+                                            return false;
+                                        }
+                                    }
+                                    return true;
+                                })()){
+                                ge.push(lastLastR[g]);
+                            }
+                        }
+                        console.log(fu);
+                        console.log(ge);
+                        /*筛选隔码，复码*/
+                        var fuNum = [],geNum = [];
+                        for(var a=0;a<arr.length;a++){
+                            for(var b=0;b<lastR.length;b++){
+                                if(arr[a] == lastR[b]){
+                                    fuNum.push(1);
+                                }
+                            }
+                            for(var c=0;c<lastLastR.length;c++){
+                                if(arr[a] == lastLastR[c]){
+                                    geNum.push(1);
+                                }
+                            }
+                        }
+                        return (fuNum.length == fuN && geNum.length == geN)?1:0;
+                    }
+                $scope.threeScaleSelect = function(zuhe){/*zuhe的参数出形如 [500,401,320]这种来进行不同的操作*/
+                    var select012 = [],bmsSelect = [],lhcSelect = [],fgzSelect = [];
+                    for(var w=0;w<$scope.wNumArr.length;w++) {
+                        for (var q = 0; q < $scope.qNumArr.length; q++) {
+                            for (var b = 0; b < $scope.bNumArr.length; b++) {
+                                for (var s = 0;  s< $scope.sNumArr.length; s++) {
+                                    for (var g = 0; g < $scope.gNumArr.length; g++) {
+                                        for(var group=0;group<zuhe.length;group++){
+                                            var tempArr = [$scope.wNumArr[w],$scope.qNumArr[q],$scope.bNumArr[b],$scope.sNumArr[s],$scope.gNumArr[g]];
+                                            if(zuhe[group] == "500"){
+                                                /*012*/
+                                                if(numAnd012(5,0,tempArr)){
+                                                    select012.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*大中小*/
+                                                if(bigAndMiddleAndSmall(5,0,tempArr)){
+                                                    bmsSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*邻弧传*/
+                                                if(linAndHuAndChuan(0,5,tempArr)){
+                                                    lhcSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*复隔中*/
+                                                if(fuAndGeAndZhong(5,0,tempArr)){
+                                                    fgzSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                            }
+                                            if(zuhe[group] == "410"){
+                                                /*012*/
+                                                if(numAnd012(4,1,tempArr)){
+                                                    select012.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*大中小*/
+                                                if(bigAndMiddleAndSmall(4,1,tempArr)){
+                                                    bmsSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*邻弧传*/
+                                                if(linAndHuAndChuan(0,4,tempArr)){
+                                                    lhcSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*复隔中*/
+                                                if(fuAndGeAndZhong(4,1,tempArr)){
+                                                    fgzSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                            }
+                                            if(zuhe[group] == "401"){
+                                                /*012*/
+                                                if(numAnd012(4,0,tempArr)){
+                                                    select012.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*大中小*/
+                                                if(bigAndMiddleAndSmall(4,0,tempArr)){
+                                                    bmsSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*邻弧传*/
+                                                if(linAndHuAndChuan(1,4,tempArr)){
+                                                    lhcSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*复隔中*/
+                                                if(fuAndGeAndZhong(4,0,tempArr)){
+                                                    fgzSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                            }
+                                            if(zuhe[group] == "311"){
+                                                /*012*/
+                                                if(numAnd012(3,1,tempArr)){
+                                                    select012.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*大中小*/
+                                                if(bigAndMiddleAndSmall(3,1,tempArr)){
+                                                    bmsSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*邻弧传*/
+                                                if(linAndHuAndChuan(1,3,tempArr)){
+                                                    lhcSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*复隔中*/
+                                                if(fuAndGeAndZhong(3,1,tempArr)){
+                                                    fgzSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                            }
+                                            if(zuhe[group] == "320"){
+                                                /*012*/
+                                                if(numAnd012(3,2,tempArr)){
+                                                    select012.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*大中小*/
+                                                if(bigAndMiddleAndSmall(3,2,tempArr)){
+                                                    bmsSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*邻弧传*/
+                                                if(linAndHuAndChuan(0,3,tempArr)){
+                                                    lhcSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*复隔中*/
+                                                if(fuAndGeAndZhong(3,2,tempArr)){
+                                                    fgzSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                            }
+                                            if(zuhe[group] == "302"){
+                                                /*012*/
+                                                if(numAnd012(3,0,tempArr)){
+                                                    select012.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*大中小*/
+                                                if(bigAndMiddleAndSmall(3,0,tempArr)){
+                                                    bmsSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*邻弧传*/
+                                                if(linAndHuAndChuan(2,3,tempArr)){
+                                                    lhcSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*复隔中*/
+                                                if(fuAndGeAndZhong(3,0,tempArr)){
+                                                    fgzSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                            }
+                                            if(zuhe[group] == "212"){
+                                                /*012*/
+                                                if(numAnd012(2,1,tempArr)){
+                                                    select012.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*大中小*/
+                                                if(bigAndMiddleAndSmall(2,1,tempArr)){
+                                                    bmsSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*邻弧传*/
+                                                if(linAndHuAndChuan(2,2,tempArr)){
+                                                    lhcSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*复隔中*/
+                                                if(fuAndGeAndZhong(2,1,tempArr)){
+                                                    fgzSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                            }
+                                            if(zuhe[group] == "221"){
+                                                /*012*/
+                                                if(numAnd012(2,2,tempArr)){
+                                                    select012.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*大中小*/
+                                                if(bigAndMiddleAndSmall(2,2,tempArr)){
+                                                    bmsSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*邻弧传*/
+                                                if(linAndHuAndChuan(1,2,tempArr)){
+                                                    lhcSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*复隔中*/
+                                                if(fuAndGeAndZhong(2,2,tempArr)){
+                                                    fgzSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                            }
+                                            if(zuhe[group] == "230"){
+                                                /*012*/
+                                                if(numAnd012(2,3,tempArr)){
+                                                    select012.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*大中小*/
+                                                if(bigAndMiddleAndSmall(2,3,tempArr)){
+                                                    bmsSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*邻弧传*/
+                                                if(linAndHuAndChuan(0,2,tempArr)){
+                                                    lhcSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*复隔中*/
+                                                if(fuAndGeAndZhong(2,3,tempArr)){
+                                                    fgzSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                            }
+                                            if(zuhe[group] == "203"){
+                                                /*012*/
+                                                if(numAnd012(2,0,tempArr)){
+                                                    select012.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*大中小*/
+                                                if(bigAndMiddleAndSmall(2,0,tempArr)){
+                                                    bmsSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*邻弧传*/
+                                                if(linAndHuAndChuan(3,2,tempArr)){
+                                                    lhcSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*复隔中*/
+                                                if(fuAndGeAndZhong(2,0,tempArr)){
+                                                    fgzSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                            }
+                                            if(zuhe[group] == "113"){
+                                                /*012*/
+                                                if(numAnd012(1,1,tempArr)){
+                                                    select012.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*大中小*/
+                                                if(bigAndMiddleAndSmall(1,1,tempArr)){
+                                                    bmsSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*邻弧传*/
+                                                if(linAndHuAndChuan(3,1,tempArr)){
+                                                    lhcSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*复隔中*/
+                                                if(fuAndGeAndZhong(1,1,tempArr)){
+                                                    fgzSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                            }
+                                            if(zuhe[group] == "122"){
+                                                /*012*/
+                                                if(numAnd012(1,2,tempArr)){
+                                                    select012.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*大中小*/
+                                                if(bigAndMiddleAndSmall(1,2,tempArr)){
+                                                    bmsSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*邻弧传*/
+                                                if(linAndHuAndChuan(2,1,tempArr)){
+                                                    lhcSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*复隔中*/
+                                                if(fuAndGeAndZhong(1,2,tempArr)){
+                                                    fgzSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                            }
+                                            if(zuhe[group] == "131"){
+                                                /*012*/
+                                                if(numAnd012(1,3,tempArr)){
+                                                    select012.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*大中小*/
+                                                if(bigAndMiddleAndSmall(1,3,tempArr)){
+                                                    bmsSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*邻弧传*/
+                                                if(linAndHuAndChuan(1,1,tempArr)){
+                                                    lhcSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*复隔中*/
+                                                if(fuAndGeAndZhong(1,3,tempArr)){
+                                                    fgzSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                            }
+                                            if(zuhe[group] == "140"){
+                                                /*012*/
+                                                if(numAnd012(1,4,tempArr)){
+                                                    select012.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*大中小*/
+                                                if(bigAndMiddleAndSmall(1,4,tempArr)){
+                                                    bmsSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*邻弧传*/
+                                                if(linAndHuAndChuan(0,1,tempArr)){
+                                                    lhcSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*复隔中*/
+                                                if(fuAndGeAndZhong(1,4,tempArr)){
+                                                    fgzSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                            }
+                                            if(zuhe[group] == "104"){
+                                                /*012*/
+                                                if(numAnd012(1,0,tempArr)){
+                                                    select012.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*大中小*/
+                                                if(bigAndMiddleAndSmall(1,0,tempArr)){
+                                                    bmsSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*邻弧传*/
+                                                if(linAndHuAndChuan(4,1,tempArr)){
+                                                    lhcSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*复隔中*/
+                                                if(fuAndGeAndZhong(1,0,tempArr)){
+                                                    fgzSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                            }
+                                            if(zuhe[group] == "050"){
+                                                /*012*/
+                                                if(numAnd012(0,5,tempArr)){
+                                                    select012.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*大中小*/
+                                                if(bigAndMiddleAndSmall(0,5,tempArr)){
+                                                    bmsSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*邻弧传*/
+                                                if(linAndHuAndChuan(0,0,tempArr)){
+                                                    lhcSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*复隔中*/
+                                                if(fuAndGeAndZhong(0,5,tempArr)){
+                                                    fgzSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                            }
+                                            if(zuhe[group] == "041"){
+                                                /*012*/
+                                                if(numAnd012(0,4,tempArr)){
+                                                    select012.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*大中小*/
+                                                if(bigAndMiddleAndSmall(0,4,tempArr)){
+                                                    bmsSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*邻弧传*/
+                                                if(linAndHuAndChuan(1,0,tempArr)){
+                                                    lhcSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*复隔中*/
+                                                if(fuAndGeAndZhong(0,4,tempArr)){
+                                                    fgzSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                            }
+                                            if(zuhe[group] == "032"){
+                                                /*012*/
+                                                if(numAnd012(0,3,tempArr)){
+                                                    select012.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*大中小*/
+                                                if(bigAndMiddleAndSmall(0,3,tempArr)){
+                                                    bmsSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*邻弧传*/
+                                                if(linAndHuAndChuan(2,0,tempArr)){
+                                                    lhcSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*复隔中*/
+                                                if(fuAndGeAndZhong(0,3,tempArr)){
+                                                    fgzSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                            }
+                                            if(zuhe[group] == "023"){
+                                                /*012*/
+                                                if(numAnd012(0,2,tempArr)){
+                                                    select012.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*大中小*/
+                                                if(bigAndMiddleAndSmall(0,2,tempArr)){
+                                                    bmsSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*邻弧传*/
+                                                if(linAndHuAndChuan(3,0,tempArr)){
+                                                    lhcSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*复隔中*/
+                                                if(fuAndGeAndZhong(0,2,tempArr)){
+                                                    fgzSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                            }
+                                            if(zuhe[group] == "014"){
+                                                /*012*/
+                                                if(numAnd012(0,1,tempArr)){
+                                                    select012.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*大中小*/
+                                                if(bigAndMiddleAndSmall(0,1,tempArr)){
+                                                    bmsSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*邻弧传*/
+                                                if(linAndHuAndChuan(4,0,tempArr)){
+                                                    lhcSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*复隔中*/
+                                                if(fuAndGeAndZhong(0,1,tempArr)){
+                                                    fgzSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                            }
+                                            if(zuhe[group] == "005"){
+                                                /*012*/
+                                                if(numAnd012(0,0,tempArr)){
+                                                    select012.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*大中小*/
+                                                if(bigAndMiddleAndSmall(0,0,tempArr)){
+                                                    bmsSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*邻弧传*/
+                                                if(linAndHuAndChuan(5,0,tempArr)){
+                                                    lhcSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                                /*复隔中*/
+                                                if(fuAndGeAndZhong(0,0,tempArr)){
+                                                    fgzSelect.push($scope.wNumArr[w] + "," + $scope.qNumArr[q] + "," + $scope.bNumArr[b] + "," + $scope.sNumArr[s] + "," + $scope.gNumArr[g]);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if(select012.length == 0){
+                        console.log("012不存在");
+                    }else{
+                        console.log(select012);
+                    }
+                    if(bmsSelect.length == 0){
+                        console.log("大中小不存在");
+                    }else{
+                        console.log(bmsSelect);
+                    }
+                    if(lhcSelect.length == 0){
+                        console.log("邻弧传不存在");
+                    }else{
+                        console.log(lhcSelect);
+                    }
+                    if(fgzSelect.length == 0){
+                        console.log("复隔中不存在");
+                    }else{
+                        console.log(fgzSelect);
+                    }
+                }
+
+        })
+</script>
+</body>
+</html>

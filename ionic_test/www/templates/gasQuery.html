@@ -1,0 +1,30 @@
+<ion-view view-title="气量核查" id="open-user">
+  <ion-content>
+    <div class="list">
+      <label class="item item-input">
+        <span class="input-label">用户名</span>
+        <select ng-model="userMessage.name" style="border:none;">
+          <option ng-repeat="item in userContent">{{item}}</option>
+        </select>
+      </label>
+      <label class="item item-input">
+        <span class="input-label">联系电话</span>
+        <input type="number" placeholder="请输入手机号" ng-model="userMessage.tel">
+      </label>
+      <div class="item item-input bottom-no-border">
+        <span class="pick-img">气量核查图</span>
+        <a href="javascript:;" class="file pick-btn">{{userMessage.gasQuery? "修改":"上传"}}
+          <input type="file" accept="image/*" class="gasQuery">
+        </a>
+      </div>
+    </div>
+    <div class="img-list">
+      <div class="img-second-dev">
+        <img ng-src="{{userMessage.gasQuery || 'img/bg-img.jpg'}}" alt="" id="homeImg">
+      </div>
+    </div>
+    <p class="open-offer" style="margin-top:70px;">
+      <button ng-click="gasQuery()" style="width:100%;">提交申请</button>
+    </p>
+  </ion-content>
+</ion-view>

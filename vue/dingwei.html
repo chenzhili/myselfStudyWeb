@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>定位</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body ng-controller="myCtrl">
+<ul class="clearFloat">
+    <li class="lf" ng-repeat = "item in type"><button ng-class="{typeActive:item.state == 1}" ng-click="typeClick(item)">{{item.name}}</button></li>
+</ul>
+<ul class="clearFloat content">
+    <li class="lf" ng-repeat="item in content" ng-click="numClick(item)">
+        <div class="original" ng-show="item.state == 0">{{item.num}}</div>
+        <div class="active" ng-hide="item.state == 0">{{item.num}}</div>
+    </li>
+</ul>
+<script src="angular.js"></script>
+<script>
+   angular.module("myApp",[])
+       .controller("myCtrl",function($scope){
+           /*/!*判断是质数还是和数*!/
+            var prime = [],sum = [],primeOld = [],json={};
+            for(var n=0;n<10;n++){
+            if(n==0){
+            sum.push(n);
+            }
+            if(n==1){
+            primeOld.push(n);
+            }
+            if(n==2){
+            primeOld.push(n);
+            }
+            (function(){
+            for(var i=2;i<n;i++){
+            if(n%i == 0){
+            sum.push(n);
+            return;
+            }
+            primeOld.push(n);
+            }
+            })();
+            for(var j=0;j<primeOld.length;j++){
+            if(!json[primeOld[j]]){
+            prime.push(primeOld[j]);
+            json[primeOld[j]] = 1;
+            }
+            }
+            }
+            console.log(prime);
+            console.log(sum);*/
+           var bigArr = [],smallArr = [],oddsArr = [],evenArr = [],primeArr = [],primeOld = [],json = {},sumArr = [];
+           var allNumber = [0,1,2,3,4,5,6,7,8,9];
+           $scope.type = [
+               {name:"大",state:0,arr:bigArr},
+               {name:"小",state:0,arr:smallArr},
+               {name:"奇",state:0,arr:oddsArr},
+               {name:"偶",state:0,arr:evenArr},
+               {name:"质",state:0,arr:primeArr},
+               {name:"合",state:0,arr:sumArr}
+           ];
+           $scope.content = [
+               {num:0,state:0},
+               {num:1,state:0},
+               {num:2,state:0},
+               {num:3,state:0},
+               {num:4,state:0},
+               {num:5,state:0},
+               {num:6,state:0},
+               {num:7,state:0},
+               {num:8,state:0},
+               {num:9,state:0}
+               ];
+           /*实际筛选的号码数组*/
+           $scope.numArr = [];
+           /*大和小  bigAndSmall*/
+           (function(){
+               for(var i=0;i<10;i++){
+                   if(i>=5){
+                       bigArr.push(i);
+                   }else{
+                       smallArr.push(i);
+                   }
+               }
+           })();
+           /*奇和偶 oddAndEven*/
+           (function(){
+               for(var i=0;i<10;i++){
+                   if(i%2 != 0){
+                       oddsArr.push(i);
+                   }else{
+                       evenArr.push(i);
+                   }
+               }
+           })();
+           /*质和和数 primeAndSum*/
+           (function(){
+               for(var n=0;n<10;n++){
+                   if(n == 0){
+                       sumArr.push(n);
+                   }
+                   if(n == 1){
+                       primeOld.push(n);
+                   }
+                   if(n == 2){
+                       primeOld.push(n);
+                   }
+                   (function(){
+                       if(n>=3){
+                           for(var i=2;i<n;i++){
+                               if(n%i == 0){
+                                   sumArr.push(n);
+                                   return;
+                               }
+                           }
+                           primeOld.push(n);
+                       }
+                   })();
+                   for(var j=0;j<primeOld.length;j++){
+                       if(!json[primeOld[j]]){
+                           primeArr.push(primeOld[j]);
+                           json[primeOld[j]] = 1;
+                       }
+                   }
+               }
+           })();
+           /*做并集*/
+           function bingji(arr1,arr2){
+               var arr = arr1.concat(arr2),arrShi = [];
+               var json = {};
+               for(var i=0;i<arr.length;i++){
+                   if(!json[arr[i]]){
+                       arrShi.push(arr[i]);
+                       json[arr[i]] = 1;
+                   }
+               }
+               $scope.numArr = arrShi;
+           }
+           /*做交集*/
+
+           function jiaoji(arr1,arr2){
+               for(var i=0;i<arr1.length;i++){
+                   for(var j=0;j<arr2.length;j++){
+                       if(arr1[i] == arr2[j]){
+                           $scope.numArr.push(arr1[i]);
+                       }
+                   }
+               }
+           }
+
+           /*交集赋值*/
+           function jiaojiA(arr1,arr2){
+               var arr = [];
+               for(var i=0;i<arr1.length;i++){
+                   for(var j=0;j<arr2.length;j++){
+                       if(arr1[i] == arr2[j]){
+                           arr.push(arr1[i]);
+                       }
+                   }
+               }
+               return arr;
+           }
+
+           /*点击号码*/
+           $scope.numClick = function(item){
+               if(item.state == 0){
+                   item.state = 1;
+                   $scope.numArr.push(item.num);
+               }else{
+                   item.state = 0;
+                   for(var i=0;i<$scope.numArr.length;i++){
+                       if($scope.numArr[i] == item.num){
+                           $scope.numArr.splice(i,1);
+                       }
+                   }
+               }
+           };
+
+           /*选择numArr中的大*/
+           function big(numArr){
+               for(var i=0;i<numArr.length;i++){
+                   if(numArr[i]<5){
+                       $scope.numArr.splice(i,1);
+                       i--;
+                   }
+               }
+           }
+           /*选择numArr中的小*/
+           function small(numArr){
+               for(var i=0;i<numArr.length;i++){
+                   if(numArr[i]>=5){
+                       $scope.numArr.splice(i,1);
+                       i--;
+                   }
+               }
+           }
+           /*选择numArr中的奇*/
+           function odds(numArr){
+               for(var i=0;i<numArr.length;i++){
+                   if(numArr[i]%2==0){
+                       numArr.splice(i,1);
+                       i--;
+                   }
+               }
+           }
+           /*选择numArr中的偶*/
+            function even(numArr){
+                for(var i=0;i<numArr.length;i++){
+                    if(numArr[i]%2!=0){
+                        numArr.splice(i,1);
+                        i--;
+                    }
+                }
+            }
+            /*选择numArr中的质*/
+            function prime(numArr){
+                for(var i=0;i<numArr.length;i++){
+                    if($scope.numArr[i] == 0){
+                        $scope.numArr.splice(i,1);
+                        i--;
+                    }
+                    if((function(){
+                            if( $scope.numArr[i] > 3){
+                                for(var n=2;n<$scope.numArr[i];n++){
+                                    if($scope.numArr[i]%n == 0){
+                                        return true;
+                                    }
+                                }
+                                return false;
+                            }
+                        })()){
+                        $scope.numArr.splice(i,1);
+                        i--;
+                    }
+                }
+            }
+            /*选择numArr中的合*/
+            function sum(numArr){
+                for(var i=0;i<numArr.length;i++){
+                    if($scope.numArr[i] == 1 || $scope.numArr[i] == 2 || $scope.numArr[i] == 3){
+                        $scope.numArr.splice(i,1);
+                        i--;
+                    }
+                    if((function(){
+                            if( $scope.numArr[i] > 3){
+                                for(var n=2;n<$scope.numArr[i];n++){
+                                    if($scope.numArr[i]%n == 0){
+                                        return false;
+                                    }
+                                }
+                                return true;
+                            }
+                        })()){
+                        $scope.numArr.splice(i,1);
+                        i--;
+                    }
+                }
+            }
+
+           /*获取所有单击按钮是否被选中*/
+           function bianSelected(){
+               var arr = [];
+               for(var i=0;i<$scope.type.length;i++){
+                   if($scope.type[i].state == 0){
+                       arr.push(i);
+                   }
+               }
+               if(arr.length == 5){
+                   return true;
+               }else{
+                   return false;
+               }
+           }
+           /*单击大事件*/
+           function bigClick(item){
+               if(item.state == 0){
+                   item.state = 1;
+                   if($scope.numArr.length == 0 || bianSelected()){
+                       $scope.numArr = bigArr.concat();
+                   }else{
+                        if($scope.type[1].state == 1){
+                            if($scope.type[2].state ==1 && $scope.type[3].state ==1){
+                                if(($scope.type[4].state ==1 && $scope.type[5].state ==1) || ($scope.type[4].state !=1 && $scope.type[5].state !=1)){
+                                    $scope.numArr = allNumber.concat();
+                                }else if($scope.type[4].state == 1) {
+                                    $scope.numArr = primeArr.concat();
+                                }else if($scope.type[5].state == 1){
+                                    $scope.numArr = sumArr.concat();
+                                }
+                            }else if($scope.type[2].state ==1){
+                                if(($scope.type[4].state ==1 && $scope.type[5].state ==1) || ($scope.type[4].state !=1 && $scope.type[5].state !=1)){
+                                    jiaoji(bigArr,oddsArr);
+                                }else if($scope.type[4].state == 1) {
+                                    $scope.numArr = jiaojiA(oddsArr,primeArr);
+                                }else if($scope.type[5].state == 1){
+                                    $scope.numArr = jiaojiA(oddsArr,sumArr);
+                                }
+                            }else if($scope.type[3].state ==1){
+                                if(($scope.type[4].state ==1 && $scope.type[5].state ==1) || ($scope.type[4].state !=1 && $scope.type[5].state !=1)){
+                                    jiaoji(bigArr,evenArr);
+                                }else if($scope.type[4].state == 1) {
+                                    $scope.numArr = jiaojiA(evenArr,primeArr);
+                                }else if($scope.type[5].state == 1){
+                                    $scope.numArr = jiaojiA(evenArr,sumArr);
+                                }
+                            }else if($scope.type[2].state !=1 && $scope.type[3].state !=1){
+                                if(($scope.type[4].state ==1 && $scope.type[5].state ==1) || ($scope.type[4].state !=1 && $scope.type[5].state !=1)){
+                                    $scope.numArr = allNumber.concat();
+                                }else if($scope.type[4].state == 1) {
+                                    $scope.numArr = primeArr.concat();
+                                }else if($scope.type[5].state == 1){
+                                    $scope.numArr = sumArr.concat();
+                                }
+                            }
+                        }else{
+                            big($scope.numArr);
+                        }
+                   }
+               }else{
+                   item.state = 0;
+                   if($scope.type[1].state == 1){
+                       for(var i=0;i<$scope.numArr.length;i++){
+                           if($scope.numArr[i]>=5){
+                               $scope.numArr.splice(i,1);
+                               i--;
+                           }
+                       }
+                   }else{
+                       if($scope.type[2].state ==1 && $scope.type[3].state ==1){
+                           if(($scope.type[4].state ==1 && $scope.type[5].state ==1) || ($scope.type[4].state !=1 && $scope.type[5].state !=1)){
+                               $scope.numArr = allNumber.concat();
+                           }else if($scope.type[4].state == 1) {
+                               $scope.numArr = primeArr.concat();
+                           }else if($scope.type[5].state == 1){
+                               $scope.numArr = sumArr.concat();
+                           }
+                       }else if($scope.type[2].state ==1){
+                           if(($scope.type[4].state ==1 && $scope.type[5].state ==1) || ($scope.type[4].state !=1 && $scope.type[5].state !=1)){
+                               $scope.numArr = oddsArr.concat();
+                           }else if($scope.type[4].state == 1) {
+                               $scope.numArr = jiaojiA(oddsArr,primeArr);
+                           }else if($scope.type[5].state == 1){
+                               $scope.numArr = jiaojiA(oddsArr,sumArr);
+                           }
+                       }else if($scope.type[3].state ==1){
+                           if(($scope.type[4].state ==1 && $scope.type[5].state ==1) || ($scope.type[4].state !=1 && $scope.type[5].state !=1)){
+                               $scope.numArr = evenArr.concat();
+                           }else if($scope.type[4].state == 1) {
+                               $scope.numArr = jiaojiA(evenArr,primeArr);
+                           }else if($scope.type[5].state == 1){
+                               $scope.numArr = jiaojiA(evenArr,sumArr);
+                           }
+                       }else if($scope.type[2].state !=1 && $scope.type[3].state !=1){
+                           if($scope.type[4].state ==1 && $scope.type[5].state ==1){
+                               $scope.numArr = allNumber.concat();
+                           }else if($scope.type[4].state !=1 && $scope.type[5].state !=1) {
+                               $scope.numArr = [];
+                           }else if($scope.type[4].state == 1) {
+                               $scope.numArr = primeArr.concat();
+                           }else if($scope.type[5].state == 1){
+                               $scope.numArr = sumArr.concat();
+                           }
+                       }
+                   }
+               }
+           }
+            /*单击小事件*/
+            function smallClick(item){
+                if(item.state == 0){
+                    item.state = 1;
+                    if($scope.numArr.length == 0 || bianSelected()){
+                        $scope.numArr = smallArr.concat();
+                    }else{
+                        if($scope.type[0].state == 1){
+                            if($scope.type[2].state ==1 && $scope.type[3].state ==1){
+                                if(($scope.type[4].state ==1 && $scope.type[5].state ==1) || ($scope.type[4].state !=1 && $scope.type[5].state !=1)){
+                                    $scope.numArr = allNumber.concat();
+                                }else if($scope.type[4].state == 1) {
+                                    $scope.numArr = primeArr.concat();
+                                }else if($scope.type[5].state == 1){
+                                    $scope.numArr = sumArr.concat();
+                                }
+                            }else if($scope.type[2].state ==1){
+                                if(($scope.type[4].state ==1 && $scope.type[5].state ==1) || ($scope.type[4].state !=1 && $scope.type[5].state !=1)){
+                                    jiaoji(smallArr,oddsArr);
+                                }else if($scope.type[4].state == 1) {
+                                    $scope.numArr = jiaojiA(oddsArr,primeArr);
+                                }else if($scope.type[5].state == 1){
+                                    $scope.numArr = jiaojiA(oddsArr,sumArr);
+                                }
+                            }else if($scope.type[3].state ==1){
+                                if(($scope.type[4].state ==1 && $scope.type[5].state ==1) || ($scope.type[4].state !=1 && $scope.type[5].state !=1)){
+                                    jiaoji(smallArr,evenArr);
+                                }else if($scope.type[4].state == 1) {
+                                    $scope.numArr = jiaojiA(evenArr,primeArr);
+                                }else if($scope.type[5].state == 1){
+                                    $scope.numArr = jiaojiA(evenArr,sumArr);
+                                }
+                            }else if($scope.type[2].state !=1 && $scope.type[3].state !=1){
+                                if(($scope.type[4].state ==1 && $scope.type[5].state ==1) || ($scope.type[4].state !=1 && $scope.type[5].state !=1)){
+                                    $scope.numArr = allNumber.concat();
+                                }else if($scope.type[4].state == 1) {
+                                    $scope.numArr = primeArr.concat();
+                                }else if($scope.type[5].state == 1){
+                                    $scope.numArr = sumArr.concat();
+                                }
+                            }
+                        }else{
+                            small($scope.numArr);
+                        }
+                    }
+                }else{
+                    item.state = 0;
+                    if($scope.type[0].state == 1){
+                        for(var i=0;i<$scope.numArr.length;i++){
+                            if($scope.numArr[i]<5){
+                                $scope.numArr.splice(i,1);
+                                i--;
+                            }
+                        }
+                    }else{
+                        if($scope.type[2].state ==1 && $scope.type[3].state ==1){
+                            if(($scope.type[4].state ==1 && $scope.type[5].state ==1) || ($scope.type[4].state !=1 && $scope.type[5].state !=1)){
+                                $scope.numArr = allNumber.concat();
+                            }else if($scope.type[4].state == 1) {
+                                $scope.numArr = primeArr.concat();
+                            }else if($scope.type[5].state == 1){
+                                $scope.numArr = sumArr.concat();
+                            }
+                        }else if($scope.type[2].state ==1){
+                            if(($scope.type[4].state ==1 && $scope.type[5].state ==1) || ($scope.type[4].state !=1 && $scope.type[5].state !=1)){
+                                $scope.numArr = oddsArr.concat();
+                            }else if($scope.type[4].state == 1) {
+                                $scope.numArr = jiaojiA(oddsArr,primeArr);
+                            }else if($scope.type[5].state == 1){
+                                $scope.numArr = jiaojiA(oddsArr,sumArr);
+                            }
+                        }else if($scope.type[3].state ==1){
+                            if(($scope.type[4].state ==1 && $scope.type[5].state ==1) || ($scope.type[4].state !=1 && $scope.type[5].state !=1)){
+                                $scope.numArr = evenArr.concat();
+                            }else if($scope.type[4].state == 1) {
+                                $scope.numArr = jiaojiA(evenArr,primeArr);
+                            }else if($scope.type[5].state == 1){
+                                $scope.numArr = jiaojiA(evenArr,sumArr);
+                            }
+                        }else if($scope.type[2].state !=1 && $scope.type[3].state !=1){
+                            if($scope.type[4].state ==1 && $scope.type[5].state ==1){
+                                $scope.numArr = allNumber.concat();
+                            }else if($scope.type[4].state !=1 && $scope.type[5].state !=1) {
+                                $scope.numArr = [];
+                            }else if($scope.type[4].state == 1) {
+                                $scope.numArr = primeArr.concat();
+                            }else if($scope.type[5].state == 1){
+                                $scope.numArr = sumArr.concat();
+                            }
+                        }
+                    }
+                }
+            }
+            /*单击奇事件*/
+            function oddsClick(item){
+                if(item.state == 0){
+                    item.state =1;
+                    if($scope.numArr.length == 0 || bianSelected()){
+                        $scope.numArr = oddsArr.concat();
+                    }else{
+                        if($scope.type[3].state == 1){
+                            if($scope.type[0].state ==1 && $scope.type[1].state ==1){
+                                if(($scope.type[4].state ==1 && $scope.type[5].state ==1) || ($scope.type[4].state !=1 && $scope.type[5].state !=1)){
+                                    $scope.numArr = allNumber.concat();
+                                }else if($scope.type[4].state == 1) {
+                                    $scope.numArr = primeArr.concat();
+                                }else if($scope.type[5].state == 1){
+                                    $scope.numArr = sumArr.concat();
+                                }
+                            }else if($scope.type[0].state ==1){
+                                if(($scope.type[4].state ==1 && $scope.type[5].state ==1) || ($scope.type[4].state !=1 && $scope.type[5].state !=1)){
+                                    jiaoji(oddsArr,bigArr);
+                                }else if($scope.type[4].state == 1) {
+                                    $scope.numArr = jiaojiA(bigArr,primeArr);
+                                }else if($scope.type[5].state == 1){
+                                    $scope.numArr = jiaojiA(bigArr,sumArr);
+                                }
+                            }else if($scope.type[1].state ==1){
+                                if(($scope.type[4].state ==1 && $scope.type[5].state ==1) || ($scope.type[4].state !=1 && $scope.type[5].state !=1)){
+                                    jiaoji(oddsArr,smallArr);
+                                }else if($scope.type[4].state == 1) {
+                                    $scope.numArr = jiaojiA(smallArr,primeArr);
+                                }else if($scope.type[5].state == 1){
+                                    $scope.numArr = jiaojiA(smallArr,sumArr);
+                                }
+                            }else if($scope.type[0].state !=1 && $scope.type[1].state !=1){
+                                if(($scope.type[4].state ==1 && $scope.type[5].state ==1) || ($scope.type[4].state !=1 && $scope.type[5].state !=1)){
+                                    $scope.numArr = allNumber.concat();
+                                }else if($scope.type[4].state == 1) {
+                                    $scope.numArr = primeArr.concat();
+                                }else if($scope.type[5].state == 1){
+                                    $scope.numArr = sumArr.concat();
+                                }
+                            }
+                        }else{
+                            odds($scope.numArr);
+                        }
+                    }
+                }else{
+                    item.state = 0;
+                    if($scope.type[3].state == 1){
+                        for(var i=0;i<$scope.numArr.length;i++){
+                            if($scope.numArr[i] %2 !=0){
+                                $scope.numArr.splice(i,1);
+                                i--;
+                            }
+                        }
+                    }else{
+                        if($scope.type[0].state ==1 && $scope.type[1].state ==1){
+                            if(($scope.type[4].state ==1 && $scope.type[5].state ==1) || ($scope.type[4].state !=1 && $scope.type[5].state !=1)){
+                                $scope.numArr = allNumber.concat();
+                            }else if($scope.type[4].state == 1) {
+                                $scope.numArr = primeArr.concat();
+                            }else if($scope.type[5].state == 1){
+                                $scope.numArr = sumArr.concat();
+                            }
+                        }else if($scope.type[0].state ==1){
+                            if(($scope.type[4].state ==1 && $scope.type[5].state ==1) || ($scope.type[4].state !=1 && $scope.type[5].state !=1)){
+                                $scope.numArr = bigArr.concat();
+                            }else if($scope.type[4].state == 1) {
+                                $scope.numArr = jiaojiA(bigArr,primeArr);
+                            }else if($scope.type[5].state == 1){
+                                $scope.numArr = jiaojiA(bigArr,sumArr);
+                            }
+                        }else if($scope.type[1].state ==1){
+                            if(($scope.type[4].state ==1 && $scope.type[5].state ==1) || ($scope.type[4].state !=1 && $scope.type[5].state !=1)){
+                                $scope.numArr = smallArr.concat();
+                            }else if($scope.type[4].state == 1) {
+                                $scope.numArr = jiaojiA(smallArr,primeArr);
+                            }else if($scope.type[5].state == 1){
+                                $scope.numArr = jiaojiA(smallArr,sumArr);
+                            }
+                        }else if($scope.type[0].state !=1 && $scope.type[1].state !=1){
+                            if($scope.type[4].state ==1 && $scope.type[5].state ==1){
+                                $scope.numArr = allNumber.concat();
+                            }else if($scope.type[4].state !=1 && $scope.type[5].state !=1) {
+                                $scope.numArr = [];
+                            }else if($scope.type[4].state == 1) {
+                                $scope.numArr = primeArr.concat();
+                            }else if($scope.type[5].state == 1){
+                                $scope.numArr = sumArr.concat();
+                            }
+                        }
+                    }
+                }
+            }
+            /*单击偶事件*/
+            function evenClick(item){
+                if(item.state == 0){
+                    item.state = 1;
+                    if($scope.numArr.length == 0 || bianSelected()){
+                        $scope.numArr = evenArr.concat();
+                    }else{
+                        if($scope.type[2].state == 1){
+                            if($scope.type[0].state ==1 && $scope.type[1].state ==1){
+                                if(($scope.type[4].state ==1 && $scope.type[5].state ==1) || ($scope.type[4].state !=1 && $scope.type[5].state !=1)){
+                                    $scope.numArr = allNumber.concat();
+                                }else if($scope.type[4].state == 1) {
+                                    $scope.numArr = primeArr.concat();
+                                }else if($scope.type[5].state == 1){
+                                    $scope.numArr = sumArr.concat();
+                                }
+                            }else if($scope.type[0].state ==1){
+                                if(($scope.type[4].state ==1 && $scope.type[5].state ==1) || ($scope.type[4].state !=1 && $scope.type[5].state !=1)){
+                                    jiaoji(evenArr,bigArr);
+                                }else if($scope.type[4].state == 1) {
+                                    $scope.numArr = jiaojiA(bigArr,primeArr);
+                                }else if($scope.type[5].state == 1){
+                                    $scope.numArr = jiaojiA(bigArr,sumArr);
+                                }
+                            }else if($scope.type[1].state ==1){
+                                if(($scope.type[4].state ==1 && $scope.type[5].state ==1) || ($scope.type[4].state !=1 && $scope.type[5].state !=1)){
+                                    jiaoji(evenArr,smallArr);
+                                }else if($scope.type[4].state == 1) {
+                                    $scope.numArr = jiaojiA(smallArr,primeArr);
+                                }else if($scope.type[5].state == 1){
+                                    $scope.numArr = jiaojiA(smallArr,sumArr);
+                                }
+                            }else if($scope.type[0].state !=1 && $scope.type[1].state !=1){
+                                if(($scope.type[4].state ==1 && $scope.type[5].state ==1) || ($scope.type[4].state !=1 && $scope.type[5].state !=1)){
+                                    $scope.numArr = allNumber.concat();
+                                }else if($scope.type[4].state == 1) {
+                                    $scope.numArr = primeArr.concat();
+                                }else if($scope.type[5].state == 1){
+                                    $scope.numArr = sumArr.concat();
+                                }
+                            }
+                        }else{
+                            even($scope.numArr);
+                        }
+                    }
+                }else{
+                    item.state = 0;
+                    if($scope.type[2].state == 1){
+                        for(var i=0;i<$scope.numArr.length;i++){
+                            if($scope.numArr[i] %2 ==0){
+                                $scope.numArr.splice(i,1);
+                                i--;
+                            }
+                        }
+                    }else{
+                        if($scope.type[0].state ==1 && $scope.type[1].state ==1){
+                            if(($scope.type[4].state ==1 && $scope.type[5].state ==1) || ($scope.type[4].state !=1 && $scope.type[5].state !=1)){
+                                $scope.numArr = allNumber.concat();
+                            }else if($scope.type[4].state == 1) {
+                                $scope.numArr = primeArr.concat();
+                            }else if($scope.type[5].state == 1){
+                                $scope.numArr = sumArr.concat();
+                            }
+                        }else if($scope.type[0].state ==1){
+                            if(($scope.type[4].state ==1 && $scope.type[5].state ==1) || ($scope.type[4].state !=1 && $scope.type[5].state !=1)){
+                                $scope.numArr = bigArr.concat();
+                            }else if($scope.type[4].state == 1) {
+                                $scope.numArr = jiaojiA(bigArr,primeArr);
+                            }else if($scope.type[5].state == 1){
+                                $scope.numArr = jiaojiA(bigArr,sumArr);
+                            }
+                        }else if($scope.type[1].state ==1){
+                            if(($scope.type[4].state ==1 && $scope.type[5].state ==1) || ($scope.type[4].state !=1 && $scope.type[5].state !=1)){
+                                $scope.numArr = smallArr.concat();
+                            }else if($scope.type[4].state == 1) {
+                                $scope.numArr = jiaojiA(smallArr,primeArr);
+                            }else if($scope.type[5].state == 1){
+                                $scope.numArr = jiaojiA(smallArr,sumArr);
+                            }
+                        }else if($scope.type[0].state !=1 && $scope.type[1].state !=1){
+                            if($scope.type[4].state ==1 && $scope.type[5].state ==1){
+                                $scope.numArr = allNumber.concat();
+                            }else if($scope.type[4].state !=1 && $scope.type[5].state !=1) {
+                                $scope.numArr = [];
+                            }else if($scope.type[4].state == 1) {
+                                $scope.numArr = primeArr.concat();
+                            }else if($scope.type[5].state == 1){
+                                $scope.numArr = sumArr.concat();
+                            }
+                        }
+                    }
+                }
+            }
+            /*单击质事件*/
+            function primeClick(item){
+                if(item.state == 0){
+                    item.state = 1;
+                    if($scope.numArr.length == 0 || bianSelected()){
+                        $scope.numArr = primeArr.concat();
+                    }else{
+                        if($scope.type[5].state == 1){
+                            if($scope.type[0].state ==1 && $scope.type[1].state ==1){
+                                if(($scope.type[2].state ==1 && $scope.type[3].state ==1) || ($scope.type[2].state !=1 && $scope.type[3].state !=1)){
+                                    $scope.numArr = allNumber.concat();
+                                }else if($scope.type[2].state == 1) {
+                                    $scope.numArr = oddsArr.concat();
+                                }else if($scope.type[3].state == 1){
+                                    $scope.numArr = evenArr.concat();
+                                }
+                            }else if($scope.type[0].state ==1){
+                                if(($scope.type[2].state ==1 && $scope.type[3].state ==1) || ($scope.type[2].state !=1 && $scope.type[3].state !=1)){
+                                    jiaoji(primeArr,bigArr);
+                                }else if($scope.type[2].state == 1) {
+                                    $scope.numArr = jiaojiA(bigArr,oddsArr);
+                                }else if($scope.type[3].state == 1){
+                                    $scope.numArr = jiaojiA(bigArr,evenArr);
+                                }
+                            }else if($scope.type[1].state ==1){
+                                if(($scope.type[2].state ==1 && $scope.type[3].state ==1) || ($scope.type[2].state !=1 && $scope.type[3].state !=1)){
+                                    jiaoji(primeArr,smallArr);
+                                }else if($scope.type[2].state == 1) {
+                                    $scope.numArr = jiaojiA(smallArr,oddsArr);
+                                }else if($scope.type[3].state == 1){
+                                    $scope.numArr = jiaojiA(smallArr,evenArr);
+                                }
+                            }else if($scope.type[0].state !=1 && $scope.type[1].state !=1){
+                                if(($scope.type[2].state ==1 && $scope.type[3].state ==1) || ($scope.type[2].state !=1 && $scope.type[3].state !=1)){
+                                    $scope.numArr = allNumber.concat();
+                                }else if($scope.type[2].state == 1) {
+                                    $scope.numArr = oddsArr.concat();
+                                }else if($scope.type[3].state == 1){
+                                    $scope.numArr = evenArr.concat();
+                                }
+                            }
+                        }else{
+                            prime($scope.numArr);
+                        }
+                    }
+                }else{
+                    item.state = 0;
+                    if($scope.type[5].state == 1){
+                        for(var i=0;i<$scope.numArr.length;i++){
+                            if($scope.numArr[i] == 1 || $scope.numArr[i] == 2 || $scope.numArr[i] == 3){
+                                $scope.numArr.splice(i,1);
+                                i--;
+                            }
+                            if((function(){
+                                    if( $scope.numArr[i] > 3){
+                                        for(var n=2;n<$scope.numArr[i];n++){
+                                            if($scope.numArr[i]%n == 0){
+                                                return false;
+                                            }
+                                        }
+                                        return true;
+                                    }
+                                })()){
+                                $scope.numArr.splice(i,1);
+                                i--;
+                            }
+                        }
+                    }else{
+                        if($scope.type[0].state ==1 && $scope.type[1].state ==1){
+                            if(($scope.type[2].state ==1 && $scope.type[3].state ==1) || ($scope.type[2].state !=1 && $scope.type[3].state !=1)){
+                                $scope.numArr = allNumber.concat();
+                            }else if($scope.type[2].state == 1) {
+                                $scope.numArr = oddsArr.concat();
+                            }else if($scope.type[3].state == 1){
+                                $scope.numArr = evenArr.concat();
+                            }
+                        }else if($scope.type[0].state ==1){
+                            if(($scope.type[2].state ==1 && $scope.type[3].state ==1) || ($scope.type[2].state !=1 && $scope.type[3].state !=1)){
+                                $scope.numArr = bigArr.concat();
+                            }else if($scope.type[2].state == 1) {
+                                $scope.numArr = jiaojiA(bigArr,oddsArr);
+                            }else if($scope.type[3].state == 1){
+                                $scope.numArr = jiaojiA(bigArr,evenArr);
+                            }
+                        }else if($scope.type[1].state ==1){
+                            if(($scope.type[2].state ==1 && $scope.type[3].state ==1) || ($scope.type[2].state !=1 && $scope.type[3].state !=1)){
+                                $scope.numArr = smallArr.concat();
+                            }else if($scope.type[2].state == 1) {
+                                $scope.numArr = jiaojiA(smallArr,oddsArr);
+                            }else if($scope.type[3].state == 1){
+                                $scope.numArr = jiaojiA(smallArr,evenArr);
+                            }
+                        }else if($scope.type[0].state !=1 && $scope.type[1].state !=1){
+                            if($scope.type[2].state ==1 && $scope.type[3].state ==1){
+                                $scope.numArr = allNumber.concat();
+                            }else if($scope.type[2].state !=1 && $scope.type[3].state !=1) {
+                                $scope.numArr = [];
+                            }else if($scope.type[2].state == 1) {
+                                $scope.numArr = oddsArr.concat();
+                            }else if($scope.type[3].state == 1){
+                                $scope.numArr = evenArr.concat();
+                            }
+                        }
+                    }
+                }
+            }
+            /*单击合事件*/
+            function sumClick(item){
+                if(item.state == 0){
+                    item.state = 1;
+                    if($scope.numArr.length == 0 || bianSelected()){
+                        $scope.numArr = sumArr.concat();
+                    }else{
+                        if($scope.type[4].state == 1){
+                            if($scope.type[0].state ==1 && $scope.type[1].state ==1){
+                                if(($scope.type[2].state ==1 && $scope.type[3].state ==1) || ($scope.type[2].state !=1 && $scope.type[3].state !=1)){
+                                    $scope.numArr = allNumber.concat();
+                                }else if($scope.type[2].state == 1) {
+                                    $scope.numArr = oddsArr.concat();
+                                }else if($scope.type[3].state == 1){
+                                    $scope.numArr = evenArr.concat();
+                                }
+                            }else if($scope.type[0].state ==1){
+                                if(($scope.type[2].state ==1 && $scope.type[3].state ==1) || ($scope.type[2].state !=1 && $scope.type[3].state !=1)){
+                                    jiaoji(sumArr,bigArr);
+                                }else if($scope.type[2].state == 1) {
+                                    $scope.numArr = jiaojiA(bigArr,oddsArr);
+                                }else if($scope.type[3].state == 1){
+                                    $scope.numArr = jiaojiA(bigArr,evenArr);
+                                }
+                            }else if($scope.type[1].state ==1){
+                                if(($scope.type[2].state ==1 && $scope.type[3].state ==1) || ($scope.type[2].state !=1 && $scope.type[3].state !=1)){
+                                    jiaoji(sumArr,smallArr);
+                                }else if($scope.type[2].state == 1) {
+                                    $scope.numArr = jiaojiA(smallArr,oddsArr);
+                                }else if($scope.type[3].state == 1){
+                                    $scope.numArr = jiaojiA(smallArr,evenArr);
+                                }
+                            }else if($scope.type[0].state !=1 && $scope.type[1].state !=1){
+                                if(($scope.type[2].state ==1 && $scope.type[3].state ==1) || ($scope.type[2].state !=1 && $scope.type[3].state !=1)){
+                                    $scope.numArr = allNumber.concat();
+                                }else if($scope.type[2].state == 1) {
+                                    $scope.numArr = oddsArr.concat();
+                                }else if($scope.type[3].state == 1){
+                                    $scope.numArr = evenArr.concat();
+                                }
+                            }
+                        }else{
+                            sum($scope.numArr);
+                        }
+                    }
+                }else{
+                    item.state = 0;
+                    if($scope.type[4].state == 1){
+                        for(var i=0;i<$scope.numArr.length;i++){
+                            if($scope.numArr[i] == 0){
+                                $scope.numArr.splice(i,1);
+                                i--;
+                            }
+                            if((function(){
+                                    if( $scope.numArr[i] > 3){
+                                        for(var n=2;n<$scope.numArr[i];n++){
+                                            if($scope.numArr[i]%n == 0){
+                                                return true;
+                                            }
+                                        }
+                                        return false;
+                                    }
+                                })()){
+                                $scope.numArr.splice(i,1);
+                                i--;
+                            }
+                        }
+                    }else{
+                        if($scope.type[0].state ==1 && $scope.type[1].state ==1){
+                            if(($scope.type[2].state ==1 && $scope.type[3].state ==1) || ($scope.type[2].state !=1 && $scope.type[3].state !=1)){
+                                $scope.numArr = allNumber.concat();
+                            }else if($scope.type[2].state == 1) {
+                                $scope.numArr = oddsArr.concat();
+                            }else if($scope.type[3].state == 1){
+                                $scope.numArr = evenArr.concat();
+                            }
+                        }else if($scope.type[0].state ==1){
+                            if(($scope.type[2].state ==1 && $scope.type[3].state ==1) || ($scope.type[2].state !=1 && $scope.type[3].state !=1)){
+                                $scope.numArr = bigArr.concat();
+                            }else if($scope.type[2].state == 1) {
+                                $scope.numArr = jiaojiA(bigArr,oddsArr);
+                            }else if($scope.type[3].state == 1){
+                                $scope.numArr = jiaojiA(bigArr,evenArr);
+                            }
+                        }else if($scope.type[1].state ==1){
+                            if(($scope.type[2].state ==1 && $scope.type[3].state ==1) || ($scope.type[2].state !=1 && $scope.type[3].state !=1)){
+                                $scope.numArr = smallArr.concat();
+                            }else if($scope.type[2].state == 1) {
+                                $scope.numArr = jiaojiA(smallArr,oddsArr);
+                            }else if($scope.type[3].state == 1){
+                                $scope.numArr = jiaojiA(smallArr,evenArr);
+                            }
+                        }else if($scope.type[0].state !=1 && $scope.type[1].state !=1){
+                            if($scope.type[2].state ==1 && $scope.type[3].state ==1){
+                                $scope.numArr = allNumber.concat();
+                            }else if($scope.type[2].state !=1 && $scope.type[3].state !=1) {
+                                $scope.numArr = [];
+                            }else if($scope.type[2].state == 1) {
+                                $scope.numArr = oddsArr.concat();
+                            }else if($scope.type[3].state == 1){
+                                $scope.numArr = evenArr.concat();
+                            }
+                        }
+                    }
+                }
+            }
+
+
+
+           /*封装 处理球状态ui效果*/
+           function qiuUi(){
+               for(var qiu=0;qiu<$scope.content.length;qiu++){
+                   for(var num=0;num<$scope.numArr.length;num++){
+                       $scope.content[$scope.numArr[num]].state = 1;
+                   }
+               }
+           }
+           /*点击类型*/
+           $scope.typeClick = function(item){
+               /*重置球的样式*/
+               for(var q=0;q<$scope.content.length;q++){
+                   $scope.content[q].state = 0;
+               }
+               if(item.name == "大"){
+                   bigClick(item);
+               }else if(item.name == "小"){
+                   smallClick(item);
+               }else if(item.name == "奇"){
+                   oddsClick(item);
+               }else if(item.name == "偶"){
+                   evenClick(item);
+               }else if(item.name == "质"){
+                   primeClick(item);
+               }else if(item.name == "合"){
+                   sumClick(item);
+               }
+               /*处理球的状态ui效果*/
+               qiuUi();
+           };
+
+
+       });
+</script>
+</body>
+</html>

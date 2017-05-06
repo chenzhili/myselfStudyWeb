@@ -1,0 +1,14 @@
+<ion-view id="account_query" hide-nav-bar="true">
+  <ion-header-bar align-title="center">
+    <button class="button button-clear ion-chevron-left" nav-direction="forward" style="color:#fff;"></button>
+    <h1 class="title" style="color:#fff;">
+      <div class="row row-wrap">
+        <div id="moneyQuery" class="col-50" style="">账单查询</div>
+        <div id="gasQuery" class="col-50" style="">气量查询</div>
+      </div>
+    </h1>
+  </ion-header-bar>
+  <ion-content>
+    <div style="width:100px;height:100px;border:1px solid #0a9dc7;border-radius:50%;" ng-class="{true:'jello css_active',false:css_old}[state == 1]" ng-click="csClick()"></div>
+  </ion-content>
+</ion-view>
