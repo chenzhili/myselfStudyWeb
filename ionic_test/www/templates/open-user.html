@@ -23,6 +23,10 @@
            <select ng-change="changeType(userMessage.userType)" ng-model="userMessage.userType" ng-options="item.value as item.name for item in openContent.type">
            </select>
          </label>
+         <label class="item" style="padding-top:6px;padding-bottom:5px;">
+           <span class="input-label" style="display:inline-block;">电话号码</span>
+           <input type="tel" placeholder="电话类型">
+         </label>
        </div>
         <div class="list" style="border-top:4px solid #E7E0E1;width:100%;margin-left:0;">
           <label class="item" style="border-top:none;margin-left:10px;" ng-click="testaa()">

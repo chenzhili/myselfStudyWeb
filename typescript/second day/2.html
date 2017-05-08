@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ch-ZN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>typescript2--基本类型、变量声明</title>
+</head>
+<body>
+
+<script type="text/javascript" src="2.js"></script>
+<script type="text/javascript">
+	/*let下的块级作用域中，不存在申明提前的说法了，并且不能进行重复申明*/
+	console.log(b);
+	{
+		console.log(b);
+		var b;
+	}
+	{
+		try{      //这里直接就报错了
+			console.log(a);
+		}catch(err){
+			console.log(err);
+		}
+		let a;
+
+	}
+	
+	let c=1;
+	try1();
+	function try1(){
+		console.log(c);
+	}
+	/*const和let相似，但是对于他只能赋值一次*/
+</script>
+</body>
+</html>

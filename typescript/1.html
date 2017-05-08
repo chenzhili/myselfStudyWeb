@@ -11,38 +11,31 @@
 <div id="aa" style="width:100px;height:100px;border:1px solid #ddd;">
 	暂停定时器
 </div>
+<div id="button1">
+	对于组织冒泡方式的两种不同方式的力度的不同
+</div>
+<!-- <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=1845882620&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:1845882620:53" alt="您好" title="您好"/>qq客服</a> -->
+<!-- typescript -->
 <!-- <script type="text/javascript" src="1.js"></script> -->
+<!-- 对于定时器的运用 -->
+<!-- <script type="text/javascript" src="timeout.js"></script> -->
+<script type="text/javascript" src="jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
-    var state = false;
-    var n = 10;
-    var timeEnd;
-    document.getElementById("aa").onclick = function(){
-      console.log("开始");
-      clearTimeout(timeEnd);
-      state = !state;
-      timeEnd = null;
-      if(!state){
-          n=10;
-          time();
-      }
-    };
-    function method(){
-        if(n){
-            console.log(n);
-        }else{
-            state = true;
-            n = 11;
-        }
-        n--;
-    }
-    function time(){
-        if(state)return;
-        method();
-        timeEnd=setTimeout(time,1000);
-    }
-    window.onload = function(){
-        time();
-    }
+		// 注册顺序,就是代码的执行顺序  
+	$("#button1").click(function(event){  
+	    alert(1);  
+	});  
+	  
+	$("#button1").click(function(event){  
+	    alert("2before");  
+	    /*event.stopImmediatePropagation();  */
+	    event.stopPropagation();  
+	    alert("2after");  
+	});  
+	  
+	$("#button1").click(function(event){  
+	    alert(3);  
+	});  
 </script>
 </body>
 </html>
