@@ -7,7 +7,8 @@
 </head>
 <body>
 <h1>promise的理解</h1>
-<script type="text/javascript">
+<!-- 第一种常用方式 -->
+<!-- <script type="text/javascript">
 	(function es6(){
 		let n = 0;
 		function proFn1(){
@@ -57,7 +58,34 @@ setTimeout(() => resolve(p1), 1000)
 p2
 .then(result => console.log(result),(err)=>console.log(err))
 /*.then(resutl=>console.log(resutl),err=>console.log(err));*/
-.catch(error => console.log(error))//下面是为了捕捉最后promis返回的数据，不管是对还是错
+.catch(error => console.log(error))//Promise.prototype.catch方法是.then(null, rejection)的别名，用于指定发生错误时的回调函数，p1抛出错误也算是报错了catch就会捕捉到，只要是代码中运行出现错误，catch都能捕捉到，所以在写的时候，最好不要讲then的第二个参数加上，而是用catch来捕捉错误，执行中错误会一直冒泡到catch捕捉到,但是也只能捕捉在这之前的错误，之后的错误捕捉不到
+
+
+/*实际例子*/
+var someAsyncThing = function() {
+return new Promise(function(resolve, reject) {
+//  下面一行会报错，因为 x 没有声明
+resolve(x + 2);
+});
+};
+someAsyncThing().then(function() {
+console.log('everything is great');
+});
+/*上面代码中，someAsyncThing函数产生的 Promise 对象会报错，但是由于没有指定catch方法，这个错误不会被捕获，也不会传递到外层代码，导致运
+行后没有任何输出。                          注意， Chrome 浏览器不遵守这条规定，它会抛出错误 “ReferenceError: x is not defined” */
+</script> -->
+
+
+<script type="text/javascript">
+/*****promise执行的时间在这一次循环的结束之前********* 定时器是在下次循环的开始之前执行********************************其他代码是立即执行*/
+	setTimeout(()=>{console.log(1);},0);
+	var aa=new Promise((resolve,reject)=>{
+		resolve();
+	});
+	aa.then(function(){
+		console.log(2);
+	});	
+	console.log(3);
 </script>
 </body>
 </html>

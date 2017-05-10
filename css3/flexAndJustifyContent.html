@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initail-scale=1">
+	<title>css3的flex布局</title>
+	<style type="text/css">
+		.type1{display:flex;}
+		.type1 div{
+			width:100px;
+			height:100px;
+			border:1px dashed #f00;
+		}
+		.box{
+			/*其他属性用的不多，参见地址 http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html*/
+			display:flex;
+			/*justify-content:space-around;*/
+			justify-content:space-between;/*主轴上的对齐方式，参数有flex-start（默认左对齐） | flex-end | center | space-between（左右无间隔的均匀对齐） | space-around（两端有间隔的均匀对齐）*/
+			flex-wrap:wrap;/*排不下的时候是否换行，参数有nowrap（默认，不换行） | wrap | wrap-reverse*/
+			flex-direction: column;/*用于弹性盒子定义对齐的主轴是在x还是y方向上，参数有 row（默认） | row-reverse | column | column-reverse*/
+			border:1px solid rgba(0,0,0,.1);
+			height:200px;
+		}
+		.project{
+			width:120px;
+			height:50px;
+		}
+	</style>
+</head>
+<body>
+<div class="type1">
+	<div style="flex:2">1</div>
+	<div style="flex:1">2</div>
+	<div style="flex:3">3</div>
+</div>
+<div class="type2" style="width:200px;height:200px;border:1px dotted #ddd;display:flex;">
+	<div style="width:50px;height:50px;border:1px solid rgba(0,0,0,.1);margin:auto;">呵呵</div>
+</div>
+
+<hr>
+<!-- 对于flex的详细解释 -->
+<div class="box">
+	<div class="project" style="border:1px solid #ff0;">1</div>
+	<div class="project" style="border:1px solid #f00;">2</div>
+	<div class="project" style="border:1px solid #0f0;">3</div>
+	<div class="project" style="border:1px solid #00f;">4</div>
+</div>
+</body>
+</html>
