@@ -354,7 +354,7 @@ angular.module('starter.controllers', [])
 })
 
 .controller('AccountCtrl', function($rootScope,$scope) {
-  /*判断图片加载的问题*/
+  /*判断图片加载的问题，如果没有加载成功可以通过onerror事件来监听*/
  /* document.getElementsByClassName("tryOn")[0].onload=function(e){
     e.stopPropagation();
     console.log(e);
@@ -363,6 +363,16 @@ angular.module('starter.controllers', [])
   setInterval(function(){
     console.log(document.getElementsByClassName("tryOn")[0].complete);
   },1000);*/
+
+  /*promise方法*/
+  /*const preloadImage = function (path) {
+return new Promise(function (resolve, reject) {
+var image = new Image();
+image.onload = resolve;
+image.onerror = reject;
+image.src = path;
+});
+};*/
   
   $rootScope.disState = 1;
 })
