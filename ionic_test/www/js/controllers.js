@@ -354,6 +354,16 @@ angular.module('starter.controllers', [])
 })
 
 .controller('AccountCtrl', function($rootScope,$scope) {
+  /*判断图片加载的问题*/
+ /* document.getElementsByClassName("tryOn")[0].onload=function(e){
+    e.stopPropagation();
+    console.log(e);
+    console.log(1);
+  };
+  setInterval(function(){
+    console.log(document.getElementsByClassName("tryOn")[0].complete);
+  },1000);*/
+  
   $rootScope.disState = 1;
 })
 .controller("swipCtrl",function($scope){
