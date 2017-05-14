@@ -4,9 +4,63 @@
 		<meta charset=utf-8>
 		<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
 		<title>experiment</title>
+		<style type="text/css">
+			.new-input{
+				position:relative;
+				margin:100px auto;
+				width:300px;
+			}
+			label{
+				position:absolute;
+				bottom:0;
+				display:block;
+				width:100%;
+				font-size:24px;
+				transition:all linear .5s;
+			}
+			#bt_input{width:100%;border-left:none;border-right:none;border-top:none;border-bottom:1px solid #ddd;outline:none;}
+			.input_border{width:1%;height:2px;background-color:#2384ea;transition:all linear .5s;}
+
+
+			#bt_input:focus+label{
+				bottom:26px;
+				font-size:14px;
+			}
+			#bt_input:focus~.input_border{
+				width:100%;
+			}
+
+
+			/*后面这个很重要*//*有兼容性问题*/
+				/************运用placeholder为参照，用伪类来判断他是否存在，根据input的特性，失去焦点的时候不存在，就说明用户输入了内容************/
+			#bt_input::-webkit-input-placeholder{
+				opacity: 0;
+			}
+			#bt_input:not(:placeholder-shown)+label{
+				bottom:26px;
+				font-size:14px;
+			}
+			#bt_input:not(:placeholder-shown)~.input_border{
+				width:100%;
+			}
+			
+			/*+选择器必须是紧挨着的元素，~是多有满足条件的元素，但是都必须是向下找，不能向上找*/
+			/*.a~p{color:#f00;}*/
+		</style>
 	</head>
 	<body>
 		<!-- https://juejin.im/entry/59104f4d44d904007bf18711 -->
 		<!-- 资源文件地方，看着做一个 -->
+
+		<div class="new-input">
+			<input type="text" id="bt_input" placeholder="为了让用户有输入时，不让label移动的">
+			<label for="bt_input">card</label>
+			<div class="input_border"></div>
+		</div>
+		<!-- <div class="next">
+			<div class="a">试试</div>
+			<div>看看</div>
+			<p>对不对</p>
+		</div> -->
 	</body>
 </html>
