@@ -111,9 +111,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         controller:'account2Ctrl'
       }
     }
+  })
+  .state("time",{
+    url:"/time",
+    templateUrl:"templates/time.html",
+    controller:"timeCtrl"
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/openUser');
+  $urlRouterProvider.otherwise('/time');
 
 })

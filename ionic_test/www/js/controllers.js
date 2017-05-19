@@ -518,4 +518,78 @@ angular.module('starter.controllers', [])
         $scope.state = 0;
       }
     }
-  });
+  })
+  .controller("timeCtrl",["$scope","$timeout",function($scope,$timeout){
+      $scope.timeEnd = false;
+      $scope.n  = 10;
+      var timeGet;
+      $scope.beginTime = function(){
+        $scope.timeEnd = !$scope.timeEnd; 
+        $timeout.cancel(timeGet);
+        tiemGet = null;
+        if(!$scope.timeEnd){
+          time();
+        }
+      }
+      function time(){
+        if($scope.timeEnd)return;
+        method();
+        timeGet = $timeout(time,1000);
+      }
+      function method(){
+          if($scope.n){
+            console.log($scope.n);
+          }else{
+            $scope.timeEnd = true;
+            $timeout.cancel(timeGet);
+            tiemGet = null;
+            $scope.n  = 11;
+          }
+          $scope.n--;
+      }
+
+      $scope.beginAni = function(){
+        anim.timeF();
+      }
+/*动画*//*就是错的*/
+    var anim = {
+      step:50,
+      time:500,
+      state:false,
+      timeGet:"",
+      width:0,
+      increment:0,
+      ele:"",
+      n:0,
+      getAction:function(){
+        var n = this.time/this.step;
+        /*this.increment = */
+        this.width = document.getElementById("wid");
+        console.log(this.width);
+        if(n){
+
+        }else{
+          this.state = true;
+        }
+        n--;
+      },
+      timeF:function(){
+        var me = this;
+        if(this.state)return;
+        /*this.n = this.time/this.step;*/
+        /*this.increment = */
+        me.n = this.time/this.step;
+        me.ele = document.getElementById("wid");
+        me.width = parseFloat(getComputedStyle(this.ele).width.split("p")[0]);
+        console.log(me.n);
+        if(me.n){
+          me.ele += 98/me.n+"%";
+        }else{
+          me.state = true;
+        }
+        me.n--;
+        me.tiemGet=setTimeout(me.timeF,me.n);
+      }
+    }
+
+  }]);
