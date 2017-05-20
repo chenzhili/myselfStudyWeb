@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>解构赋值的写法</title>
+</head>
+<body>
+	<script type="text/javascript">
+	/*数组*/
+		//1基本结构
+		var [a,b]=[1,2];
+		console.log(a);//1
+		console.log(b);//2
+		//2、拥有默认值
+		var [a=1,b]=[undefined,2]  //如果将undefined换成null，就为null，按着全等的方式进行匹配，除此之外都会被赋给后面的数组；
+		console.log(a);//1
+		console.log(b);//2
+
+		/*如果默认值是一个表达式，那么这个表达式是惰性求值的，即只有在用到的时候，才会求值。*/
+		function f() {
+		  console.log('aaa');
+		}
+
+		/*let [x = f()] = [1];*/
+		/*上面代码中，因为x能取到值，所以函数f根本不会执行。上面的代码其实等价于下面的代码。*/
+
+
+	/*对象是根据属性名进行赋值*/
+	var {obj:aa}={obj:11};//完整的写法
+	console.log(aa);//11
+	var {obj} = {obj:11};//缩写
+	console.log(obj);//11
+
+	let abcd;
+	({obj:abcd}={obj:1})//必须加上括号，不然会被认为是块级作用域
+	console.log(abcd);//1		
+		//2、拥有默认值
+		var {x = 3} = {};
+		x // 3
+
+		/*var {x, y = 5} = {x: 1};*/
+		x // 1
+		//y // 5
+
+		/*var {x:y = 3} = {};*/
+		//y // 3
+
+		/*var {x:y = 3} = {x: 5};*/
+		//y // 5
+
+		var { message: msg = 'Something went wrong' } = {};
+		msg // "Something went wrong"
+		
+
+		// 错误的写法
+		let y;
+		/*{x} = {x: 1};*/
+		// SyntaxError: syntax error
+		// 正确的写法
+		({y} = {y: 1});
+		[[1,2],[2,3]].map(([a,b])=>{
+			console.log(a);
+			console.log(b);
+		});
+		/*[[1, 2], [3, 4]].map(([a, b]) => a + b); 不怎么理解*/
+	</script>
+</body>
+</html>

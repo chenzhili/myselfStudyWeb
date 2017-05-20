@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>对于同时的解构赋值的不容返回方式</title>
+</head>
+<body>
+	<script type="text/javascript">
+	/*各种情况的对比*/
+		/*第一种情况*/
+		let a=0,b=1;
+		[a,b]=[b,a+b]/*对于a赋值后，b赋值，但是b中的表达式的a是用的解构赋值外的0*/
+		console.log(a);//1
+		console.log(b);//1
+		/*第二种情况*/
+		let c=0,d=1;
+		[c,d]=[++d,c+d]
+		console.log(c);//2
+		console.log(d);//2
+		/*第三种情况*/
+		let e=0,f=1;
+		[e,f]=[f,++e+f]
+		console.log(e);//1
+		console.log(f);//2
+	</script>
+</body>
+</html>
