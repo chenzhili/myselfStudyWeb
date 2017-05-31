@@ -8,41 +8,47 @@
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
 .run(function($ionicPlatform,$rootScope) {
-  var left,top,totalHeight = window.screen.availHeight,totalWidth = window.screen.availWidth;
-
+  /*var left,top,totalHeight = window.screen.availHeight,totalWidth = window.screen.availWidth;*/
+  var swData = {
+    left:-1,
+    top:-1,
+    totalHeight:window.screen.availHeight,
+    totalWidth:window.screen.availWidth,
+    padd:4
+  }
   /*拖拽事件的运用*/
+  /*封装一个获取元素left和top的方法*/
+  function position(el,st){
+    return Number(getComputedStyle(el)[st].split("p")[0]);
+  }
     //拖拽事件的发生
   $rootScope.icoD = function(e){
     var el = e.target;
-    left +=e.gesture.deltaX;
-    top +=e.gesture.deltaY;
-    el.style.left = left+"px";
-    el.style.top = top+"px";
+    el.style.left = swData.left + e.gesture.deltaX+"px";
+    el.style.top = swData.top + e.gesture.deltaY+"px";
   }
     //用户按下触发的
   $rootScope.touchDown = function(e){
     var el = e.target;
-    left = Number(getComputedStyle(el).left.split("p")[0]);
-    top = Number(getComputedStyle(el).top.split("p")[0]);
-    console.log(left);
-    console.log(top);
+    swData.left = position(el,"left");
+    swData.top = position(el,"top");
   }
    //用户松开事件
    $rootScope.releaseUp = function(e){
-    var el = e.target;
-    var elWidth = Number(getComputedStyle(el).width.split("p")[0]);
-    console.log(elWidth);
-    var elHeight = Number(getComputedStyle(el).height.split("p")[0]);
-    if(top <= 0){
-      el.style.top = 0;
-    }else if(top >= totalHeight){
-      el.style.top = totalHeight;
+    var el = e.target,lef;
+    var elWidth = position(el,"width");
+    var elHeight = position(el,"height");
+    if(position(el,"top") <= 0){
+      el.style.top = swData.padd+'px';
+    }else if(position(el,"top") >= swData.totalHeight){
+      el.style.top = swData.totalHeight-elHeight-swData.padd+ "px";
     }
-    /*if(left <= (totalWidth/2-elWidth/2)){
-      el.style.left = 4px;
+    if(position(el,"left") <= (swData.totalWidth/2-elWidth/2)){
+      el.style.left = swData.padd + "px";
     }else{
-      el.style.right = 4px;
-    }*/
+      el.style.left = null;
+      el.style.right = swData.padd + "px";
+    }
    }
   /*$rootScope.releaseUp = function(e){
     var el = e.target;
