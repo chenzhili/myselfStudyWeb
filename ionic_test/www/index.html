@@ -49,6 +49,8 @@
     <!--
       The nav bar that will be updated as we navigate between views.
     -->
+    <a style="position:absolute;right:4px;top:40px;width:30px;line-height:30px;background-color:#f00;z-index:100;color:#fff;text-align:center;border-radius:50%;" 
+    on-drag="icoD($event)" on-touch="touchDown($event)" on-release="releaseUp($event)">拖</a>
     <ion-nav-bar class="bar-stable" ng-class="{'no-display':fade==1}" id="indexBar">
       <ion-nav-back-button>
       </ion-nav-back-button>

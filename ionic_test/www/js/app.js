@@ -8,6 +8,59 @@
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
 .run(function($ionicPlatform,$rootScope) {
+  var left,top,totalHeight = window.screen.availHeight,totalWidth = window.screen.availWidth;
+
+  /*拖拽事件的运用*/
+    //拖拽事件的发生
+  $rootScope.icoD = function(e){
+    var el = e.target;
+    left +=e.gesture.deltaX;
+    top +=e.gesture.deltaY;
+    el.style.left = left+"px";
+    el.style.top = top+"px";
+  }
+    //用户按下触发的
+  $rootScope.touchDown = function(e){
+    var el = e.target;
+    left = Number(getComputedStyle(el).left.split("p")[0]);
+    top = Number(getComputedStyle(el).top.split("p")[0]);
+    console.log(left);
+    console.log(top);
+  }
+   //用户松开事件
+   $rootScope.releaseUp = function(e){
+    var el = e.target;
+    var elWidth = Number(getComputedStyle(el).width.split("p")[0]);
+    console.log(elWidth);
+    var elHeight = Number(getComputedStyle(el).height.split("p")[0]);
+    if(top <= 0){
+      el.style.top = 0;
+    }else if(top >= totalHeight){
+      el.style.top = totalHeight;
+    }
+    /*if(left <= (totalWidth/2-elWidth/2)){
+      el.style.left = 4px;
+    }else{
+      el.style.right = 4px;
+    }*/
+   }
+  /*$rootScope.releaseUp = function(e){
+    var el = e.target;
+    var elWidth = Number(getComputedStyle(el).width.split("p")[0]);
+    console.log(elWidth);
+    var elHeight = Number(getComputedStyle(el).height.split("p")[0]);
+    if(top <= 0){
+      el.style.top = 0;
+    }else if(top >= totalHeight){
+      el.style.top = totalHeight;
+    }
+    if(left <= totalWidth/2-elWidth/2){
+      el.style.left = 4px;
+    }else{
+      el.style.right = 4px;
+    }
+  }*/
+
   $rootScope.disState=0;
   $rootScope.fade = 0;
   $rootScope.$on("$ionicView.beforeEnter",function(){
