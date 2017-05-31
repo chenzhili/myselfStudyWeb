@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initail-scale=1">
+	<title>拖拽事件,对于ionic的拖动事件写到了ionic_test中</title>
+</head>
+<body>
+	<!-- <div style="width:100px;height:100px;border:1px solid #f00;" draggable='true'></div> -->
+	<div style="display:flex;">
+		<div style="flex:2;" id="dragEle">
+			<div style="width:100px;height:100px;background-color:#ff0;margin-bottom:5px;" id="d1" draggable="true">1</div>
+			<div style="width:100px;height:100px;background-color:#ff0;margin-bottom:5px;" id="d2" draggable="true">2</div>
+			<div style="width:100px;height:100px;background-color:#ff0;margin-bottom:5px;" id="d3" draggable="true">3</div>
+		</div>
+		<div style="flex:8;border:1px solid #f00;height:400px;" id="tarEle">
+
+		</div>
+	</div>
+	<script type="text/javascript">
+	/*拖拽事件一定要注意，拖拽元素和目标元素不同的事件一定要区分开*//*大概了解，回去用原声写一个苹果的效果*/
+		var d1Left ,d1Top;
+		var drag = document.getElementById("dragEle");
+		var tar = document.getElementById("tarEle");
+		console.log(tar.getBoundingClientRect());//获取元素里编辑区域的记录包括left，right，top,bottom
+		var tarLeft = tar.getBoundingClientRect().left;
+		var tarRight = tar.getBoundingClientRect().right;
+		var tarTop = tar.getBoundingClientRect().top;
+		var tarBottom = tar.getBoundingClientRect().bottom;
+		drag.addEventListener("drag",function(e){
+			if(e.target.id == "d1"){
+				/*console.log(e.screenX);*/
+				d1Left = e.clientX;
+				e.target.style.marginLeft = d1Left+"px";
+			}
+		});
+		drag.ondragend = function(e){
+			e.preventDefault();
+			/*e.target.style.marginLeft = d1Left+"px";*/
+		}
+
+		tar.addEventListener("drop",function(e){
+			console.log(1);
+		});
+		tar.ondragover  = function(e){
+			e.preventDefault();
+		}
+	</script>
+</body>
+</html>
