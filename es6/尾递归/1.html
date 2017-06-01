@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+	<meta meta="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>位尾递归</title>
+</head>
+<body>
+	<h1>dsfsdf</h1>
+	<input type="text">
+	<script type="text/javascript">
+			console.log(1);
+			document.onkeydown = function(e){
+				console.log(e.keyCode);
+			}
+		/*"use strict";*/
+		/*//阶乘的实现,好像并没有节约内存，数足够大就会报错
+		function fun(n,total){
+			if(n === 1)return total;
+			return fun(n-1,n*total);
+		}
+		fun(1000000,1);*/
+		/*function fun(n){
+			if(n == 1000000000){
+				return 1;
+			}else{
+				return fun(n++);
+			}
+		}
+		fun(1);*/
+		/*function currying(fn, n) {
+  			return function (m) {
+   			 return fn.call(this, m, n);
+  			};
+		}
+
+		function tailFactorial(n, total) {
+		  if (n === 1) return total;
+		  return tailFactorial(n - 1, n * total);
+		}
+
+		const factorial = currying(tailFactorial, 1);
+
+		factorial(10000000000)*/
+
+		/*function fundamental(fn,m){
+			return function(n){
+				console.log(m);
+				return fn.call(this,n,m);
+			}
+
+		}
+		function fun(n,total){
+			if(n === 1)return total;
+			return fun(n-1,n*total);
+		}
+
+		var tempFUn  = fundamental(fun,1);
+
+		console.log(tempFUn(4));*/
+		
+	</script>
+</body>
+</html>
