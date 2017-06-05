@@ -12,6 +12,8 @@ import {A} from './hero';
 export class AppComponent {
   title = "first angular2";
   age = new A(11);
+  contValue = "";
+  eC = "";
   heroes = [
     new Hero(0,"tom"),
     new Hero(1,"carry"),
@@ -24,5 +26,14 @@ export class AppComponent {
   }
   keyDo(e:any){
     console.log(e.target.value);
+  }
+  kp(v){
+    this.contValue = v +"|";
+  }
+  ke(v){
+    this.eC = v;
+  }
+  addKE(v){
+    this.heroes.push(new Hero(10,v));
   }
 }
