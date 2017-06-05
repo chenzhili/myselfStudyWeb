@@ -6,3 +6,8 @@ export class Hero{
 
   }
 }
+export  class A{
+  constructor(public age:any){
+    console.log(age);
+  }
+}

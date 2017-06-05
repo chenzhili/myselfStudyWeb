@@ -4,3 +4,13 @@
   <li *ngFor="let hero of heroes;let i = index;">{{hero.name}}--{{i}}</li>
 </ul>
 <p *ngIf="heroes.length>2">there are many heroes</p>
+
+<button (click)="clickFun($event)">
+    绑定事件的方法 {{age.age}}
+</button>
+<input type="text" style="outline:none;border:1px solid #ddd;border-radius:5px;width:100px;height:20px;" (keyup)="keyDo($event)">
+
+
+<!--模板变量-->
+<input type="text" style="outline:none;border:1px solid #ddd;border-radius:5px;width:100px;height:20px;" #box (keyup)="1">
+<p>{{box.value}}</p>
