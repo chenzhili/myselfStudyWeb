@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>class类</title>
+	<style type="text/css">
+		html{font-size:20px;}
+	</style>
+</head>
+<body>
+
+	<div style="width:345px;height:300;border:1px solid #f00;display:flex;">
+ 		<div style="width:100px;height:50px;margin:auto;background-color:#ff0;"></div>
+	</div>
+	<hr>
+	<div style="display:table;width:160px;height:100px;border:1px solid #f00;text-align:center;vertical-align:middle;">
+        <div style="display:table-row;">
+	    	<div style="display:table-cell;width:40px;height:30px;background-color:#ff0;vertical-align:middle;">afsdfsdf</div>	
+	        <div style="display:table-cell;width:40px;height:10px;background-color:#f0f;">aaaa</div>
+	        <div style="display:table-cell;width:40px;height:10px;background-color:#f0f;">sdfaabbsdf</div>
+	        <div style="display:table-cell;width:40px;height:10px;background-color:#f0f;">sdbbfsdf</div>
+        </div>
+        <div style="display:table-cell;width:40px;height:10px;background-color:#f0f;">sdfsdf</div>
+	</div>
+	<hr>
+	<div style="font-size:0.8rem;width:10rem;height:10rem;background-color:#f00;color:#000;">呵呵</div>
+<script type="text/javascript">
+	/*var aa = new Fun(2,3);
+	Fun.prototype.funA = function(){console.log(this.x+""+this.y);}
+	aa.funA();
+	console.log(aa.__proto__);
+	function Fun(x,y){
+		this.x = x;
+		this.y = y;
+	}*/
+
+
+
+
+	//1、对于class类声明构造函数，完全符合es5对于构造函数的申明方式对应的理论
+	//2、对于class来说不存在声明提前，必须在定义后调用才不会报错
+	//这后面是对于构造函数（类）的继承问题
+		//1、ES5的继承，实质是先创造子类的实例对象this，然后再将父类的方法添加到this上面（Parent.apply(this)）、ES6的继承机制完全不同，实质是先创造父类的实例对象this（所以必须先调用super方法），然后再用子类的构造函数修改this
+		//2、对于es6中对于super的理解
+			//在继承的类中不存在自己的this，必须通过父类的this得到，通过super()   //这个是实质的意思就是父类的 constructor()方法、默认返回this的
+			//super作为函数运行的时候，只能运行在constructor中，其他地方会报错
+			//ES6 规定，通过super调用父类的方法时，super会绑定子类的this // 这里补充个东西，就是静态方法，指的是 直接调用的方法，不需要通过new以后，在进行调用
+			//由于绑定子类的this，所以如果通过super对某个属性赋值，这时super就是this，赋值的属性会变成子类实例的属性
+			//如果super作为对象，用在静态方法之中，这时super将指向父类，而不是父类的原型对象
+
+	//比较好的例子
+						/******************注意，使用super的时候，必须显式指定是作为函数、还是作为对象使用，否则会报错。******************************/
+
+	class A{
+		constructor(a){
+			this.a = a;
+		}
+		fun(){
+			console.log("原型链上的");
+		}
+		static fun(){
+			console.log("静态方法");
+		}
+	}
+	A.prototype.a = -1;
+	class B extends A{
+		constructor(a){
+			super(a);
+			super.a = 2;
+			console.log(this.a);
+			console.log(super.a);
+		}
+		static fun(){
+			super.fun();
+		}
+	}
+	var aa =new B();
+	try{
+		aa.fun();
+		B.fun();
+	}catch(err){
+		console.log(err);
+	}
+</script>
+</body>
+</html>

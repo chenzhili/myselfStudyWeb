@@ -1,0 +1,16 @@
+/* You can add global styles to this file, and also import other style files */
+/*公共样式*/
+body,ul,li,p,table,tr,td,thead,tbody,tfoot,ol{padding:0;margin:0;}
+
+a{
+  text-decoration:none;
+  color:#000;
+}
+.lf{float:left;}
+.gt{float:right;}
+li{list-style:none;}
+.clearF:after{
+  display:block;
+  clear:both;
+  content:""
+}

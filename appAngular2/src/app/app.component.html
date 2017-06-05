@@ -1,0 +1,6 @@
+<!--The whole content below can be removed with the new code.-->
+<div>{{title}}</div>
+<ul>
+  <li *ngFor="let hero of heroes;let i = index;">{{hero.name}}--{{i}}</li>
+</ul>
+<p *ngIf="heroes.length>2">there are many heroes</p>
