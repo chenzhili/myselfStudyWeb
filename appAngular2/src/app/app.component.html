@@ -26,7 +26,10 @@
 <p>{{eC}}</p>
 
 <!-- 比较综合的添加英雄列表 -->
-<input type="text" style="outline:none;border:1px solid #ddd;border-radius:5px;width:100px;height:20px;" #addHero 
-	(keyup.enter)="addKE(addHero.value);addHero.value='';" 
+<input type="text" style="outline:none;border:1px solid #ddd;border-radius:5px;width:100px;height:20px;" #addHero
+	(keyup.enter)="addKE(addHero.value);addHero.value='';"
 	(blur)="addKE(addHero.value);addHero.value='';">
 <button class="add-hero" style="padding:5px 10px;color:#f00;border:none;background-color:#ff0;" (click)="addKE(addHero.value)">add</button>
+
+<hr>
+

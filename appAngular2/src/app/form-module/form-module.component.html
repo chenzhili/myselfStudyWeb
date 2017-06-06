@@ -1,0 +1,51 @@
+<!--<form style="padding:5px;border:1px solid #eee;">
+  <h4>{{formTitle}}</h4>
+  <div>
+    <p style="font-size:14px;">Name</p>
+    <i class="form_bingo" style="display:inline-block;vertical-align:middle;width:2px;height:20px;position:relative;left:6px;"></i>
+    <input type="text" style="outline:none;border:1px solid #ddd;border-radius:5px;width:50%;height:20px;" required>
+  </div>
+  <div style="height:20px;width:50%;background-color:#F2DEDE;color:#BC6C6A;">Name is required</div>
+  <div>
+    <p style="font-size:14px;">Alter Ego</p>
+    <input type="text" style="outline:none;border:1px solid #ddd;border-radius:5px;width:50%;height:20px;">
+  </div>
+  <div>
+    <p style="font-size:14px;">Hero Power</p>
+    <i class="form_bingo" style="display:inline-block;vertical-align:middle;width:2px;height:20px;position:relative;left:6px;"></i>
+    <input type="text" style="outline:none;border:1px solid #ddd;border-radius:5px;width:50%;height:20px;" required>
+  </div>
+  <div style="height:20px;width:50%;background-color:#F2DEDE;color:#BC6C6A;">Hero Power is required</div>
+  <button disabled="disabled" type="button" class="add-hero form_submit" style="border:1px solid #ddd;border-radius:10px;padding:5px 8px;color:#aaa;background-color:transparent;">Submit</button>
+</form>-->
+<form #heroFom="ngForm" action="https://www.baidu.com" (ngSubmit)="onSubmit()"><!--这个模板自变量赋值的ngForm的意义-->
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" class="form-control" id="name"
+           required
+           [(ngModel)]="model.name" name="name" #name="ngModel" (keyup)="aa(name)"><!--#spy--><!--#name="ngModel"这种绑定ngModel的意义是什么，不明白-->
+    <div [hidden]="name.valid || name.pristine"
+         class="alert alert-danger">
+      Name is required
+    </div>
+  </div>
+  <!--<p>{{spy.className}}</p>-->
+
+  <div class="form-group">
+    <label for="alterEgo">Alter Ego</label>
+    <input type="text"  class="form-control" id="alterEgo"
+           [(ngModel)]="model.alterEgo" name="alterEgo">
+  </div>
+
+  <div class="form-group">
+    <label for="power">Hero Power</label>
+    <select class="form-control"  id="power"
+            required
+            [(ngModel)]="model.power" name="power">
+      <option *ngFor="let pow of powers" [value]="pow">{{pow}}</option>
+    </select>
+  </div>
+  <button class="btn btn-success" type="submit" [disabled]="!heroFom.form.valid">submit</button>
+  <button class="btn btn-prime" type="button" (click)="addHeroes();heroFom.reset();" [disabled]="!heroFom.form.valid">add heroes</button>
+</form>
+<p *ngFor="let i of obj">{{i}}</p>

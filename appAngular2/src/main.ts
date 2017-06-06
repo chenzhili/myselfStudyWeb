@@ -20,3 +20,8 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 import { AppModuleNgFactory } from './app.module.ngfactory';
 
 platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);*/
+
+/*认为angular2相比于angular1的优势*/
+/*
+* 1、通过模块加载的，按需加载需要的模块，不需要把所有的框架js都加载到项目中，用到什么加载什么
+* */

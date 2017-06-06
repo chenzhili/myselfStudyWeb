@@ -11,3 +11,12 @@ export  class A{
     console.log(age);
   }
 }
+
+export class DetailHero{
+  constructor(
+    public id:number,
+    public name:string,
+    public power:string,
+    public alterEgo? :string
+  ){}
+}
