@@ -49,3 +49,6 @@
   <button class="btn btn-prime" type="button" (click)="addHeroes();heroFom.reset();" [disabled]="!heroFom.form.valid">add heroes</button>
 </form>
 <p *ngFor="let i of obj">{{i}}</p>
+<p>{{safeString?.name}}</p><!--安全导航操作符，用于当遇到空的时候直接返回，不会应为空.的访问方式而报错，保护了程序的运行-->
+<!--<input type="text" value="1111" id="input" (keyup)="abc()">--><!--attribute 和 property的区别-->
+<button class="btn btn-prime" type="button" disabled="false">试试</button>
