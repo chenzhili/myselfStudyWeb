@@ -19,6 +19,7 @@
   <button disabled="disabled" type="button" class="add-hero form_submit" style="border:1px solid #ddd;border-radius:10px;padding:5px 8px;color:#aaa;background-color:transparent;">Submit</button>
 </form>-->
 <form #heroFom="ngForm" action="https://www.baidu.com" (ngSubmit)="onSubmit()"><!--这个模板自变量赋值的ngForm的意义-->
+<!-- 如果你没有导入过FormsModule，Angular就不会控制这个表单，那么它就是一个HTMLFormElement实例。 这里的heroForm实际上是一个Angular NgForm 指令的引用， 因此具备了跟踪表单中的每个控件的值和有效性的能力 -->
   <div class="form-group">
     <label for="name">Name</label>
     <input type="text" class="form-control" id="name"
@@ -51,4 +52,4 @@
 <p *ngFor="let i of obj">{{i}}</p>
 <p>{{safeString?.name}}</p><!--安全导航操作符，用于当遇到空的时候直接返回，不会应为空.的访问方式而报错，保护了程序的运行-->
 <!--<input type="text" value="1111" id="input" (keyup)="abc()">--><!--attribute 和 property的区别-->
-<button class="btn btn-prime" type="button" disabled="false">试试</button>
+<button class="btn btn-prime" type="button" [disabled]="false">试试</button>
