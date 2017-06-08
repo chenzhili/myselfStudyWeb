@@ -5,17 +5,18 @@ import {A} from './hero';
 
 @Component({
   selector: 'app-root',
-  /*templateUrl: './app.component.html',*/
-  template:'<app-form-module></app-form-module>',
-  styleUrls:['form-module/form-module.component.css']
+  templateUrl: './app.component.html',
+  /*template:'<app-form-module></app-form-module>',*/
+  /*styleUrls:['form-module/form-module.component.css']*/
   /*template:'<h1>first{{title}}</h1>',*/
-  /*styleUrls: ['./app.component.css']*/
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
   /*首页的信息*/
-  /*title = "first angular2";
+  title = "first angular2";
   age = new A(11);
   contValue = "";
+  selectHero:Hero;
   eC = "";
   heroes = [
     new Hero(0,"tom"),
@@ -24,7 +25,7 @@ export class AppComponent {
     new Hero(3,"brown"),
   ];
   clickFun(e){
-    /!*alert(1);*!/
+    /*alert(1);*/
     console.log(e.target);
   }
   keyDo(e:any){
@@ -38,6 +39,9 @@ export class AppComponent {
   }
   addKE(v){
     this.heroes.push(new Hero(10,v));
-  }*/
-
+  }
+  select(hero){
+    console.log(hero);
+    this.selectHero = hero;
+  }
 }

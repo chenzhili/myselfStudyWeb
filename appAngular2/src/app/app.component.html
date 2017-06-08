@@ -1,7 +1,7 @@
 <!--The whole content below can be removed with the new code.-->
 <div>{{title}}</div>
 <ul>
-  <li *ngFor="let hero of heroes;let i = index;">{{hero.name}}--{{i}}</li>
+  <li *ngFor="let hero of heroes;let i = index;" (click)="select(hero)">{{hero.name}}--{{i}}</li>
 </ul>
 <p *ngIf="heroes.length>2">there are many heroes</p>
 
@@ -32,4 +32,5 @@
 <button class="add-hero" style="padding:5px 10px;color:#f00;border:none;background-color:#ff0;" (click)="addKE(addHero.value)">add</button>
 
 <hr>
+<app-hero-detail [hero]="selectHero"></app-hero-detail>
 
