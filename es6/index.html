@@ -6,6 +6,16 @@
 </head>
 <body>
 <div class="div"></div>
+<input type="text" value="10" onkeyup="(function(){
+		if(this.value.replace(/0+/,'0') == '0' && event.key == '0'){
+			console.log(this.value);
+			this.value = (this.value).replace(/^([\s,0]+)/gi,'');
+			console.log(this.value);
+			
+		}
+		this.value = (this.value).replace(/^([\s,0]+)/gi,'');
+		console.log(this.value);
+	}.bind(this))(event)" style="width:200px;height:20px;border:1px solid #ddd;border-radius:20px;padding-left:10px;">
 <button>button</button>
 <script src="js.js"></script>
 </body>
