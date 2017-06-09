@@ -6,17 +6,54 @@
 </head>
 <body>
 <div class="div"></div>
-<input type="text" value="10" onkeyup="(function(){
+<input class="aa" type="text" value="10" onkeyup="(function(){
+        this.value=this.value.replace(/[^0-9-]+/,'');
 		if(this.value.replace(/0+/,'0') == '0' && event.key == '0'){
 			console.log(this.value);
 			this.value = (this.value).replace(/^([\s,0]+)/gi,'');
 			console.log(this.value);
-			
+
 		}
 		this.value = (this.value).replace(/^([\s,0]+)/gi,'');
 		console.log(this.value);
 	}.bind(this))(event)" style="width:200px;height:20px;border:1px solid #ddd;border-radius:20px;padding-left:10px;">
-<button>button</button>
+<button id="btn">button</button>
+<ul class="fl sprite-yuan">
+    <li class="cm">
+        <span>10</span>
+        <input type="text" value="10">
+    </li>
+    <li class="cm">
+        <span>100</span>
+        <input type="text" value="100">
+    </li>
+    <li class="cm">
+        <span>500</span>
+        <input type="text" value="500">
+    </li>
+    <li class="cm">
+        <span>1000</span>
+        <input type="text" value="1000">
+    </li>
+    <li class="cm">
+        <span>5000</span>
+        <input type="text" value="5000">
+    </li>
+</ul>
 <script src="js.js"></script>
+<script src="jquery.min.js"></script>
+<script>
+    $('#btn').click(function(){
+        /*$('.cm span').text($(this).next().value());*/
+        var $span = $('.cm span');
+        for(var i=0,l=$span.length;i<l;i++){
+            console.log($span[i]);
+            /*$('.cm span').text($(this).next().value());*/
+            $($span[i]).text($($span[i]).next().val());
+        }
+        console.log($('.aa').get(0).value);
+        console.log($('.aa').val());
+    });
+</script>
 </body>
 </html>
