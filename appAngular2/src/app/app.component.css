@@ -1,7 +1,2 @@
-.add-hero:hover{
-	cursor: pointer;
-}
-
-.form_bingo{background-color:#42A948;}
-.form_err{background-color:#f00;}
-.form_submit:active{border:1px solid #ddd;}
+.pri_model .btn.active{color:#f00;margin-bottom:50px;}
+button{outline:none !important;}

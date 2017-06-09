@@ -1,36 +1,7 @@
 <!--The whole content below can be removed with the new code.-->
-<div>{{title}}</div>
-<ul>
-  <li *ngFor="let hero of heroes;let i = index;" (click)="select(hero)">{{hero.name}}--{{i}}</li>
-</ul>
-<p *ngIf="heroes.length>2">there are many heroes</p>
-
-<button (click)="clickFun($event)">
-    绑定事件的方法 {{age.age}}
-</button>
-
-<!-- 第一种获取input变量值 -->
-<input type="text" style="outline:none;border:1px solid #ddd;border-radius:5px;width:100px;height:20px;" (keyup)="keyDo($event)">
-
-
-<!--模板变量--><!-- 第二种获取变量的值 -->
-<input type="text" style="outline:none;border:1px solid #ddd;border-radius:5px;width:100px;height:20px;" #box (keyup)="1">
-<p>{{box.value}}</p>
-
-<!-- 这种写法比上面两种都好 -->
-<input type="text" style="outline:none;border:1px solid #ddd;border-radius:5px;width:100px;height:20px;" #cont (keyup)="kp(cont.value)">
-<p>{{contValue}}</p>
-
-<!-- 回车键的特殊模拟事件 -->
-<input type="text" style="outline:none;border:1px solid #ddd;border-radius:5px;width:100px;height:20px;" #eCotent (keyup.enter)="ke(eCotent.value)">
-<p>{{eC}}</p>
-
-<!-- 比较综合的添加英雄列表 -->
-<input type="text" style="outline:none;border:1px solid #ddd;border-radius:5px;width:100px;height:20px;" #addHero
-	(keyup.enter)="addKE(addHero.value);addHero.value='';"
-	(blur)="addKE(addHero.value);addHero.value='';">
-<button class="add-hero" style="padding:5px 10px;color:#f00;border:none;background-color:#ff0;" (click)="addKE(addHero.value)">add</button>
-
-<hr>
-<app-hero-detail [hero]="selectHero"></app-hero-detail>
-
+<h4>{{title}}</h4>
+<div class="clearF pri_model">
+  <button class="btn btn-prime lf" style="margin-right:20px;" routerLink="/Dashboard" (click)="changeRouterState(1)" [ngClass]="{active:routerState==1}">Dashboard</button>
+  <button class="btn btn-prime lf" routerLink="/Heroes" (click)="changeRouterState(2)" [ngClass]="{active:routerState==2}">Heroes</button>
+</div>
+<router-outlet></router-outlet>

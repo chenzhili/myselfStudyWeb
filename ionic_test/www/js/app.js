@@ -175,6 +175,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     url:"/time",
     templateUrl:"templates/time.html",
     controller:"timeCtrl"
+  })
+  .state("tab.ggc",{
+    url:"/ggc",
+    views:{
+      'tab-dash':{
+        templateUrl:"templates/ggc.html"
+      }
+    }
   });
 
   // if none of the above states are matched, use this as the fallback
