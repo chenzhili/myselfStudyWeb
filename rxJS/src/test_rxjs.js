@@ -1,5 +1,8 @@
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+const obser = Rx.Observable.create(function(observer){
+    console.dir(observer);
+    observer.next(1);
+    observer.next(2);
 
-console.log(Observable);
-console.log(Subject);
+});
+obser.subscribe();
+console.dir(Rx.Observable);
