@@ -17,13 +17,13 @@ $("#type").click(function(e){
             $("#downloadSplash").attr("src","img/download_pk_splash.png");
             $("#titleImg").attr("src","img/download_pk_title.png");
             $("#linkIOS").attr("href","#pk");
-            $("#linkAn").attr("href","#pk");
+            $("#linkAn").attr("href","http://www.jiucaijihua.com/jiucai/jiucai_ssc.apk");
             makeQr("http://fir.im/5lk7");
         }else if(target.id == "ssc"){
             $("#downloadSplash").attr("src","img/download_ssc_splash.png");
             $("#titleImg").attr("src","img/download_ssc_title.png");
             $("#linkIOS").attr("href","#ssc");
-            $("#linkAn").attr("href","#ssc");
+            $("#linkAn").attr("href","http://www.jiucaijihua.com/jiucai/jiucai_pk.apk");
             makeQr("http://fir.im/5lk7");
         }
     }
