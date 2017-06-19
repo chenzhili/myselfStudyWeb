@@ -18,13 +18,13 @@ $("#type").click(function(e){
             $("#titleImg").attr("src","img/download_pk_title.png");
             $("#linkIOS").attr("href","#pk");
             $("#linkAn").attr("href","http://www.jiucaijihua.com/jiucai/jiucai_ssc.apk");
-            makeQr("http://fir.im/5lk7");
+            makeQr("http://114.215.222.89/app/index.php?i=4&c=entry&m=yike_ts_plan&do=download&sizs=6&callback=jQuery21402001338752895021_1497524994083&_=1497524994084&type=pk");
         }else if(target.id == "ssc"){
             $("#downloadSplash").attr("src","img/download_ssc_splash.png");
             $("#titleImg").attr("src","img/download_ssc_title.png");
             $("#linkIOS").attr("href","#ssc");
             $("#linkAn").attr("href","http://www.jiucaijihua.com/jiucai/jiucai_pk.apk");
-            makeQr("http://fir.im/5lk7");
+            makeQr("http://114.215.222.89/app/index.php?i=4&c=entry&m=yike_ts_plan&do=download&sizs=6&callback=jQuery21402001338752895021_1497524994083&_=1497524994084&type=ssc");
         }
     }
 });
@@ -35,4 +35,4 @@ function makeQr(http){
         height:"140"
     }).makeCode(http);
 }
-makeQr("http://fir.im/5lk7");
+makeQr("http://114.215.222.89/app/index.php?i=4&c=entry&m=yike_ts_plan&do=download&sizs=6&callback=jQuery21402001338752895021_1497524994083&_=1497524994084&type=pk");
