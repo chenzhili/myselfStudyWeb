@@ -18,9 +18,19 @@ subject.next(n++);*/
 /*
 * 1、这个多了一步，不是通过订阅后就直接输出执行观察者的操作，通过connect方法来决定何时分享观察的对象
 * */
-const source = Rx.Observable.from([1,2,3]);
+/*const source = Rx.Observable.from([1,2,3]);
 const subject2 = new Rx.Subject();
 let multicasted = source.multicast(subject2); //multicast返回一个ConnectableObservable，它只是一个具有connect（）方法的Observable。
 multicasted.subscribe(x=>{console.log(x);});
 multicasted.subscribe(x=>{console.log(x);});
-/*multicasted.connect();*///用于分享
+multicasted.connect();//用于分享*/
+
+
+
+let observe = Rx.Observable.interval(500);
+let sub = new Rx.Subject();
+let mul = observe.multicast(sub);
+mul.subscribe(x=>{
+	console.log(x);
+});
+/*mul.connect();*/
