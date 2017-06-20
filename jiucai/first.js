@@ -13,14 +13,14 @@ $("#type").click(function(e){
         $("#type div").removeClass("type_active");
         $(target).addClass("type_active");
         if(target.id == "pk"){
-            $("#downloadSplash").attr("src","img/download_pk_splash.png");
-            $("#titleImg").attr("src","img/download_pk_title.png");
+            $("#downloadSplash").attr("src","img_pc/download_pk_splash.png");
+            $("#titleImg").attr("src","img_pc/download_pk_title.png");
             $("#linkIOS").attr("href","http://fir.im/ydth");
             $("#linkAn").attr("href","http://www.jiucaijihua.com/jiucai/jiucai_ssc.apk");
             makeQr("http://114.215.222.89/app/index.php?i=4&c=entry&m=yike_ts_plan&do=download&sizs=6&callback=jQuery21402001338752895021_1497524994083&_=1497524994084&type=pk");
         }else if(target.id == "ssc"){
-            $("#downloadSplash").attr("src","img/download_ssc_splash.png");
-            $("#titleImg").attr("src","img/download_ssc_title.png");
+            $("#downloadSplash").attr("src","img_pc/download_ssc_splash.png");
+            $("#titleImg").attr("src","img_pc/download_ssc_title.png");
             $("#linkIOS").attr("href","http://fir.im/hvcn");
             $("#linkAn").attr("href","http://www.jiucaijihua.com/jiucai/jiucai_pk.apk");
             makeQr("http://114.215.222.89/app/index.php?i=4&c=entry&m=yike_ts_plan&do=download&sizs=6&callback=jQuery21402001338752895021_1497524994083&_=1497524994084&type=ssc");

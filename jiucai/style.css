@@ -23,12 +23,13 @@ a{
 .inline_block{display:inline-block;}
 .download_type.type_active{background-color:rgba(252,71,67,1);}
 /*主题部分*/
+    /*pc端屏幕的样式*/
 .header{width:100%;border-bottom:1px solid #F30000;height:80px;position:fixed;z-index:10000;background-color:#fff;}
 .header_content{margin:0 auto;line-height:80px;width:90%;left:4%;}
 .header_logo{vertical-align:middle;margin-right:24px;}
 .header_logo_special{vertical-align:middle;}
 .header_nav{line-height:76px; margin-left: 120px;}
-.download_area{position:relative;top:80px;height:750px;background:url('img/download_bg.png') no-repeat center center;background-size:100% 100%;}
+.download_area{position:relative;top:80px;height:750px;background:url('img_pc/download_bg.png') no-repeat center center;background-size:100% 100%;}
 .download_type_content{position:absolute;right:0;top:300px;}
 .download_type{width:80px;height:80px;font-size:27px;text-align:center;line-height:40px;background-color:#DAD7D2;border-top-left-radius:5px;border-bottom-left-radius:5px;color:#fff;font-weight:700;}
 .download_type:hover{cursor:pointer;}
@@ -41,8 +42,9 @@ a{
 .download_inline{height:60px;width:300px;border-left:4px solid #F30000;border-right:4px solid #F30000;margin:0 auto;}
 .download_total{width:480px;height:620px;border:1px solid #F30000;}
 .download_title{width:305px;margin:60px auto;height:54px;}
-.production_introduce{margin-top:80px;padding:85px 180px 150px 80px;color:#fff; height:750px;background:url('img/introduce_bg.png') no-repeat left top;background-size:100% 100%;}
+.production_introduce{margin-top:80px;padding:85px 180px 150px 80px;color:#fff; height:750px;background:url('img_pc/introduce_bg.png') no-repeat left top;background-size:100% 100%;}
 .production_introduce>p{font-size:36px; }
-.production_introduce_circle{padding-left:30px;margin-bottom:34px;background:url('img/introduce_circle.png') no-repeat 0 10px;}
+.production_introduce_circle{padding-left:30px;margin-bottom:34px;background:url('img_pc/introduce_circle.png') no-repeat 0 10px;}
 .production_introduce_circle p{line-height:30px;}
 .production_introduce_circle p:last-child{color:#8D8A85;}
+    /*移动端屏幕的样式*/

@@ -18,45 +18,38 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
+      <file leaf-file-name="style.css" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="837">
-              <caret line="31" column="60" lean-forward="false" selection-start-line="31" selection-start-column="60" selection-end-line="31" selection-end-column="60" />
+            <state relative-caret-position="351">
+              <caret line="48" column="57" lean-forward="true" selection-start-line="48" selection-start-column="57" selection-end-line="48" selection-end-column="57" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="download_pk_title.png" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/img/download_pk_title.png">
-          <provider selected="true" editor-type-id="images">
-            <state />
+      <file leaf-file-name="first.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/first.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="189">
+              <caret line="9" column="29" lean-forward="true" selection-start-line="9" selection-start-column="29" selection-end-line="9" selection-end-column="29" />
+              <folding>
+                <element signature="e#0#38#0" expanded="false" />
+              </folding>
+            </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="243">
-              <caret line="83" column="10" lean-forward="true" selection-start-line="83" selection-start-column="10" selection-end-line="83" selection-end-column="10" />
+            <state relative-caret-position="378">
+              <caret line="88" column="37" lean-forward="true" selection-start-line="88" selection-start-column="37" selection-end-line="88" selection-end-column="37" />
               <folding>
                 <element signature="n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
                 <element signature="n#style#0;n#div#1;n#div#2;n#div#2;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#2;n#div#2;n#div#2;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#3;n#div#2;n#div#2;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="first.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/first.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="12" column="50" lean-forward="true" selection-start-line="12" selection-start-column="50" selection-end-line="12" selection-end-column="50" />
-              <folding>
-                <element signature="e#0#38#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -89,15 +82,19 @@
       <find>.download_content</find>
       <find>console.</find>
       <find>linkIOS</find>
+      <find>img</find>
     </findStrings>
+    <replaceStrings>
+      <replace>img_pc</replace>
+    </replaceStrings>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/style.html" />
-        <option value="$PROJECT_DIR$/style.css" />
-        <option value="$PROJECT_DIR$/first.js" />
         <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/first.js" />
+        <option value="$PROJECT_DIR$/style.css" />
       </list>
     </option>
   </component>
@@ -240,16 +237,16 @@
       <workItem from="1497836953734" duration="3882000" />
       <workItem from="1497864529331" duration="650000" />
       <workItem from="1497925065700" duration="42000" />
-      <workItem from="1497954285977" duration="830000" />
+      <workItem from="1497954285977" duration="2265000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="30070000" />
+    <option name="totallyTimeSpent" value="31505000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1358" y="-8" width="1936" height="1056" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14541623" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -288,7 +285,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/img/download_pk_title.png">
+    <entry file="file://$PROJECT_DIR$/img_pc/download_pk_title.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
@@ -324,7 +321,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/img/download_pk_title.png">
+    <entry file="file://$PROJECT_DIR$/img_pc/download_pk_title.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
@@ -360,7 +357,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/img/download_pk_title.png">
+    <entry file="file://$PROJECT_DIR$/img_pc/download_pk_title.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
@@ -396,7 +393,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/img/download_pk_title.png">
+    <entry file="file://$PROJECT_DIR$/img_pc/download_pk_title.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
@@ -432,7 +429,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/img/download_pk_title.png">
+    <entry file="file://$PROJECT_DIR$/img_pc/download_pk_title.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
@@ -468,7 +465,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/img/download_pk_title.png">
+    <entry file="file://$PROJECT_DIR$/img_pc/download_pk_title.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
@@ -504,12 +501,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/img/download_ssc_title.png">
+    <entry file="file://$PROJECT_DIR$/img_pc/download_ssc_title.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/img/download_pk_title.png">
+    <entry file="file://$PROJECT_DIR$/img_pc/download_pk_title.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
@@ -538,27 +535,27 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/style.html" />
-    <entry file="file://$PROJECT_DIR$/img/logo_name.png">
+    <entry file="file://$PROJECT_DIR$/img_pc/logo_name.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/img/download_lottery.png">
+    <entry file="file://$PROJECT_DIR$/img_pc/download_lottery.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/img/introduce_bg.png">
+    <entry file="file://$PROJECT_DIR$/img_pc/introduce_bg.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/img/introduce_circle.png">
+    <entry file="file://$PROJECT_DIR$/img_pc/introduce_circle.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/img/download_qrcode.png">
+    <entry file="file://$PROJECT_DIR$/img_pc/download_qrcode.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
@@ -577,38 +574,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/img/download_ssc_splash.png">
+    <entry file="file://$PROJECT_DIR$/img_pc/download_ssc_splash.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/img/download_ssc_title.png">
+    <entry file="file://$PROJECT_DIR$/img_pc/download_ssc_title.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/img/download_ssc_title.png">
+    <entry file="file://$PROJECT_DIR$/img_pc/download_ssc_title.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/style.css">
+    <entry file="file://$PROJECT_DIR$/img_pc/download_pk_title.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/first.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="837">
-          <caret line="31" column="60" lean-forward="false" selection-start-line="31" selection-start-column="60" selection-end-line="31" selection-end-column="60" />
-          <folding />
+        <state relative-caret-position="189">
+          <caret line="9" column="29" lean-forward="true" selection-start-line="9" selection-start-column="29" selection-end-line="9" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#38#0" expanded="false" />
+          </folding>
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/img/download_pk_title.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="83" column="10" lean-forward="true" selection-start-line="83" selection-start-column="10" selection-end-line="83" selection-end-column="10" />
+        <state relative-caret-position="378">
+          <caret line="88" column="37" lean-forward="true" selection-start-line="88" selection-start-column="37" selection-end-line="88" selection-end-column="37" />
           <folding>
             <element signature="n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#div#1;n#div#2;n#div#2;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -618,13 +617,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/first.js">
+    <entry file="file://$PROJECT_DIR$/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="12" column="50" lean-forward="true" selection-start-line="12" selection-start-column="50" selection-end-line="12" selection-end-column="50" />
-          <folding>
-            <element signature="e#0#38#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="351">
+          <caret line="48" column="57" lean-forward="true" selection-start-line="48" selection-start-column="57" selection-end-line="48" selection-end-column="57" />
+          <folding />
         </state>
       </provider>
     </entry>
