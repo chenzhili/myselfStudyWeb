@@ -47,9 +47,11 @@ a{
 .production_introduce_circle{padding-left:30px;margin-bottom:34px;background:url('../img_pc/introduce_circle.png') no-repeat 0 10px;}
 .production_introduce_circle p{line-height:30px;}
 .production_introduce_circle p:last-child{color:#8D8A85;}
+.big_screen{display:none;}
     /*移动端屏幕的样式*/
 /*公共样式*/
 .width100{width:100%;}
+.small_screen{position: absolute;height: 100%;width: 100%;display:none;}
 .small_screen .switch{position:fixed;width:26%;top:40px;z-index:1000;left:-15px;font-size:12px;}
 .small_screen .switch_content{width:100%;height:14px;border-radius:20px;border:1px solid #C3C0B9;color:#C3C0B9;padding:5px 5px 5px 15px;margin-bottom:10px;text-align:center;}
 .small_screen .switch_active{border:1px solid #F30000;color:#fff;background-color:#F30000;}
