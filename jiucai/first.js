@@ -16,13 +16,13 @@ $("#type").click(function(e){
             $("#downloadSplash").attr("src","img_pc/download_pk_splash.png");
             $("#titleImg").attr("src","img_pc/download_pk_title.png");
             $("#linkIOS").attr("href","http://fir.im/ydth");
-            $("#linkAn").attr("href","http://www.jiucaijihua.com/jiucai/jiucai_ssc.apk");
+            $("#linkAn").attr("href","http://www.jiucaijihua.com/jiucai/jiucai_pk.apk");
             makeQr("qrCode","http://114.215.222.89/app/index.php?i=4&c=entry&m=yike_ts_plan&do=download&sizs=6&callback=jQuery21402001338752895021_1497524994083&_=1497524994084&type=pk");
         }else if(target.id == "ssc"){
             $("#downloadSplash").attr("src","img_pc/download_ssc_splash.png");
             $("#titleImg").attr("src","img_pc/download_ssc_title.png");
             $("#linkIOS").attr("href","http://fir.im/hvcn");
-            $("#linkAn").attr("href","http://www.jiucaijihua.com/jiucai/jiucai_pk.apk");
+            $("#linkAn").attr("href","http://www.jiucaijihua.com/jiucai/jiucai_ssc.apk");
             makeQr("qrCode","http://114.215.222.89/app/index.php?i=4&c=entry&m=yike_ts_plan&do=download&sizs=6&callback=jQuery21402001338752895021_1497524994083&_=1497524994084&type=ssc");
         }
     }
@@ -76,13 +76,13 @@ $(document).ready(function(){
         }
     });
     /*模态对应的不同二维的方法*/
-    $("#small_pk_code").click(function(){
+    $(".small_pk_code").click(function(){
         console.log(1);
         $(".mark").css("display","block");
         $("#style_title").attr("src","img_mobile/mark_code_pk.png");
         makeQr("mark_code","http://114.215.222.89/app/index.php?i=4&c=entry&m=yike_ts_plan&do=download&sizs=6&callback=jQuery21402001338752895021_1497524994083&_=1497524994084&type=pk","100");
     });
-    $("#small_ssc_code").click(function(){
+    $(".small_ssc_code").click(function(){
         $(".mark").css("display","block");
         $("#style_title").attr("src","img_mobile/mark_code_ssc.png");
         makeQr("mark_code","http://114.215.222.89/app/index.php?i=4&c=entry&m=yike_ts_plan&do=download&sizs=6&callback=jQuery21402001338752895021_1497524994083&_=1497524994084&type=ssc","100");
