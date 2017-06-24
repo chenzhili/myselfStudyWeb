@@ -15,7 +15,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     totalHeight:window.screen.availHeight,
     totalWidth:window.screen.availWidth,
     padd:4
-  }
+  };
   /*拖拽事件的运用*/
   /*封装一个获取元素left和top的方法*/
   function position(el,st){
