@@ -1,33 +1,33 @@
 var htmlContent;
-var current = "";
 window.onload = function(){
 	init();
     var input = document.getElementById("input");
     var source = Rx.Observable.fromEvent(input,"keyup");
-	/*var subject = new Rx.Subject();
-	 var refCounted = source.multicast(subject).refCount();*/
-    source
+	var subject = new Rx.Subject();
+    var refCounted = source.multicast(subject).refCount();
+    refCounted
         .debounceTime(500)
         .subscribe(x=>{
             if(x.keyCode != 67 && x.keyCode != 17){
+                let jsonContent = document.getElementById("content");
+                let current = "";
                 if(x.target.value){
-                    var jsonContent = document.getElementById("content");
-                    var regExp = new RegExp(x.target.value,"ig");
+                    var regExp = new RegExp(x.target.value,"g");
                     console.log(regExp);
-                    for(var item in htmlContent){
-                    	console.log(regExp.test(htmlContent[item]));
+                    for(let item in htmlContent){
                     	if(regExp.test(htmlContent[item])){
                             current += `<li>${htmlContent[item]}</li>`;
 						}
 					}
+					console.log(current);
+                    jsonContent.innerHTML = current;
                 }else{
                     for(var key in htmlContent){
                         current += `<li>${htmlContent[key]}</li>`
                     }
+                    jsonContent.innerHTML = current;
 				}
             }
-            console.log(current);
-            jsonContent.innerHTML = current;
         });
 };
 /*页面初始化*/
