@@ -13,8 +13,6 @@ window.onload = function(){
                 let current = "";
                 if(x.target.value){
                     var regExp = new RegExp(x.target.value);
-                    /*var regExp = "/"+x.target.value+"/g";*/
-                    console.log(regExp instanceof RegExp);
                     console.log(regExp);
                     for(let item in htmlContent){
                         /*console.log(regExp.test(htmlContent[item]));*/
