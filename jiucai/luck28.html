@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>幸运28</title>
+</head>
+<body>
+
+<script>
+    /*范围在0-27之间*/
+        /*状态 大为0，小为1，奇为2，偶为3，极大为4，极小为5*/
+    function bigAndSmall(num){
+        if(num >= 14){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+    function oddAndEven(num){
+        if(num % 2 ==0){
+            return 3;
+        }else{
+            return 2;
+        }
+    }
+    function biggerAndSmaller(num){
+        if(num >= 23){
+            return 4;
+        }
+        if(num <= 4){
+            return 5;
+        }
+    }
+    /*破色*/
+    /*红波为11，绿波为22，蓝波为33*/
+    function boFun(num){
+        if(num %3 == 0){
+            return 11;
+        }
+        if(num %3 ==1){
+            return 22;
+        }
+        if(num %3 == 2){
+            return 33;
+        }
+    }
+</script>
+</body>
+</html>
