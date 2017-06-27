@@ -3,18 +3,21 @@ window.onload = function(){
 	init();
     var input = document.getElementById("input");
     var source = Rx.Observable.fromEvent(input,"keyup");
-	var subject = new Rx.Subject();
-    var refCounted = source.multicast(subject).refCount();
-    refCounted
+	/*var subject = new Rx.Subject();
+    var refCounted = source.multicast(subject).refCount();*/
+    source
         .debounceTime(500)
         .subscribe(x=>{
             if(x.keyCode != 67 && x.keyCode != 17){
                 let jsonContent = document.getElementById("content");
                 let current = "";
                 if(x.target.value){
-                    var regExp = new RegExp(x.target.value,"g");
+                    var regExp = new RegExp(x.target.value);
+                    /*var regExp = "/"+x.target.value+"/g";*/
+                    console.log(regExp instanceof RegExp);
                     console.log(regExp);
                     for(let item in htmlContent){
+                        /*console.log(regExp.test(htmlContent[item]));*/
                     	if(regExp.test(htmlContent[item])){
                             current += `<li>${htmlContent[item]}</li>`;
 						}
