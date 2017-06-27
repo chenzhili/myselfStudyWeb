@@ -12,7 +12,7 @@ window.onload = function(){
                 let jsonContent = document.getElementById("content");
                 let current = "";
                 if(x.target.value){
-                    var regExp = new RegExp(x.target.value,"g");
+                    var regExp = new RegExp(x.target.value);
                     console.log(regExp);
                     for(let item in htmlContent){
                     	if(regExp.test(htmlContent[item])){
