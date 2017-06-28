@@ -1,3 +1,54 @@
+/*对于canvas中的用法*/
+var canvas = document.createElement("canvas");
+canvas.width = 100;
+canvas.height = 100;
+var img = new Image();
+img.crossOrigin = "anonymous";
+img.src = "http://137.59.23.98:12000/img/login/01.png";
+var ctx = canvas.getContext("2d");
+ctx.drawImage(img,0,0);
+var data = canvas.toDataURL();
+console.log(data);
+
+function saveImageToPhone(url, success, error) {
+    var canvas, context, imageDataUrl, imageData;
+    var img = new Image();
+    img.crossOrigin = "anonymous";
+    try {
+        img.src = url;
+    }
+    catch (e) {
+        error(e.message);
+    }
+    img.onload = function () {
+        canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        context = canvas.getContext('2d');
+        context.drawImage(img, 0, 0);
+        try {
+            imageDataUrl = canvas.toDataURL();
+            console.log(imageDataUrl);
+            imageData = canvas.toDataURL().replace(/data:image\/png;base64,/, '');
+            cordova.exec(
+                success,
+                error,
+                'Canvas2ImagePlugin',
+                'saveImageDataToLibrary',
+                [imageData]
+            );
+        }
+        catch (e) {
+            error(e.message);
+        }
+    };
+    try {
+        img.src = url;
+    }
+    catch (e) {
+        error(e.message);
+    }
+}
 var htmlContent;
 window.onload = function(){
 	init();
