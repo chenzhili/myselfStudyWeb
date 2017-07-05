@@ -2,7 +2,7 @@
  * Created by YK on 2017/7/4.
  */
 $(document).ready(function(){
-    makeQr("code","http://www.baidu.com");
+    makeQr("code","http://www.ggyucai.com/index.php?s=/home/home/down");
     $(".close_modal").click(function(){
         $(".modal").css("display","none");
     });

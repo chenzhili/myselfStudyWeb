@@ -1,0 +1,16 @@
+{
+  "name": "exercise-webpack",
+  "version": "1.0.0",
+  "description": "this is a webpackProject for exercise",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build":"webpack",
+    "start":"这个比较特殊 npm start 其他要用 npm run build"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^3.0.0"
+  }
+}
