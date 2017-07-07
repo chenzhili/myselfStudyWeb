@@ -1,5 +1,11 @@
-module.exports = function() {
+/*module.exports = function() {
   var greet = document.createElement('div');
   greet.textContent = "Hi there and greetings!";
   return greet;
-};
+};*/
+
+export function fun(){
+  var greet = document.createElement('div');
+  greet.textContent = "Hi there and greetings!";
+  return greet;
+}
