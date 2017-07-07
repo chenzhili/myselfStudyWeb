@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="baidu-site-verification" content="IFf0HGyDKa" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+    <title>支付</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head>
+<style>
+/*新添样式*/
+    body{padding:0;margin:0;}
+    .header{width:100%;text-align:center;background-color:#00AAEE;line-height:2.5em;color:#fff;font-size:1.125em;}
+    .clearfix:after{
+        display:table;
+        clear:both;
+        content:"";
+        width:0;
+        height:0;
+    }
+    .fl{float:left;}
+    .fr{float:right;}
+    .name{width:30%;padding:4px 6px;color:#000;line-height:2em;}
+    .cont{width:50%;color:#000;margin-left:2%;line-height:2.5em;}
+    .content{width:90%;margin:0 auto;}
+    .cont select,.cont input{width:100%;}
+    p{padding:0 0 0 6px;margin:0;color:#f00;font-size:0.75rem;}
+    .submit_btn{width:80%;margin:2em auto;}
+    .submit_btn button{width:100%;line-height:2.5em;border-radius:1.4em;color:#fff;text-align:center;padding:4px 6px;outline:none;background-color:#00AAEE;border:none;}
+
+</style>
+<body>
+<div class="header">
+    <div class="title">支付</div>
+</div>
+<div class="content">
+    <form action="http://p.weixinxiu.cn/Pay.do" target="_blank">
+        <div class="pay_ways clearfix">
+            <div class="name fl">支付方式：</div>
+            <div class="cont fl">
+                <select name="payType" id="payTypeId" lay-verify="required">
+                    <option  value="'.$payType.'">微信支付</option>
+                </select>
+            </div>
+        </div>
+        <div class="pay_ways clearfix">
+            <div class="name fl">订单号：</div>
+            <div class="cont fl">
+                <input type="text" name="mchOrderNo" readonly="readonly" id="order_id" value="'.$mchOrderNo.'">
+                <input type="hidden" name="mchNo" value="10037540" />
+                <input type="hidden" name="productId" value="'.$productId.'" />
+                <input type="hidden" name="signType" value="MD5" />
+                <input type="hidden" name="sign" value="'.$sing.'" />
+                <input type="hidden" name="notifyUrl" value="'.$notifyUrl.'" />
+                <input type="hidden" name="returnUrl" value="'.$returnUrl.'" />
+            </div>
+        </div>
+        <div class="pay_ways clearfix">
+            <div class="name fl">商品名称：</div>
+            <div class="cont fl">
+                <input type="text" name="productName" readonly="readonly" id="product_name" value="'.$productName.'">
+            </div>
+        </div>
+        <p>注意：商户订单号.必填(建议是英文字母和数字,不能含有特殊字符)</p>
+        <div class="pay_ways clearfix">
+            <div class="name fl">付款金额：</div>
+            <div class="cont fl">
+                <input type="text" name="price" readonly="readonly"  id="price" value="'.$price.'">
+            </div>
+        </div>
+        <p>注意：产品名称，必填(建议中文，英文，数字，不能含有特殊字符)</p>
+        <div class="pay_ways clearfix">
+            <div class="name fl">商品描述：</div>
+            <div class="cont fl">
+                <input type="text" name="mark" readonly="readonly" id="mark" value="'.$mark.'">
+            </div>
+        </div>
+        <p>注意：商品描述，选填(建议中文，英文，数字，不能含有特殊字符)</p>
+        <div class="submit_btn">
+            <button type="button">确认支付</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
