@@ -1,0 +1,11 @@
+推荐样式编写顺序
+    1 显示属性 ：display，list-style，position，float，clear [注意按照横着的顺序]
+    2 自身属性（合模型）：width，height，margin，padding，border，background（第3点）
+    3 背景：background
+    4 行高：line-height
+    5 文本属性：color,font，text-decoration，text-align，vertical-align，white-space，content
+    6 其他 cursor/z-index/zoom
+    7 css3属性：trandsform/transition/animation/box-shadow/border-radius
+    8 链接的样式请严格按照如下顺序添加：
+      a:link-->a:visited-->a:hover-->a:active(LoVeHAte)
+ * 书写的CSS代码的时候请注意按照显示 自身 文本的书写顺序来书写！

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initail-scale=1">
+		<title>transform</title>
+		<style>
+			body:after{
+				display:block;
+				clear:both;
+				content:"";
+			}
+			.fl{float:left;}
+			div{
+				width:200px;
+				height:200px;
+				background-color:#ff0;
+				color:#000;
+				margin-bottom:40px;
+			}
+			.scale-x{transform:scaleX(-1);} /*transform:scale(-1,1) 缩放的值，X为负时，字体先沿Y轴翻转再缩放*/
+			.scale-y{transform:scaleY(-1);} /*缩放的值，Y为负时，字体先沿X轴翻转再缩放*/
+
+			
+			/* 参与过渡的属性、过渡时间、过渡方式（动画类型） 延迟时间 【需要写前缀】
+				一般情况下，transition添加在基本效果上，而不是hover效果中。css原状态和hover状态设置为两种不同的样式，
+				然后通过CSS3过渡进行‘渐变’处理padding、color所有浏览器都支持渐变 */
+			.scale-xy{width:200px;transform:scale(-1,-1);transition:all 4s linear .6s;}
+			.scale-xy:hover{
+				width:100px;
+			    transform: scale(2); 
+			}
+		</style>
+	</head>
+	<body>
+		<p class="fl">
+			<!-- scale 特别注意为负数的时候的用法 -->
+			<div class="scale-x">
+				对于scaleX为负数
+			</div>
+			<div class="scale-y">
+				对于scaleY为负数
+			</div>
+			<div class="scale-xy">
+				对于scaleXY为负数
+			</div>
+		</p>
+	</body>
+</html>
