@@ -1,16 +1,20 @@
 {
   "name": "exercise-webpack",
   "version": "1.0.0",
-  "description": "this is a webpackProject for exercise",
+  "description": "this is a webpackProject for exercise;webpack也是模块型加载，按需加载减小加载的文件",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build":"webpack --watch",
-    "start":"这个比较特殊 npm start 其他要用 npm run build"
+    "build": "webpack --watch -p",
+    "begin":"webpack-dev-server --port 8888",
+    "start": "这个比较特殊 npm start 其他要用 npm run build"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "webpack": "^3.0.0"
+    "css-loader": "^0.28.4",
+    "style-loader": "^0.18.2",
+    "webpack": "^3.0.0",
+    "webpack-dev-server": "^2.5.1"
   }
 }

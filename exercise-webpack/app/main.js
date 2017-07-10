@@ -1,7 +1,9 @@
 /*var greeter = require('./Greeter.js');
 document.getElementById('root').appendChild(greeter());*/
 import { fun } from "./Greeter.js"
-document.getElementById('root').appendChild(fun()); 
+
+import "./main.css";
+document.getElementById('root').appendChild(fun());  
 
 
 
