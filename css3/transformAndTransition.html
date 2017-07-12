@@ -11,7 +11,7 @@
 				content:"";
 			}
 			.fl{float:left;}
-			div{
+			.fl div{
 				width:200px;
 				height:200px;
 				background-color:#ff0;
@@ -30,10 +30,45 @@
 				width:100px;
 			    transform: scale(2); 
 			}
+			div.anim{
+				width:50px;
+				height:50px;
+				line-height:50px;
+				background-color:#f00;
+				color:#ddd;
+				text-align:center;
+				border-radius:50%;
+				transform:scale(1);
+				animation:speed-b 1s;
+			}
+			@keyframes speed-b{
+				0% {transform:scale(1);}
+				10% {transform:scale(1.05) skew(5deg);} 
+				20% {transform:scale(1) skew(0deg);}
+				30% {transform:scale(0.95) skew(-5deg);}
+				40% {transform:scale(1);}
+				50% {transform:scale(1.25);}
+				60% {transform:scale(1.15) skew(5deg);}
+				70% {transform:scale(1) skew(0deg);}
+				80% {transform:scale(1.1) skew(-5deg);}
+				100% {transform:scale(1);}
+			}
+			@-webkit-keyframes speed-b{
+				0% {transform:scale(1);}
+				10% {transform:scale(1.05) skew(5deg);} 
+				20% {transform:scale(1) skew(0deg);}
+				30% {transform:scale(0.95) skew(-5deg);}
+				40% {transform:scale(1);}
+				50% {transform:scale(1.25);}
+				60% {transform:scale(1.15) skew(5deg);}
+				70% {transform:scale(1) skew(0deg);}
+				80% {transform:scale(1.1) skew(-5deg);}
+				100% {transform:scale(1);}
+			}
 		</style>
 	</head>
 	<body>
-		<p class="fl">
+		<div class="fl">
 			<!-- scale 特别注意为负数的时候的用法 -->
 			<div class="scale-x">
 				对于scaleX为负数
@@ -44,6 +79,12 @@
 			<div class="scale-xy">
 				对于scaleXY为负数
 			</div>
-		</p>
+		</div>
+		<div class="fl">
+			<div class="anim">
+				<!-- 这是一个简单的animation的动画实践 -->
+				动
+			</div>
+		</div>
 	</body>
 </html>
