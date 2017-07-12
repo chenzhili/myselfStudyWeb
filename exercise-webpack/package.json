@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --watch -p",
+    "build": "webpack --watch",
     "begin":"webpack-dev-server --port 8888",
     "start": "这个比较特殊 npm start 其他要用 npm run build"
   },

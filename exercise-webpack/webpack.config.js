@@ -1,9 +1,12 @@
 module.exports = {
 	devtool:"eval-source-map",
-	entry:__dirname+"/app/main.js",
+	entry:{
+		"./css/":__dirname+"/app/main1.css", //这种写法的好处是 对应的key能够当做output输出口的文件的路径存在，这样就上输出的文件可以灵活的在不同的位置
+		"./public/":__dirname+"/app/main.js"
+	},
 	output:{
-		path:__dirname+"/public",
-		filename:"bundle.js"
+		path:__dirname,
+		filename:"[name]bundle.js"
 	},
 
 	/*本地服务器*/
@@ -14,7 +17,7 @@ module.exports = {
   	},
 
   	module:{
-  		loaders:[
+  		rules:[
   			{
   				test:/\.css$/,
   				loader:'style-loader!css-loader'
