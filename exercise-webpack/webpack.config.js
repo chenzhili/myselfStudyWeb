@@ -6,7 +6,8 @@ module.exports = {
 	},
 	output:{
 		path:__dirname,
-		filename:"[name].js"
+		filename:"[name].js",
+		sourceMapFilename:"[name].source.js"
 	},
 
 	/*本地服务器*/
