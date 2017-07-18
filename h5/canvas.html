@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>对于运用canvas把图片转换成base64的文件</title>
+	<style>
+		div{
+			width:200px;
+			height:200px;
+			background:url("data:image/webp;base64,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")
+					no-repeat;
+			background-size:100%;
+		}
+	</style>
+</head>
+<body>
+	<canvas>不支持canvas标签</canvas>
+	<div>
+		我是通过canvas转换成的base64位的图片背景
+	</div>
+	<script>
+		var cv = document.getElementsByTagName("canvas")[0];
+		cv.width = 100;
+		cv.height = 100;
+		var ctx = cv.getContext("2d");
+		var img = new Image();
+		/*img.crossOrigin = "anonymous";*///如果跨域需要写的
+		img.src = "./canvas_dataUrlImg.png";
+		img.onload = function(){
+			ctx.drawImage(img,0,0,img.width,img.height, 0, 0, cv.width, cv.height);
+			/*一次是
+			img	规定要使用的图像、画布或视频。
+			sx	可选。开始剪切的 x 坐标位置。
+			sy	可选。开始剪切的 y 坐标位置。
+			swidth	可选。被剪切图像的宽度。
+			sheight	可选。被剪切图像的高度。
+			x	在画布上放置图像的 x 坐标位置。
+			y	在画布上放置图像的 y 坐标位置。
+			width	可选。要使用的图像的宽度。（伸展或缩小图像）
+			height	可选。要使用的图像的高度。（伸展或缩小图像）
+			*/
+			var src = cv.toDataURL("image/webp");
+			console.log(src);
+		}
+	</script>
+</body>
+</html>
