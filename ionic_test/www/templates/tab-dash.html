@@ -1,5 +1,12 @@
 <ion-view view-title="Dashboard">
   <ion-content class="padding" overflow-scroll="true" delegate-handle="mainScroll">
+  	<div style="height:20px;overflow:hidden;">
+  		<ul style="position:relative;" id="tab-adv">
+  		<li class="dash-items">1</li>
+  		<li class="dash-items" style="background-color:#f00;">2</li>
+  		<li class="dash-items" style="background-color:#0f0;">3</li>
+  	</ul>
+  	</div>
     <div ng-click="cancelTime()">停止定时器</div>
     <div ng-repeat="n in content">{{n}}</div>
   </ion-content>
