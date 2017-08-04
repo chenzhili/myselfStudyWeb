@@ -26,5 +26,9 @@
     <p class="open-offer" style="margin-top:70px;">
       <button ng-click="gasQuery()" style="width:100%;">提交申请</button>
     </p>
+    <form action="http://192.168.1.112/yike_gentleman/app/index.php?i=1&c=entry&m=yike_ts_plan&do=image_upload" enctype="multipart/form-data" method="post" id="form">
+      <input type="file" name="imgs">
+      <button type="button" id="btn">提交</button>
+    </form>
   </ion-content>
 </ion-view>
