@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','onezone-datepicker'])
 
 .run(function($ionicPlatform,$rootScope) {
   /*var left,top,totalHeight = window.screen.availHeight,totalWidth = window.screen.availWidth;*/
@@ -176,6 +176,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     templateUrl:"templates/time.html",
     controller:"timeCtrl"
   })
+  .state("onesone-datepicker",{
+    url:"/onesone-datepicker",
+    templateUrl:"templates/onesone-datepicker.html",
+    controller:"datePickerCtrl"
+  })
   .state("tab.ggc",{
     url:"/ggc",
     views:{
@@ -186,6 +191,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/time');
+  $urlRouterProvider.otherwise('/onesone-datepicker');
 
 })

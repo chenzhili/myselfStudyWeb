@@ -40,7 +40,7 @@ angular.module('starter.controllers', [])
       ul.appendChild(ul.children[0]);
       $scope.n = 10;
     }
-    ul.setAttribute("top",$scope.n+"px");
+    ul.style.top = $scope.n-10+"px";
     /*if($scope.n){
       $scope.content.push($scope.n);
       console.log($scope.content);
@@ -53,7 +53,7 @@ angular.module('starter.controllers', [])
   time();
   function time()
   {
-    var ul = document.getElementsByClassName("dash-ul")[0];
+    var ul = document.getElementById("tab-adv");
     if(timeout) return;
     method(ul);
     $scope.timeEnd = $timeout(time,50);
@@ -265,6 +265,26 @@ angular.module('starter.controllers', [])
     }
 
   })
+.controller("datePickerCtrl",function($scope){
+  $scope.onezoneDatepicker = {
+    date: new Date(), // MANDATORY
+    mondayFirst: false,
+    disablePastDays: false,
+    disableSwipe: false,
+    disableWeekend: false,
+    startDate:new Date(1989, 1, 26),
+    endDate:new Date(2024, 1, 26),
+    showDatepicker: false,
+    showTodayButton: true,
+    calendarMode: false,
+    hideCancelButton: false,
+    hideSetButton: false,
+    callback: function(value){
+        // your code
+        console.log(new Date(value).getTime());
+    }
+};
+})
 
 .controller('ChatsCtrl', function($scope,$ionicLoading) {
   $scope.userMessage={

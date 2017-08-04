@@ -138,3 +138,5 @@
 .css_old{border:1px solid #0a9dc7;}
 .dash-item{height:20px;line-height:20px;text-align:center;}
 
+/*简单的广告轮播*/
+.dash-items{width:100%;background-color:#ff0;height:20px;text-align:center;}
