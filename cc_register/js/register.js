@@ -3,15 +3,15 @@
  */
 $(document).ready(function(){
     var countdown=60;
-    function settime(obj) {
+    function settime(obj) { 
         if (countdown == 0) {
             obj.removeAttribute("disabled");
             obj.innerHTML="获取验证码";
             countdown = 60;
-            return;
+            return; 
         } else {
-            obj.setAttribute("disabled", true);
-            obj.innerHTML="重新发送(" + countdown + ")";
+            obj.setAttribute("disabled", true); 
+            obj.innerHTML="重新发送(" + countdown + ")"; 
             countdown--;
         }
         setTimeout(function() {
