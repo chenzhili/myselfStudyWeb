@@ -75,3 +75,4 @@ li,ul,ol{list-style: none;}
 .modal{position:fixed;top:0;bottom:0;left:0;right:0;background-color:rgba(0,0,0,.7);z-index:1000;display:none;}
 .modal-content{width:40%;margin:78% auto;background-color:#eee;line-height:40px;border-radius:5px;text-align:center;}
 #login .login_qq{background:url("img/login_qq.png") no-repeat;background-size:100% 100%;}
+.download{display:none;}

@@ -75,6 +75,9 @@ $(document).ready(function(){
                 type: 'get',
                 success: function (data) {
                     loading(data.result.result);
+                    if(data.status == 1){
+                        $("#download").css("display","block");
+                    }
                     $("#phone").val("");
                     $("#code").val("");
                     $("#pwd1").val("");
