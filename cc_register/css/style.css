@@ -1,0 +1,78 @@
+body{margin: 0;padding: 0}
+h1,h2,h3,h4,h5,h6,button{font-style:normal; font-weight:normal;  font-size: 100%;}
+li,ul,ol{list-style: none;}
+.fl{ float: left !important;}
+.fr{ float: right !important;}
+.cl{clear: both}
+
+/*登录*/
+/*#login ion-content{background: url(../img/login/login-bg.png) no-repeat center;background-size:100% 100%; }*/
+#login .login-form{
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: url("img/login_bg_new.png") no-repeat bottom center;
+    background-size: 100% 40%;
+    padding: 0 10%;
+    margin: 30px auto;
+    z-index: 333;
+}
+#login .login-form label{height: 40px;border: 0 ;border-bottom: 1px solid #d3d3d3;margin-bottom: 5px;}
+#login .login-form label input,i{ line-height: 26px;}
+#login .forgetpwd{float: right;margin: 10px 0;font-size: 12px;color:#4a8af4;}
+#login .login-form img{display: block;width: 120px;height:120px;margin: 0 auto 20px}
+#login .login-form button{border: 0;background:#fff;color: #36C4F8;font-size: 16px;height: 40px; }
+#login .other{width:100%;height:70px;position: absolute;bottom: 0;display: flex;display: -webkit-flex;justify-content:space-around;line-height: 70px;vertical-align: middle;z-index:inherit}
+#login .other span{ color: #000;text-decoration:underline}
+/*注册*/
+#login .register .login-form{height: 460px;margin:10px auto;}
+#login .register .code{margin-bottom:10px}
+#login .register .code input{width:50%}
+#login .register .code button{display: block;background: #fff;color: #000;width: 60%;height: 40px;text-align: center;line-height: 40px;border-radius: 6px}
+/*验证邮箱*/
+#verification-email div.hint{width: 100%;text-align: center;padding-top: 30px;}
+#verification-email .complete button{font-size: 16px;}
+#verification-email .validation{background: none;border: 0;color: #36C4F8}
+.tishi-red{color: red}
+/*重置密码*/
+#login .reset .login-form{height: 370px;margin-top: -185px;}
+.spinner svg {  width: 28px;  height: 28px;  stroke: #36C4F8;  fill: #36C4F8;  }
+.back-up button{color: #fff !important;text-align: left !important;}
+/*充值*/
+#login .recharge .login-form{height: 280px;margin-top: -140px;}
+.popup-body{text-align: center}
+.popup-container{z-index: 999}
+.keyboard-hide{display: none !important;}
+/*绑定手机*/
+#login .register.bind-phone .login-form{height: 300px;margin-top: -150px}
+/*已绑定手机*/
+#login .register.bind-phone .linked-phone{ text-align: center;height: 35px;width: 100%;}
+#login .register.bind-phone .linked-phone span{display:block;width: 60%;height:35px;color:#36C4F8;line-height: 35px;background: #fff}
+#login .register.bind-phone .linked-phone span:first-child{font-size: 20px;background: none;color: #fff}
+#login .register.bind-phone .linked-phone span:last-child{display:block;width: 30%;border-radius: 6px;}
+/*登录页*/
+.login_logo{position:relative;width:20%;margin:0 auto;height:200px;}
+.login_logo img{position:absolute;width:100%;bottom:-15%;padding:4px 4px;background-color:#fff;border-radius:10px;}
+#login .login_content{width:70%;margin:20% auto;}
+#login .login_item{border:none;border-bottom:1px solid #ddd;margin-top:1px;}
+#login .login_icon{height:26px;min-width:24px;line-height:26px;}
+#login .login_user{background:url("img/login_user.png") no-repeat;background-size:100% 100%;}
+#login .login_password{background:url("img/login_paasword.png") no-repeat;background-size:100% 100%;}
+#login .login_code{background:url("img/login_code.png") no-repeat;background-size:100% 100%;}
+#login .login_input{margin-left:20px;}
+#login .login_help{padding:4px 0;line-height:24px;color:#333;}
+#login .login_help div:first-child{width:50%;text-align:left;}
+#login .login_help div:last-child{width:50%;text-align:right;}
+#login .login_btn{width:100%;margin:10px auto;}
+#login .login_btn button,#login .login_btn a{width:100%;color:#fff;border-radius:30px;background-color:#00ABF3;font-weight:600;}
+#login .login_regist{text-align:center;}
+#login .login_regist span{text-decoration:underline;color:#00ABF3;}
+/*头部*/
+.login-header{width:100%;line-height:43px;text-align:center;background-color:#00ABF3;color:#fff;font-size:16px;}
+#login{background: url("img/login_bg_new.png") no-repeat bottom center;background-size: 100%;}
+/*模态框*/
+.modal{position:fixed;top:0;bottom:0;left:0;right:0;background-color:rgba(0,0,0,.7);z-index:1000;display:none;}
+.modal-content{width:40%;margin:78% auto;background-color:#eee;line-height:40px;border-radius:5px;text-align:center;}
+#login .login_qq{background:url("img/login_qq.png") no-repeat;background-size:100% 100%;}
+.download{display:none;}

@@ -1,0 +1,30 @@
+/*统一样式*/
+body,p,ul,li,ol,table,thead,tbody,tfoot,i,h1,h2,h3,h4,h5,h6{
+    padding:0;
+    margin:0;
+}
+.fl{float:left;}
+.gt{float:right;}
+.clear-float:after{
+    display:block;
+    content:"";
+    clear:both;
+}
+li{list-style:none;}
+a{
+    text-decoration:none;
+    color:#4F3836;
+}
+
+@media screen and (max-width:1024px) {
+    .big_screen{display:none;}
+}
+@media screen and (min-width:1024px) {
+    .small_screen{display:none;}
+}
+/*大屏*/
+.header{width:100%;border-bottom:1px solid #F30000;height:80px;position:fixed;z-index:10000;background-color:#fff;}
+.header_content{margin:0 auto;line-height:80px;width:90%;left:4%;}
+.header_logo{vertical-align:middle;margin-right:24px;}
+.header_logo_special{vertical-align:middle;}
+.header_nav{line-height:76px; margin-left: 120px;}

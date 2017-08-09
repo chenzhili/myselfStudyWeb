@@ -34,7 +34,6 @@ angular.module('starter.controllers', [])
           timeMethod($scope.startTime);
           setTimeout(daoTime,1000);
         }*/
-
   var timeout = false; //启动及关闭按钮
   var method = function(ul){
     if($scope.n == -10){
@@ -241,7 +240,7 @@ angular.module('starter.controllers', [])
         }
       }
       $.ajax({
-        url: "http://www.yike1908.com/app/index.php?i=52&c=entry&m=yike_gas&do=application&op=application",
+        url: "http://192.168.1.112/yike_gentleman/app/index.php?i=1&c=entry&m=yike_ts_plan&do=image_upload",
         type:"post",
         data:data,
         cache: false,
@@ -268,8 +267,8 @@ angular.module('starter.controllers', [])
   })
 .controller("datePickerCtrl",function($scope){
   $scope.onezoneDatepicker = {
-    date: new Date(), // MANDATORY                     
-    mondayFirst: false,                
+    date: new Date(), // MANDATORY
+    mondayFirst: false,
     disablePastDays: false,
     disableSwipe: false,
     disableWeekend: false,
@@ -399,7 +398,7 @@ angular.module('starter.controllers', [])
   image.src = path;
   });
   };*/
-  
+
   $rootScope.disState = 1;
 })
 .controller("swipCtrl",function($scope){
@@ -425,7 +424,7 @@ angular.module('starter.controllers', [])
   var fun = 1;
   console.log(fun);
 })
-  .controller("gasQueryCtrl",function($scope){
+  .controller("gasQueryCtrl",function($scope,$ionicLoading){
     /*初始化*/
     function init(){
 
@@ -460,7 +459,7 @@ angular.module('starter.controllers', [])
         formData.append("gasQuery",$scope.userMessage.gasQuery);
       }
       $.ajax({
-        url: "http://www.yike1908.com/app/index.php?i=52&c=entry&m=yike_gas&do=application&op=application",
+        url: "http://192.168.1.112/yike_gentleman/app/index.php?i=1&c=entry&m=yike_ts_plan&do=image_upload",
         type:"post",
         data:formData,
         cache: false,
@@ -479,6 +478,10 @@ angular.module('starter.controllers', [])
         }
       })
     }
+    btn.onclick = function(){
+      document.getElementById("form").submit();
+    }
+
   })
   .controller("applyB1Ctrl",function($scope,Service){
     $scope.data={
@@ -550,7 +553,7 @@ angular.module('starter.controllers', [])
       $scope.n  = 10;
       var timeGet;
       $scope.beginTime = function(){
-        $scope.timeEnd = !$scope.timeEnd; 
+        $scope.timeEnd = !$scope.timeEnd;
         $timeout.cancel(timeGet);
         tiemGet = null;
         if(!$scope.timeEnd){
