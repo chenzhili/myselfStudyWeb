@@ -17,7 +17,7 @@ module.exports = {
 	    inline: true//实时刷新
   	},
 
-  	module:{
+  	module:{ 
   		rules:[ //rules和loaders效果一样，但是现在3点几的版本用的是rules
   			{
   				test:/\.css$/,
