@@ -2,6 +2,28 @@
  * Created by YK on 2017/8/1.
  */
 $(document).ready(function(){
+    /*用于自己测试定时器的用法*/
+    var isOver = false;
+    var bengin,time = 10;
+    function benginTime(){
+        var dom = document.getElementById("time");
+        if(isOver){
+            dom.innerHTML = "点击";
+            time = 10;
+            isOver = false;
+            return;
+        }else{
+            dom.innerHTML = "倒计时还有"+time;
+            if(time == 1){
+                isOver = true;
+            }
+            time--;
+        }
+        bengin = setTimeout(benginTime,1000);
+    }
+    document.querySelector("#time").onclick = function(){
+      benginTime();
+    };
     var countdown=60;
     function settime(obj) { 
         if (countdown == 0) {
