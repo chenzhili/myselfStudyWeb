@@ -3,6 +3,7 @@
  */
 var gulp = require("gulp");
 var $ = require("gulp-load-plugins")();
+const open = require("open");
 
 var sourPaths = {
     cssSource:["css/**/*.css","css/**/*.min.css"],
@@ -42,6 +43,7 @@ gulp.task("server",function(){
         livereload:true,
         port:8888
     });
+    open('http://localhost:8888/register.html');
 });
 gulp.task("watch",function(){
     gulp.watch(sourPaths.cssSource,["css"]);
