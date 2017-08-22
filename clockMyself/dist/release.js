@@ -1,0 +1,1 @@
+window.onload=function(){var n=document.getElementById("canvas"),i=n.getContext("2d");n.width=window.innerWidth,n.height=window.innerWidth;var t=new Image;t.src="img/clock.png",t.onload=function(){i.drawImage(t,0,0,t.width,t.height,0,0,n.width,n.height)}};
