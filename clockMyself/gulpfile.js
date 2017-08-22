@@ -27,7 +27,7 @@ gulp.task("css",function(){
 gulp.task("js",function(){
     gulp.src(sourPaths.jsSource)
         .pipe($.concat("release.js"))
-        .pipe($.uglify())
+        /*.pipe($.uglify())*/
         .pipe(gulp.dest(sourPaths.prod))
         .pipe($.connect.reload());
 });
