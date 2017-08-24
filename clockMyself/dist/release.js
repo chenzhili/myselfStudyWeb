@@ -304,6 +304,11 @@ window.onload = function(){
     clock.initPainting();
 };
 /*顺便没事加强自己对git，命令行提交的技能补充*/
-/*
-
+/*  地址 ：http://www.jianshu.com/p/072587b47515
+    一般git到远程仓库分为3个步骤：
+    1、将工作区修改的文件让git进行管理，放到暂存区域  git add . （把所有更改的文件让git管理）
+    2、将暂存区域的内容提交到本地仓库 git commit -m "这里是提交的信息，用英文"
+    3、将本地仓库提交到远程仓库 git push <远程分支>   (写法 ：git push origin(远程) master(分支)) **一种情形强行推送，不管又冲突没 git push <远程> --force
+        推送所有分支到远程 git push <远程> --all
+    **** 当然还有很多其他的，关于 分支、回滚、分支合并之类的，其中的区别 都在 上面的地址里
  */
