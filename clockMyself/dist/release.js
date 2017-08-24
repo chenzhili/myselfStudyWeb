@@ -303,3 +303,7 @@ window.onload = function(){
     var clock = new Clock(document.getElementById("canvas"),"img/clock.png","img/h.png","img/m.png","img/s.png");
     clock.initPainting();
 };
+/*顺便没事加强自己对git，命令行提交的技能补充*/
+/*
+
+ */
