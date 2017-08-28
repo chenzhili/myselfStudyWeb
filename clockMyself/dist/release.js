@@ -313,5 +313,4 @@ window.onload = function(){
     3、将本地仓库提交到远程仓库 git push <远程分支>   (写法 ：git push origin(远程) master(分支)) **一种情形强行推送，不管又冲突没 git push <远程> --force
         推送所有分支到远程 git push <远程> --all
     **** 当然还有很多其他的，关于 分支、回滚、分支合并之类的，其中的区别 都在 上面的地址里
-    * 实验一遍 
  */
