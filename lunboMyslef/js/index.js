@@ -11,7 +11,7 @@ window.onload = function(){
         n:0, /*记住总共的步数是否到了，到了停掉定时器*/
         state:0 /*停止定时器*/
     };
-    /*获取图片资源*/
+    /*获取图片资源*/ 
     var imgs = document.querySelectorAll(".car-item");
     console.log(imgs);
     var img_number = 0;

@@ -8,7 +8,7 @@ const open = require("open");
 var sourPaths = {
     cssSource:["css/*.css"],
     jsSource:["js/*.js"],
-    imgSource:"img/*.png",
+    imgSource:"img/*.jpg",
     htmlSource:"*.html",
     prod:"dist/"
 };
@@ -35,7 +35,7 @@ gulp.task("img",function(){
     gulp.src(sourPaths.imgSource)
         .pipe($.imagemin())
         .pipe(gulp.dest(sourPaths.prod+"img/"))
-        .pipe($.connect.reload());
+        .pipe($.connect.reload()); 
 });
 gulp.task("server",function(){
     $.connect.server({
