@@ -19,22 +19,41 @@ window.onload = function(){
         img_number++;
         if(img_number == l){
             beginTime();
+            mouseEnter();
         }
     }
     /*启动定时器的方法*/
     function beginTime(){
         caroObj.totalStep = caroObj.step * (imgs.length-1);
-        if(caroObj.n == caroObj.totalStep){
+        /*if(caroObj.n == caroObj.totalStep){
             caroObj.state = 1;
-        }
+        }*/
         if(caroObj.state) return;
         caroObj.distanceDetail = caroObj.itemDistance/caroObj.step/imgs.length;
         caroObj.ele.style.left = parseFloat(getComputedStyle(caroObj.ele).left) + -1 * caroObj.distanceDetail + "px";
         caroObj.n++;
+        imgAppend(caroObj.n);
         caroObj.Time = setTimeout(beginTime,caroObj.time)
     }
     /*每轮播完一个图片就切除放到最后*/
-    function imgAppend(){
+    function imgAppend(n){
+        if(n%caroObj.step == 0 && n != 0){
+            console.log("完成一个图片");
+            var firstImg = document.getElementsByClassName("car-item")[0];
+            var parentDom = document.querySelectorAll(".carousel-content")[0];
+            console.log(firstImg);
+            caroObj.ele.removeChild(firstImg);
+            parentDom.appendChild(firstImg);
+            caroObj.ele.style.left = 0;
+        }
 
+    }
+    /*鼠标进入，停止定时器*/
+    function mouseEnter(){
+        console.log(caroObj.ele);
+        caroObj.ele.addEventListener("mousehover",function(){
+            console.log("停止了");
+            caroObj.state = 1;
+        });
     }
 };
