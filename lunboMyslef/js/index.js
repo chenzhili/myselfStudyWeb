@@ -13,8 +13,12 @@ window.onload = function(){
         n:0, /*记住总共的步数是否到了，到了停掉定时器*/
         state:0, /*停止定时器*/
         stateAdd:0, /*停止补全定时器*/
-        onlyOne:1 /*补全函数只执行一次*/
+        onlyOne:1, /*补全函数只执行一次*/
+        addIsOver:0 /*补全动画是否完成*/
     };
+    /*获取 actve item的资源*/
+    var pageItems = document.querySelectorAll(".page-item");
+    var regExp = /\s*?active/g;
     /*获取图片资源*/ 
     var imgs = document.querySelectorAll(".car-item");
     var img_number = 0;
@@ -27,6 +31,14 @@ window.onload = function(){
     }
     /*启动定时器的方法*/
     function beginTime(){
+        /*这里是让对应的 active 点亮*/
+        var imgActive = document.querySelectorAll(".car-item")[0].dataset.position;
+        for(var i=0,l=pageItems.length;i<l;i++){
+            pageItems[i].className = pageItems[i].className.replace(regExp,"");
+            if(imgActive == pageItems[i].dataset.active){
+                pageItems[i].className += " active";
+            }
+        }
         caroObj.totalStep = caroObj.step * (imgs.length-1);
         /*if(caroObj.n == caroObj.totalStep){
             caroObj.state = 1;
@@ -54,7 +66,6 @@ window.onload = function(){
                 beginTime();
             },1000)
         }
-
     }
     /*存储手指的位置等信息*/
     var gestureMessage = {
@@ -95,16 +106,22 @@ window.onload = function(){
         });
         /*手指在屏幕上滑动*/
         caroObj.ele.addEventListener("touchmove",function(e){
-            caroObj.stateAdd = 1;
-            gestureMessage.endX = e.touches[0].clientX;
-            var cha = gestureMessage.endX-gestureMessage.startX;
-            caroObj.ele.style.left = parseFloat(getComputedStyle(caroObj.ele).left) + cha + "px";
-            gestureMessage.startX = e.touches[0].clientX;
+            if(caroObj.addIsOver == 1){
+                caroObj.stateAdd = 1;
+                gestureMessage.endX = e.touches[0].clientX;
+                var cha = gestureMessage.endX-gestureMessage.startX;
+                caroObj.ele.style.left = parseFloat(getComputedStyle(caroObj.ele).left) + cha + "px";
+                gestureMessage.startX = e.touches[0].clientX;
+            }
             return false;
         });
         /*手指触摸结束*/
         caroObj.ele.addEventListener("touchend",function(e){
-            /*console.log(e.target.parentNode);*/
+            /*为了判断当前图片的位置*/
+            var targetPosition = e.target.parentNode.dataset.position;
+            var imgs = document.querySelectorAll(".car-item");
+            var firstImgPosition = imgs[0].dataset.position;
+            var lastImgPosition= imgs[imgs.length-1].dataset.position;
             /*
             * e.touches[0].clientX 在这里不存，需要用 e.changedTouches[0].clientX 来获取对应的触摸的坐标，这个要注意
             * */
@@ -119,18 +136,57 @@ window.onload = function(){
                     gestureMessage.i = 1;
                     toucheAddImgFinish(gestureMessage.i);
                 }else{
-                    /*补充到下一张图片*/
-                    gestureMessage.addDistance = gestureMessage.itemImg - cha*(-1);
-                    gestureMessage.itemDistance = gestureMessage.addDistance/gestureMessage.step;
-                    gestureMessage.i = -1;
-                    toucheAddImgFinish(gestureMessage.i);
+                    /*如果当前为最后一张图片，就一直留在当前图片的补全，不是就补充下一张*/
+                    if(lastImgPosition == targetPosition){
+                        gestureMessage.addDistance = cha*(-1);
+                        gestureMessage.itemDistance = gestureMessage.addDistance/gestureMessage.step;
+                        gestureMessage.i = 1;
+                        toucheAddImgFinish(gestureMessage.i);
+                    }else{
+                        /*补充到下一张图片*/
+                            /*这里是 让对应的 active*/
+                        for(var i=0,l=pageItems.length;i<l;i++){
+                            pageItems[i].className = pageItems[i].className.replace(regExp,"");
+                            if(((Number(targetPosition)+1 == 5)?1:(Number(targetPosition)+1)) == pageItems[i].dataset.active){
+                                pageItems[i].className += " active";
+                            }
+                        }
+                        gestureMessage.addDistance = gestureMessage.itemImg - cha*(-1);
+                        gestureMessage.itemDistance = gestureMessage.addDistance/gestureMessage.step;
+                        gestureMessage.i = -1;
+                        toucheAddImgFinish(gestureMessage.i);
+                    }
                 }
             }else{
                 if(cha <= gestureMessage.itemImg/2){
                     /*补充到当前图片*/
+                    gestureMessage.addDistance = cha;
+                    gestureMessage.itemDistance = gestureMessage.addDistance/gestureMessage.step;
+                    gestureMessage.i= -1;
+                    toucheAddImgFinish(gestureMessage.i);
                 }else{
-                    /*补充到上一张图片*/
+                    /*如果当前为第一张图片，就一直留在当前图片，否则就补全上一张图片的动画*/
+                    if(firstImgPosition == targetPosition){
+                        gestureMessage.addDistance = cha;
+                        gestureMessage.itemDistance = gestureMessage.addDistance/gestureMessage.step;
+                        gestureMessage.i= -1;
+                        toucheAddImgFinish(gestureMessage.i);
+                    }else{
+                        /*补充到上一张图片*/
+                            /*让对应的 active*/
+                        for(var i=0,l=pageItems.length;i<l;i++){
+                            pageItems[i].className = pageItems[i].className.replace(regExp,"");
+                            if(((Number(targetPosition)-1)?(Number(targetPosition)-1):4) == pageItems[i].dataset.active){
+                                pageItems[i].className += " active";
+                            }
+                        }
+                        gestureMessage.addDistance = gestureMessage.itemImg - cha;
+                        gestureMessage.itemDistance = gestureMessage.addDistance/gestureMessage.step;
+                        gestureMessage.i= 1;
+                        toucheAddImgFinish(gestureMessage.i);
+                    }
                 }
+                /*这里最后如果没有进行任何操作，就会再次启动定时器*/
             }
             return false;
         });
@@ -156,6 +212,7 @@ window.onload = function(){
                 addImgFinish(caroObj.n);
             },caroObj.time);
         }else{
+            caroObj.addIsOver = 1;
             caroObj.n++;
             caroObj.stateAdd = 1;
             /*这里没必要删除前面的图片，这里没有在让他自动轮播，这里可以解决当触摸发生左右滑动的时候，去添加和删除图片的删除，还有执行过程中的不定性
@@ -169,3 +226,23 @@ window.onload = function(){
         }
     }
 };
+/*成都户口落户所需要的材料*/
+/*
+1、天府新区集体户户主内页、空白内页的领取
+*毕业证    原件  复印件 2
+*身份证    原件  复印件 2
+*户口本    原件  复印件 2
+*学信网学历证明  复印件 2
+* */
+/*
+2、申请人 无房证明 原件
+* 只需要带上身份证到特定 地方去
+* */
+/*
+3、落户集体户所需材料
+* 入户申请表  （有）
+* 毕业证书 原件 复印件  （有）
+* 居民户口簿和身份证 原件 复印件  （有）
+* 申请人 无房证明 原件 （无）
+* 集体户户主内页、空白内页 （代办）
+* */

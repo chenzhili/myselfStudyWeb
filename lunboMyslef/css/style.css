@@ -16,3 +16,4 @@ html,body,p,h1,h2,h3,h4,table,tbody,tfoot,thead,tr,td{padding:0;margin:0;}
 .car-item img{width:100%;height:auto;vertical-align:middle;}
 .carousel-page{position:absolute;bottom:5%;left:60%;}
 .page-item{width:10px;height:10px;border-radius:50%;background-color:#fff;margin-right:4px;}
+.page-item.active{background-color:#f00;}
