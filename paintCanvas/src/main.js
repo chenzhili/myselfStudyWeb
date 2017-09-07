@@ -157,7 +157,21 @@ var Paint = (function(){
     }
     return Paint;
 })();
+function paintText(text,background,color){
+    var canvas = document.createElement("canvas");
+    canvas.width = 100;
+    canvas.height = 30;
+    var ctx = canvas.getContext("2d");
+    ctx.fillStyle = "#6364C6";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.font = "normal 16px arial";
+    ctx.fillStyle = "#fff";
+    ctx.fillText("联系客服",18,20);
+    return canvas.toDataURL("image/png");
+}
 window.onload = function(){
     var paiting = new Paint(window.innerWidth,window.innerWidth,"#fff",document.getElementById("box"),"img/img/bg-1.jpg");
     paiting.generateCanvasAndEdit();
+    var a=paintText();
+    console.log(a);
 };
