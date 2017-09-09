@@ -1,0 +1,18 @@
+/*样式重置*/
+html{font-size:16px;font-family:"microsoft yahei"}
+html,body,p,h1,h2,h3,h4,table,tbody,tfoot,thead,tr,td{padding:0;margin:0;}
+.fl{float:left;}
+.fr{float:right;}
+.clear-f:after{
+    content:"";
+    display:table;
+    clear:both;
+}
+
+/*轮播图样式*/
+.carousel{overflow:hidden;width:100%;position:relative;}
+.carousel .carousel-content{width:400%;position:relative;}
+.car-item{width:25%;}
+.car-item img{width:100%;height:auto;vertical-align:middle;}
+.carousel-page{position:absolute;bottom:5%;left:60%;}
+.page-item{width:10px;height:10px;border-radius:50%;background-color:#fff;margin-right:4px;}
