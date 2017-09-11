@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width"> -->
+    <title>c3动画实现等待圈</title>
+    <link rel="stylesheet" href="mian.css">
+    <style type="text/css">
+        .container{
+            position:absolute;
+            top:50%;
+            left:50%;
+            width:100px;
+            height:100px;
+            transform: translateX(-50%) translateY(-50%);
+            perspective: 400px;
+        }
+        .rotate{
+            position:absolute;
+            width:100px;
+            height:100px;
+            border-radius:50%;
+        }
+        .cub{
+            position:absolute;
+            width:100px;
+            height:100px;
+            transform-style: preserve-3d; /*这个属性很重：使被转换的子元素保留其 3D 转换：*/
+            transform-origin:50% 50%;
+            animation:main-roate 4s ease-in-out infinite;
+        }
+        @keyframes main-roate{
+            0% {transform:rotateX(0deg) rotateY(0deg) rotateZ(0deg);}
+            33.3% {transform:rotateX(360deg) rotateY(0deg) rotateZ(0deg);}
+            66.7%{transform:rotateX(360deg) rotateY(360deg) rotateZ(0deg);}
+            100% {transform:rotateX(360deg) rotateY(360deg) rotateZ(360deg);}
+        }
+        .slide-qian{
+            transform:translateZ(100px);
+            background-color:#41C3AC;
+            /*z-index:100;*/
+        }
+        .slide-hou{
+            transform:translateZ(-100px);
+            background-color:#32526E;
+            /*z-index:10;*/
+        }
+        /*旋转过后，x,y,z轴会随着旋转而变动，试点是在中心屏幕前的 400px*/
+        .slide-top{
+            transform:rotateX(90deg) translateZ(100px);
+            background-color:#FFCC5C;
+        }
+        .slide-bottom{
+            transform:rotateX(90deg) translateZ(-100px);
+            background-color:#FFCC5C;
+        }
+        .slide-left{
+            transform:rotateY(90deg) translateZ(-100px);
+            background-color:#FF884D;
+        }
+        .slide-right{
+            transform:rotateY(90deg) translateZ(100px);
+            background-color:#65A2C5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="cub">
+            <div class="rotate slide-hou"></div>
+            <div class="rotate slide-qian"></div>
+            
+            <div class="rotate slide-top"></div>
+            <div class="rotate slide-bottom"></div>
+            <div class="rotate slide-left"></div>
+            <div class="rotate slide-right"></div>
+        </div>
+    </div>
+</body>
+</html>
