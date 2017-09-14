@@ -8,7 +8,7 @@ const open = require("open");
 var sourPaths = {
     cssSource:["css/*.css"],
     jsSource:["js/*.js"],
-    imgSource:"img/*.jpg",
+    imgSource:["img/*.jpg","img/*.png"],
     htmlSource:"*.html",
     prod:"dist/"
 };
@@ -41,9 +41,9 @@ gulp.task("server",function(){
     $.connect.server({
         root:"dist",
         livereload:true,
-        port:8888
+        port:8686
     });
-    open('http://localhost:8888/index.html');
+    open('http://localhost:8686/index.html');
 });
 gulp.task("watch",function(){
     gulp.watch(sourPaths.cssSource,["css"]);
