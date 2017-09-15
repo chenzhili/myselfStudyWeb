@@ -3,6 +3,11 @@ let video = document.getElementById("video");
 let operate = document.getElementById("operate");
 let bar = document.getElementsByClassName("progressbar")[0];
 let playPause = document.getElementsByClassName("play-pause")[0];
+let currentTime = document.getElementsByClassName("current")[0];
+let duration = document.getElementsByClassName("duration")[0];
+let progressBar = document.getElementsByClassName("progress-bar")[0];
+let barActive = document.getElementsByClassName("bar-active")[0];
+let circle = document.getElementsByClassName("circle")[0];
 let play = {
   playAndPause:0,
   showAndHideBar:false,
@@ -13,7 +18,15 @@ let play = {
   barTime:null, /*bar自动隐藏的定时器*/
   cssDisplayTime:null, /*把对应隐藏的 bar 的display 属性 转变成 none*/
   cssDisplayPlayTime:null, /*这是在双击暂停的时候，出现的图标的隐藏定时器*/
-  operateTime:null /*对于隐藏图标的定时器*/
+  operateTime:null, /*对于隐藏图标的定时器*/
+  currentTime:0, /*现在的播放时间*/
+  duration:0, /*总时长*/
+  barTotalWidth:parseInt(getComputedStyle(progressBar).width), /*获取进度条的总长度*/
+  touchStartX:0, /*触摸开始的位置*/
+  touchEndX:0, /*触摸结束的位置*/
+  touchInitX:0, /*初始化的位置*/
+  barClientStartX:progressBar.getBoundingClientRect().left, /*获取进度条距离左边的距离*/
+  barClientEntX:progressBar.getBoundingClientRect().left+parseInt(getComputedStyle(progressBar).width), /*获取进度条距离右边的距离*/
 };
 /*这种方法过时了*/
 /*operate.addEventListener("doubleclick",(e)=>{
@@ -33,6 +46,9 @@ let play = {
     platState.playAndPause++;
     return false;
 });*/
+/*
+* video.currentTime 通过指定这个值让视频播放指定的地方
+* */
 /**
  * 播放视屏的步骤需求
  * 1、页面ui的实现，底部滚动条，依次的按钮为，播放/暂停 播放时长/总时长 进度条 全屏(这是在竖屏的情况，横屏情况下还未考虑)
@@ -61,8 +77,10 @@ function trunBase64(src){
 /*trunBase64("img/play_black.png");*/
 /**
  * 需要添加的class和删除的class
+ * @param el
  * @param add
  * @param remove
+ * @returns {string}
  */
 function addClassAndRemove(el,add,remove){
     let classes = el.className;
@@ -135,7 +153,55 @@ playPause.addEventListener("click",()=>{
         video.pause();
     }
     rotateHideShow(funTrue,funFalse);
+    play.playAndPause = !play.playAndPause;
     return false;
+});
+/**
+ * 让时间动起来
+ */
+video.addEventListener("timeupdate",(e)=>{
+    let video = e.target;
+    play.duration = video.duration;
+    play.currentTime = video.currentTime;
+    duration.innerHTML = convertTime(play.duration);
+    currentTime.innerHTML = convertTime(play.currentTime);
+    barCss(play.currentTime,play.duration);
+});
+/**
+ * 拖拽滚动球
+ */
+circle.addEventListener("touchstart",(e)=>{
+    video.pause();
+    circle.className = "circle radiusGradient";
+    play.barTime && clearTimeout(play.barTime);
+    bar.style.display = "block";
+    bar.style.opacity = "1";
+    play.touchStartX = e.touches[0].clientX;
+    play.touchInitX = e.touches[0].clientX;
+});
+circle.addEventListener("touchmove",(e)=>{
+    /*if(e.touches[0].clientX < play.barClientStartX){
+        e.touches[0].clientX = play.barClientStartX;
+    }
+    if(e.touches[0].clientX > play.barClientEntX){
+        e.touches[0].clientX = play.barClientEntX;
+    }*/
+    circle.style.left = parseInt(circle.style.left) + e.touches[0].clientX - play.touchStartX +"px";
+    if(parseInt(circle.style.left) < 0){
+        circle.style.left = 0;
+    }
+    if(parseInt(circle.style.left) > parseInt(getComputedStyle(progressBar).width)){
+        circle.style.left = getComputedStyle(progressBar).width;
+    }
+    barActive.style.width = circle.style.left;
+    play.touchStartX = e.touches[0].clientX;
+});
+circle.addEventListener("touchend",(e)=>{
+    circle.className = "circle";
+    play.touchEndX = e.changedTouches[0].clientX;
+    let addTime = (play.touchEndX-play.touchInitX)*play.duration/parseInt(getComputedStyle(progressBar).width);
+    video.currentTime +=addTime;
+    video.play();
 });
 /**
  * 不进行任何操作的情况下，过 2s 隐藏 bar
@@ -171,6 +237,35 @@ function rotateHideShow(funTrue,funFalse){
     }
     play.btnRotateHideShow = !play.btnRotateHideShow;
 }
+/**
+ * 格式化时间
+ * @param time
+ * @returns {string}
+ */
+function convertTime(time){
+    let h,hSplit,m,s;
+    h = Math.floor(time/60/60);
+    h = h < 10?"0"+h:h;
+    h = Number(h) || "";
+    hSplit = h?h+":":"";
+    m = Math.floor((time-h*60*60)/60);
+    m = m < 10?"0"+m:m;
+    s = Math.floor(time%60);
+    s = s < 10?"0"+s:s;
+    return `${hSplit}${m}:${s}`
+}
+/**
+ * 进度条进度样式函数
+ * @param currentTime
+ * @param duration
+ */
+function barCss(currentTime,duration){
+    let currentDistance = play.barTotalWidth*currentTime/duration;
+    barActive.style.width = currentDistance+"px";
+    circle.style.left = currentDistance+"px";
+}
 window.onload = function(){
     hideBar(bar);
+    console.log(play.barClientStartX);
+    console.log(play.barClientEntX);
 };
