@@ -19,12 +19,56 @@
             ********** 这里有个新的 东西，可以在纯 css中用到的属性，可以通过 calc()对于尺寸进行就算，这个对于布局很有用处；
                 目前知道的使用场景 ：对于 背景图片对于右边或者下边的 距离的布局 等等；
         */
+        body{padding:0;margin:0;}
+        .fl{float:left;}
+        .fr{float:right;}
+        .clear-float:after{
+            content:"";
+            display:table;
+            clear:both;
+        }
+        .title{line-height:30px;margin-top:80px;padding:10px;}
+        .title input{width:50%;color:#aaa;text-align:center;}
+        .num{width:40px;height:40px;object-fit:none;margin-right:6px;transition:object-position .25s;}
+        .num0 { object-position: 0 0; }
+        .num1 { object-position: 0 -40px; }
+        .num2 { object-position: 0 -80px; }
+        .num3 { object-position: 0 -120px; }
+        .num4 { object-position: 0 -160px; }
+        .num5 { object-position: 0 -200px; }
+        .num6 { object-position: 0 -240px; }
+        .num7 { object-position: 0 -280px; }
+        .num8 { object-position: 0 -320px; }
+        .num9 { object-position: 0 -360px; }
     </style>
 </head>
 <body>
-    <div style="width:80%;height:100px;display:flex;margin:100px auto;">
+    <!--<div style="width:80%;height:100px;display:flex;margin:100px auto;">
         <img src="img/play_black.png" style="margin:auto;width:100%;height:100%;object-fit:contain;object-position:calc(100% - 20px) calc(100% - 10px)">
     </div>
-    <div style="width:100px;height:100px;border:1px solid #ddd;background:url('img/play_black.png') no-repeat calc(100% - 20px) calc(100% - 10px);background-size:10% 10%;"></div>
+    <div style="width:100px;height:100px;border:1px solid #ddd;background:url('img/play_black.png') no-repeat calc(100% - 20px) calc(100% - 10px);background-size:10% 10%;"></div>--><!--这两个属性可以做简单的轮播效果-->
+<!--对于这两个属性的实际运用，实现数字任意翻转-->
+ <div class="title">
+     <span>显示100-999数字的翻转效果</span> <br>
+     <input type="number" value="245" min="100" max="999" id="numChange">
+ </div>
+<div class="nums clear-float">
+    <img class="num num2 fl" src="img/nums.png" alt="此图片不存在">
+    <img class="num num5 fl" src="img/nums.png" alt="此图片不存在">
+    <img class="num num5 fl" src="img/nums.png" alt="此图片不存在">
+</div>
+<script>
+    var changeNum = document.getElementById("numChange");
+    var img = document.getElementsByClassName("num");
+    if(window.addEventListener){
+        changeNum.addEventListener("change",function(e){
+            if(!this.value || this.value<100 || this.value > 999){this.value = 245}
+            this.value.split("").forEach(function(v,i){
+               img[i].className = "num num"+v+" fl";
+            });
+            return false;
+        })
+    }
+</script>
 </body>
 </html>
