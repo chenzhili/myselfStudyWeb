@@ -168,7 +168,7 @@ video.addEventListener("timeupdate",(e)=>{
     barCss(play.currentTime,play.duration);
 });
 /**
- * 拖拽滚动球
+ * 拖拽滚动球进行快进
  */
 circle.addEventListener("touchstart",(e)=>{
     video.pause();
@@ -178,6 +178,7 @@ circle.addEventListener("touchstart",(e)=>{
     bar.style.opacity = "1";
     play.touchStartX = e.touches[0].clientX;
     play.touchInitX = e.touches[0].clientX;
+    return false;
 });
 circle.addEventListener("touchmove",(e)=>{
     /*if(e.touches[0].clientX < play.barClientStartX){
@@ -195,6 +196,7 @@ circle.addEventListener("touchmove",(e)=>{
     }
     barActive.style.width = circle.style.left;
     play.touchStartX = e.touches[0].clientX;
+    return false;
 });
 circle.addEventListener("touchend",(e)=>{
     circle.className = "circle";
@@ -202,6 +204,22 @@ circle.addEventListener("touchend",(e)=>{
     let addTime = (play.touchEndX-play.touchInitX)*play.duration/parseInt(getComputedStyle(progressBar).width);
     video.currentTime +=addTime;
     video.play();
+    return false;
+});
+/**
+ * 活动屏幕进行快进和后退
+ */
+video.addEventListener("touchstart",(e)=>{
+    console.log(1);
+    return false;
+});
+video.addEventListener("touchmove",(e)=>{
+    console.log(2);
+    return false;
+});
+video.addEventListener("touchend",(e)=>{
+    console.log(3);
+    return false;
 });
 /**
  * 不进行任何操作的情况下，过 2s 隐藏 bar

@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','onezone-datepicker','oc.lazyLoad'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','onezone-datepicker'])
 
 .run(function($ionicPlatform,$rootScope) {
   /*var left,top,totalHeight = window.screen.availHeight,totalWidth = window.screen.availWidth;*/
@@ -95,7 +95,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','o
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider,$ocLazyLoadProvider) {
+.config(function($stateProvider, $urlRouterProvider) {
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -116,12 +116,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','o
     url: '/dash',
     views: {
       'tab-dash': {
-        templateUrl: 'templates/tab-dash.html'
-        /*controller: 'DashCtrl'*/
+        templateUrl: 'templates/tab-dash.html',
+        controller: 'DashCtrl'
       }
-    },
-    resolve:{
-
     }
   })
 

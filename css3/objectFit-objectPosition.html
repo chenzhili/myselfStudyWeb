@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>object-position 和 object-fit</title>
+    <style>
+        /*
+            理解这两个属性的网址 http://www.zhangxinxu.com/wordpress/2015/03/css3-object-position-object-fit/
+            记住一点，这个两个是为了 设置 一种特殊标签元素 替换元素（比如img，video，输入框家族等；）操作 替换内容的
+            object-fit的属性以及表示的意义：
+                fill: 中文释义“填充”。默认值。替换内容拉伸填满整个content box, 不保证保持原有的比例。
+                contain: 中文释义“包含”。保持原有尺寸比例。保证替换内容尺寸一定可以在容器里面放得下。因此，此参数可能会在容器内留下空白。
+                cover: 中文释义“覆盖”。保持原有尺寸比例。保证替换内容尺寸一定大于容器尺寸，宽度和高度至少有一个和容器一致。因此，此参数可能会让替换内容（如图片）部分区域不可见。
+                none: 中文释义“无”。保持原有尺寸比例。同时保持替换内容原始尺寸大小。
+                scale-down: 中文释义“降低”。就好像依次设置了none或contain, 最终呈现的是尺寸比较小的那个。
+            object-position:与background-size的意义一样
+                object-position: calc(100% - 20px) calc(100% - 10px);（这种用于相对于右边布局的方式）
+            ********** 这里有个新的 东西，可以在纯 css中用到的属性，可以通过 calc()对于尺寸进行就算，这个对于布局很有用处；
+                目前知道的使用场景 ：对于 背景图片对于右边或者下边的 距离的布局 等等；
+        */
+    </style>
+</head>
+<body>
+    <div style="width:80%;height:100px;display:flex;margin:100px auto;">
+        <img src="img/play_black.png" style="margin:auto;width:100%;height:100%;object-fit:contain;object-position:calc(100% - 20px) calc(100% - 10px)">
+    </div>
+    <div style="width:100px;height:100px;border:1px solid #ddd;background:url('img/play_black.png') no-repeat calc(100% - 20px) calc(100% - 10px);background-size:10% 10%;"></div>
+</body>
+</html>
