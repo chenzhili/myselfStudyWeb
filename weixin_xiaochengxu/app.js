@@ -6,7 +6,7 @@ App({
   onLaunch: function () {
     wx.getSetting({
       success:function(res){
-        console.log(res);
+        // console.log(res);
       }
     });
     // wx.openSetting({
@@ -23,7 +23,7 @@ App({
     wx.authorize({
       scope:"scope.invoiceTitle",
       success:function(res){
-        console.log(res);
+        // console.log(res);
       },
       fail:function(err){
         console.log(err);
@@ -31,36 +31,44 @@ App({
     });
     wx.getUserInfo({
       success:function(res){
-        console.log(res);
+        // console.log(res);
       },
       fail:function(err){
         console.log(err);
       }
     });
-    wx.showModal({
-      title: '账户授权',
-      content: '登录', 
-      success:function(options){
-        if (options.confirm){
-          console.log(1);
-          wx.login({
-            success:function(res){
-              console.log(res);
-            }
-          });
-        }
-      },
-      fail:function(err){
-        console.log(err);
-      }
-    }); 
+    // let promise = new Promise(function(resolve,reject){
+    //   wx.showModal({
+    //     title: '账户授权',
+    //     content: '登录',
+    //     success: function (options) {
+    //       if (options.confirm) {
+    //         resolve(1);
+    //         // console.log(1);
+    //         // wx.login({
+    //         //   success:function(res){
+    //         //     console.log(res);
+    //         //   }
+    //         // });
+    //       }
+    //     },
+    //     fail: function (err) {
+    //       reject(2);
+    //     }
+    //   })
+    // });
+    // promise.then((data)=>{
+    //   console.log(data);
+    // }).catch((err)=>{
+    //   console.log(err);
+    // });
     // 登录
-    // wx.login({
-    //   success: res => {
-    //     // 发送 res.code 到后台换取 openId, sessionKey, unionId
-    //     console.log(res);
-    //   }
-    // })
+    wx.login({
+      success: res => {
+        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        console.log(res);
+      }
+    })
     // 获取用户信息
     wx.getSetting({
       success: res => {

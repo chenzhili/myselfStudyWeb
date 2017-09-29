@@ -1,2 +1,21 @@
-<!--pages/home/home.wxml-->
+<import src="../common/header.wxml"/>
+<import src="../common/footer.wxml"/>
 
+<template is="header" data="{{...headerData}}"></template>
+
+<scroll-view>
+  <button type="default" bind:tap="setHeaderTitle">
+    设置头部的内容
+  </button>
+  <view class="clear-float container">
+    <view class="fl goods-item"  wx:for="{{goodsList}}" wx:for-item="ls" wx:key="ls.id">
+      <view class="goods-content">
+        <view class="img">
+          <image src="{{ls.img}}" lazy-load="true" mode="aspectFill"></image>
+        </view>
+        <text class="title">{{ls.name}}</text>
+        <view><text class="title">￥{{ls.price}}</text></view>
+      </view>
+    </view>
+  </view>
+</scroll-view>
