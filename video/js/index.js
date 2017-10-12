@@ -8,6 +8,7 @@ let duration = document.getElementsByClassName("duration")[0];
 let progressBar = document.getElementsByClassName("progress-bar")[0];
 let barActive = document.getElementsByClassName("bar-active")[0];
 let circle = document.getElementsByClassName("circle")[0];
+let fullScreen = document.getElementsByClassName("full")[0];
 let play = {
   playAndPause:0,
   showAndHideBar:false,
@@ -86,6 +87,12 @@ function addClassAndRemove(el,add,remove){
     let classes = el.className;
     return classes.split(remove).join("")+add;
 }
+/**
+ * 全屏
+ */
+fullScreen.addEventListener("click",function(){
+    video.webkitRequestFullScreen();
+});
 /**
  * 显示或者隐藏bar,并且用单击模拟双击事件，这种模拟双击的方式好好看看
  * ideo.addEventListener("dblclick",(e)=>{ //这种有问题，用单击事件去模拟双击事件
