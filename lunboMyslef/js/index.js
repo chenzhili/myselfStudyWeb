@@ -186,8 +186,12 @@ window.onload = function(){
                         toucheAddImgFinish(gestureMessage.i);
                     }
                 }
-                /*这里最后如果没有进行任何操作，就会再次启动定时器*/
             }
+            /*这里最后如果没有进行任何操作，就会再次启动定时器*/
+            caroObj.TimeAgain = setTimeout(function(){
+                caroObj.state = 0;
+                beginTime();
+            },1500);
             return false;
         });
     }
