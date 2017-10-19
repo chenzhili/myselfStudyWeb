@@ -3,7 +3,7 @@ document.getElementById('root').appendChild(greeter());*/
 import { fun } from "./Greeter.js"
 
 /*import "./main1.css";*/ 
-document.getElementById('root').appendChild(fun());   
+document.getElementById('root').appendChild(fun());
  
 
 
