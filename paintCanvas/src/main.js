@@ -189,7 +189,7 @@ window.onload = function(){
             console.log(base);
         }
     }
-    generateImg("img/img/down.webp","754","424");
+    generateImg("img/img/err.png","200","200");
 
     /*下面是可以下载图片的方法*/
     /**
