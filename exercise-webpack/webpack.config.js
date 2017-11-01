@@ -1,3 +1,5 @@
+let path = require("path");
+let htmlExtract = require("html-webpack-plugin");
 module.exports = {
 	devtool:"eval-source-map",
 	entry:{
@@ -6,6 +8,7 @@ module.exports = {
 	},
 	output:{
 		path:__dirname,
+		publicPath:"",
 		filename:"[name].js",
 		sourceMapFilename:"[name].source.js"
 	},
@@ -14,7 +17,10 @@ module.exports = {
 	 devServer: { 
 	    contentBase: "./public",//本地服务器所加载的页面所在的目录
 	    historyApiFallback: true,//不跳转
-	    inline: true//实时刷新
+	    inline: true,//实时刷新
+	    host:"localhost",
+	    port:8787
+
   	},
 
   	module:{ 
@@ -25,5 +31,16 @@ module.exports = {
   				exclude:"/node_modules/"
   			}
   		]
-  	}
+  	},
+	plugins:[
+	 	new htmlExtract({
+	 		filename:path.join(__dirname,"public/main.html"),
+			template:path.join(__dirname,"public/index.html"),
+			inject:"body",
+			minify:{
+                removeComments:true,
+                collapseWhitespace:false
+			}
+		})
+	]
 }

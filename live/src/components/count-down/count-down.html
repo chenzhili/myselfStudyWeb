@@ -1,0 +1,9 @@
+<!-- Generated template for the CountDownComponent component -->
+<div class="hc-tt">
+  <div class="hc-ttb">
+    <p>第<span class="hcf-f">{{data?.nextAction||'-----'}}</span>期</p>
+    <p>距开奖<span class="hcf-f">{{data?.countDown||'-----'}}</span></p>
+  </div>
+  <p class="hc-tpp">第<span>{{data?.nowAction||'-----'}}</span>期<span class="hc-lbs"></span>开奖时间:<span>{{data?.nowKjTime||'-----'}}</span></p>
+  <p class="hc-tbb"><span class="hc-stb">号码</span><span class="hc-stb" *ngFor="let num of data?.list">{{num||'---'}}</span></p>
+</div>

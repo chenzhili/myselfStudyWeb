@@ -170,10 +170,26 @@ function paintText(text,background,color){
     return canvas.toDataURL("image/png");
 }
 window.onload = function(){
-    var paiting = new Paint(window.innerWidth,window.innerWidth,"#fff",document.getElementById("box"),"img/img/bg-1.jpg");
-    paiting.generateCanvasAndEdit();
-    var imgData=paintText();
-    var type = 'png';
+    // var paiting = new Paint(window.innerWidth,window.innerWidth,"#fff",document.getElementById("box"),"img/img/bg-1.jpg");
+    // paiting.generateCanvasAndEdit();
+    // var imgData=paintText();
+    // var type = 'png';
+
+    /*生成base64位的图片*/
+    function generateImg(img,w,h){
+        var canvas = document.createElement("canvas");
+        canvas.width = w;
+        canvas.height = h;
+        var ctx = canvas.getContext("2d");
+        var image = new Image();
+        image.src = img;
+        image.onload = function(){
+            ctx.drawImage(image,0,0,image.width,image.height,0,0,canvas.width,canvas.height);
+            var base = canvas.toDataURL("image/png");
+            console.log(base);
+        }
+    }
+    generateImg("img/img/err.png","200","200");
 
     /*下面是可以下载图片的方法*/
     /**

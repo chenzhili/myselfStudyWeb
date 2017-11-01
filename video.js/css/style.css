@@ -1,0 +1,10 @@
+/*样式重置*/
+html{font-size:16px;font-family:"microsoft yahei"}
+html,body,p,h1,h2,h3,h4,table,tbody,tfoot,thead,tr,td{padding:0;margin:0;}
+.fl{float:left;}
+.fr{float:right;}
+.clear-f:after{
+    content:"";
+    display:table;
+    clear:both;
+}

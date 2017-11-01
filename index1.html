@@ -3,68 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <title>1</title>
-    <script src="vue.js"></script>
+    <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style type="text/css">
+    	.container{
+    		width:100px;
+    		margin:0 auto;
+    	}
+    	.container div{
+    		border-bottom:1px solid #ddd;
+    		overflow:hidden;
+    		word-wrap: break-word;
+    	}
+    	.fix{
+    		position:fixed;
+    		top:8px;
+    		width:100px;
+    	}
+    	.test{background-color:#ff0;}
+    </style>
 </head>
 <body>
 
-<!--<div id="try">{{message}}</div>-->
-
-<div id="app-2">
-  <span v-bind:title="message">
-    Hover your mouse over me for a few seconds to see my dynamically bound title!
-  </span>
+<div class="container">
+	<div class="aa">
+	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	</div>
+	<div id="f" class="test">1</div>
+	<div>
+		sdfsdfsdfkjsdklfjskdlfjklsfjlksdlfk
+	</div>
+	<div>
+		sdfsdfpowrmlksfjoksdjfskdfm
+	</div>
+	<div id="f1">2</div>
+	<div>sdfsdl;fksd;lfk;sldf;lsdfsdfsdfsdf</div>
+	<div>sdfsdl;fksd;lfk;sldf;lsdfsdfsdfsdf</div>
+	<div>sdfsdl;fksd;lfk;sldf;lsdfsdfsdfsdf</div>
+	<div>sdfsdl;fksd;lfk;sldf;lsdfsdfsdfsdf</div>
+	<div>sdfsdl;fksd;lfk;sldf;lsdfsdfsdfsdflorem Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+	consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+	cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+	proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+	consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+	cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+	proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
 </div>
-<div id="app3">
-    <div v-if="bool">你出现不</div>
-</div>
-<br><br>
-
-<div class="try">
-    <div>{{message}}</div>
-    <button v-on:click="reverMessage">简单按钮</button>
-</div>
-
-<div class="model">
-    <input  type="text" v-model="message">
-    <div>{{message}}</div>
-</div>
-
-<script>
-    var model = new Vue({
-        el:".model",
-        data:{
-            message:""
-        }
-    });
-    /*var app=new Vue({
-        el:"#try",
-        data:{
-            message:"hello world"
-        }
-    });*/
-    var app2 = new Vue({
-        el: '#app-2',
-        data: {
-            message: 'You loaded this page on ' + new Date()
-        }
-    });
-    var app3 = new Vue({
-        el:"#app3",
-        data:{
-            bool:true
-        }
-    });
-    var app4= new Vue({
-        el:".try",
-        data:{
-            message:"hello hello"
-        },
-        methods:{
-            reverMessage:function(){
-                this.message = this.message.split("").reverse().join("");
-            }
-        }
-    });
+<script type="text/javascript">
+	var c = document.getElementsByClassName("container")[0];
+	var c1 = c.getBoundingClientRect().top;
+	
+	var fixed = document.getElementById("f");
+	var f = fixed.getBoundingClientRect().top;
+	var f1 = document.getElementById("f1").getBoundingClientRect().top;
+	var s1 = f-c1;
+	var s2 = f1-c1;
+	var reg = /fix/g;
+	window.onscroll = function(e){
+		var scroll = document.body.scrollTop;
+		if(scroll>s1 && scroll<s2){
+			fixed.className = "test fix"
+		}else{
+			fixed.className = "test";
+		}
+		
+	}
 </script>
 </body>
 </html>

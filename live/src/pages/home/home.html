@@ -1,0 +1,261 @@
+<ion-header style="background-color: #f3f3f3">
+  <div class="select-boxs">
+    <div class="select-style">
+      <select name="" id="" [(ngModel)]="states" (ngModelChange)="states=$event;setInfo()">
+        <option *ngFor="let one of oneMenu,let i= index" [value]='one.id' (click)="getSecMenu()">{{one?.name}}</option>
+      </select>
+    </div>
+  </div>
+
+  <ion-toolbar no-border-top style="padding: 0">
+    <div class="nav-slider">
+      <ion-slides slidesPerView="6">
+        <ion-slide class="nav-imgslider" (click)="idmuen=1">
+          <img-lazy-load [src]="'assets/image/zuqiu.png'"></img-lazy-load>
+          <span class="nav-hmspan " [ngClass]="idmuen == 1 ? 'nav_active':''">全部</span>
+        </ion-slide>
+        <ion-slide class="nav-imgslider" (click)="idmuen=2">
+          <img-lazy-load [src]="'assets/image/hot.png'"></img-lazy-load>
+          <span class="nav-hmspan " [ngClass]="idmuen == 2 ? 'nav_active':''">热门</span>
+        </ion-slide>
+        <ion-slide class="nav-imgslider" *ngFor="let list of SecMenu,let i = index" (click)="getData(list?.id)">
+          <img-lazy-load [src]="list?.img"></img-lazy-load>
+          <span class="nav-hmspan " [ngClass]="list?.id == idmuen ? 'nav_active':''">{{list?.name || '暂无数据'}}</span>
+        </ion-slide>
+      </ion-slides>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="gsbg">
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-round-down" pullingText="下拉刷新" refreshingSpinner="circles">
+    </ion-refresher-content>
+  </ion-refresher>
+  <!--<ion-scroll scrollY="true" style="width: 100%;height: 100%">-->
+    <div class="adv_banner">
+      <ion-slides pager="true" zoom="true" autoplay="1500" loop="true">
+        <ion-slide>
+          <img-lazy-load [src]="'assets/image/home/banner_1.jpg'"></img-lazy-load>
+        </ion-slide>
+        <ion-slide>
+          <img-lazy-load [src]="'assets/image/home/banner_1.jpg'"></img-lazy-load>
+        </ion-slide>
+        <ion-slide>
+          <img-lazy-load [src]="'assets/image/home/banner_1.jpg'"></img-lazy-load>
+        </ion-slide>
+
+      </ion-slides>
+    </div>
+    <div class="game_list">
+      <div class="game_item">
+        <div class="date">
+          2017年10月23日 星期一
+        </div>
+        <div class="game_details_item clear-float">
+          <div class="team fl">
+            <ion-img [src]="'assets/image/team/1.png'"></ion-img>
+            <div class="name">皇家马德里</div>
+          </div>
+          <div class="game_introduce fl">
+            <div class="play_state">
+              <ion-img [src]="'assets/image/team/living.png'"></ion-img>
+              &nbsp;直播中
+            </div>
+            <div class="play_date">
+              上半场
+            </div>
+            <div class="play_num">
+              西甲 第3轮
+            </div>
+          </div>
+          <div class="team fl">
+            <ion-img [src]="'assets/image/team/2.png'"></ion-img>
+            <div class="name">莱万特</div>
+          </div>
+        </div>
+      </div>
+      <div class="game_item">
+        <div class="date">
+          2017年10月23日 星期一
+        </div>
+        <div class="game_details_item clear-float">
+          <div class="team fl">
+            <ion-img [src]="'assets/image/team/1.png'"></ion-img>
+            <div class="name">皇家马德里</div>
+          </div>
+          <div class="game_introduce fl">
+            <div class="play_state">
+              <ion-img [src]="'assets/image/team/living.png'"></ion-img>
+              &nbsp;直播中
+            </div>
+            <div class="play_date">
+              上半场
+            </div>
+            <div class="play_num">
+              西甲 第3轮
+            </div>
+          </div>
+          <div class="team fl">
+            <ion-img [src]="'assets/image/team/2.png'"></ion-img>
+            <div class="name">莱万特</div>
+          </div>
+        </div>
+        <div class="game_details_item clear-float">
+          <div class="team fl">
+            <ion-img [src]="'assets/image/team/1.png'"></ion-img>
+            <div class="name">皇家马德里</div>
+          </div>
+          <div class="game_introduce fl">
+            <div class="play_state">
+              <ion-img [src]="'assets/image/team/living.png'"></ion-img>
+              &nbsp;直播中
+            </div>
+            <div class="play_date">
+              上半场
+            </div>
+            <div class="play_num">
+              西甲 第3轮
+            </div>
+          </div>
+          <div class="team fl">
+            <ion-img [src]="'assets/image/team/2.png'"></ion-img>
+            <div class="name">莱万特</div>
+          </div>
+        </div>
+        <div class="game_details_item clear-float">
+          <div class="team fl">
+            <ion-img [src]="'assets/image/team/1.png'"></ion-img>
+            <div class="name">皇家马德里</div>
+          </div>
+          <div class="game_introduce fl">
+            <div class="play_state">
+              <ion-img [src]="'assets/image/team/living.png'"></ion-img>
+              &nbsp;直播中
+            </div>
+            <div class="play_date">
+              上半场
+            </div>
+            <div class="play_num">
+              西甲 第3轮
+            </div>
+          </div>
+          <div class="team fl">
+            <ion-img [src]="'assets/image/team/2.png'"></ion-img>
+            <div class="name">莱万特</div>
+          </div>
+        </div>
+      </div>
+      <div class="game_item">
+        <div class="date">
+          2017年10月23日 星期一
+        </div>
+        <div class="game_details_item clear-float">
+          <div class="team fl">
+            <ion-img [src]="'assets/image/team/1.png'"></ion-img>
+            <div class="name">皇家马德里</div>
+          </div>
+          <div class="game_introduce fl">
+            <div class="play_state">
+              <ion-img [src]="'assets/image/team/living.png'"></ion-img>
+              &nbsp;直播中
+            </div>
+            <div class="play_date">
+              上半场
+            </div>
+            <div class="play_num">
+              西甲 第3轮
+            </div>
+          </div>
+          <div class="team fl">
+            <ion-img [src]="'assets/image/team/2.png'"></ion-img>
+            <div class="name">莱万特</div>
+          </div>
+        </div>
+        <div class="game_details_item clear-float">
+          <div class="team fl">
+            <ion-img [src]="'assets/image/team/1.png'"></ion-img>
+            <div class="name">皇家马德里</div>
+          </div>
+          <div class="game_introduce fl">
+            <div class="play_state">
+              <ion-img [src]="'assets/image/team/living.png'"></ion-img>
+              &nbsp;直播中
+            </div>
+            <div class="play_date">
+              上半场
+            </div>
+            <div class="play_num">
+              西甲 第3轮
+            </div>
+          </div>
+          <div class="team fl">
+            <ion-img [src]="'assets/image/team/2.png'"></ion-img>
+            <div class="name">莱万特</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!--</ion-scroll>-->
+
+
+
+
+
+  <!--午无直播信息显示内容 -->
+  <!--<div class="no_lived" *ngIf="classiFied == '' ? true:false">暂无直播</div>-->
+
+  <!-- 直播列表-->
+  <div class="cont_list_bg" *ngIf="classiFied == '' ? false:true">
+    <div *ngFor="let fied of classiFied,let i = index">
+      <div class="cont-list" (click)="goDetail(fied?.id)">
+        <div class="left-icon" *ngIf="fied?.hot == 1 ? true:false">
+          <img src="assets/image/hot.png" alt="" width="85%"/>
+        </div>
+        <div class="cont-item">
+          <div class="item-view">
+            <div class="live_logo">
+              <img-lazy-load [src]="fied?.main_logo" width="100%"></img-lazy-load>
+            </div>
+            <p class="live-name">{{fied?.main_name ||'无数据'}}</p>
+          </div>
+          <div class="item-view">
+            <div class="list_active">
+            <span class="list_active_img" *ngIf="fied?.is_open == 1 ? true:false">
+              <img src="assets/image/live_logo.png" alt="" width="100%"/>
+            </span>
+              <span [ngClass]="fied?.is_open == 1 ? 'list_active_color':''">{{fied?.is_open == 0 ? '未开始':fied?.is_open == 1 ? '直播中':'已结束'}}</span>
+            </div>
+            <p class="live_time">{{fied?.time*1000 | date:"HH:mm"}}</p>
+
+            <p class="live_textColor">{{fied?.classify}}</p>
+          </div>
+          <div class="item-view">
+            <div class="live_logo">
+              <img-lazy-load [src]="fied?.visit_logo" width="100%"></img-lazy-load>
+            </div>
+            <p class="live-name">{{fied?.visit_name}}</p>
+          </div>
+        </div>
+      </div>
+      <!--广告-->
+      <div class="ad-style" *ngIf="fied?.ad_open == 1 ? true:false">
+        <div style="width: 100%">
+          <img-lazy-load [src]="fied?.ad.img" width="100%"></img-lazy-load>
+        </div>
+        <!--<div>{{fied?.ad.title}}</div>-->
+      </div>
+    </div>
+  </div>
+</ion-content>
+<!-- 返回顶部 -->
+<div id="img" class="return-top Rotation" (click)="goBack()">
+
+</div>
+<div class="footer-bottom" *ngIf="adStatus == 0 ? true:false">
+  <div class="ad_content">广告资源位</div>
+  <div class="ad_close" (click)="CloseAd()">
+    <img src="assets/image/close.png" alt=""/>
+  </div>
+</div>
+
