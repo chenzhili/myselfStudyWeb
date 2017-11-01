@@ -1,0 +1,6 @@
+.head_foot{
+  width:100%;
+  display:inline-block;
+  color:#f00;
+  text-align:center;
+}

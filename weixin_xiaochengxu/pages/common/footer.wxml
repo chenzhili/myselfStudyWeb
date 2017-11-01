@@ -1,0 +1,7 @@
+<template name="footer">
+  <view>
+    <text>
+        这是模板套入 {{title}}
+    </text>
+  </view>
+</template>

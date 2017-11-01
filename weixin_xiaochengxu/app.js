@@ -1,15 +1,72 @@
 //app.js
 App({
+  globalData: {
+    userInfo: null
+  },
   onLaunch: function () {
-    // 展示本地存储能力
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
-
+    wx.getSetting({
+      success:function(res){
+        // console.log(res);
+      }
+    });
+    // wx.openSetting({
+    //   success:function(res){
+    //     console.log(res);
+    //   },
+    //   fail:function(err){
+    //     console.log(err);
+    //   },
+    //   complete:function(data){
+    //     console.log(data)
+    //   }
+    // });
+    wx.authorize({
+      scope:"scope.invoiceTitle",
+      success:function(res){
+        // console.log(res);
+      },
+      fail:function(err){
+        console.log(err);
+      }
+    });
+    wx.getUserInfo({
+      success:function(res){
+        // console.log(res);
+      },
+      fail:function(err){
+        console.log(err);
+      }
+    });
+    // let promise = new Promise(function(resolve,reject){
+    //   wx.showModal({
+    //     title: '账户授权',
+    //     content: '登录',
+    //     success: function (options) {
+    //       if (options.confirm) {
+    //         resolve(1);
+    //         // console.log(1);
+    //         // wx.login({
+    //         //   success:function(res){
+    //         //     console.log(res);
+    //         //   }
+    //         // });
+    //       }
+    //     },
+    //     fail: function (err) {
+    //       reject(2);
+    //     }
+    //   })
+    // });
+    // promise.then((data)=>{
+    //   console.log(data);
+    // }).catch((err)=>{
+    //   console.log(err);
+    // });
     // 登录
     wx.login({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        console.log(res);
       }
     })
     // 获取用户信息
@@ -32,8 +89,6 @@ App({
         }
       }
     })
-  },
-  globalData: {
-    userInfo: null
   }
+  
 })

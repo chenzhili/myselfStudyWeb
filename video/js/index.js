@@ -1,5 +1,6 @@
 /*视频播放*/
 let video = document.getElementById("video");
+let videoContainer= document.getElementsByClassName("video-container")[0]; /*为了不让触摸和点击事件相互干扰，点击事件绑定到container上*/
 let operate = document.getElementById("operate");
 let bar = document.getElementsByClassName("progressbar")[0];
 let playPause = document.getElementsByClassName("play-pause")[0];
@@ -22,12 +23,14 @@ let play = {
   operateTime:null, /*对于隐藏图标的定时器*/
   currentTime:0, /*现在的播放时间*/
   duration:0, /*总时长*/
-  barTotalWidth:parseInt(getComputedStyle(progressBar).width), /*获取进度条的总长度*/
+  barTotalWidth:parseFloat(getComputedStyle(progressBar).width), /*获取进度条的总长度*/
   touchStartX:0, /*触摸开始的位置*/
   touchEndX:0, /*触摸结束的位置*/
   touchInitX:0, /*初始化的位置*/
   barClientStartX:progressBar.getBoundingClientRect().left, /*获取进度条距离左边的距离*/
-  barClientEntX:progressBar.getBoundingClientRect().left+parseInt(getComputedStyle(progressBar).width), /*获取进度条距离右边的距离*/
+  barClientEntX:progressBar.getBoundingClientRect().left+parseFloat(getComputedStyle(progressBar).width), /*获取进度条距离右边的距离*/
+  speedAndBackStart:0, /*快进和倒退的初始位置*/
+  speedAndBackEnd:0, /*快进和倒退的结束位置*/
 };
 /*这种方法过时了*/
 /*operate.addEventListener("doubleclick",(e)=>{
@@ -100,7 +103,7 @@ fullScreen.addEventListener("click",function(){
    return false;
 });
  */
-video.addEventListener("click",(e)=>{
+videoContainer.addEventListener("click",(e)=>{
     /*清除所有的定时器*/
     play.barTime && clearTimeout(play.barTime);
     play.cssDisplayTime && clearTimeout(play.cssDisplayTime);
@@ -194,11 +197,11 @@ circle.addEventListener("touchmove",(e)=>{
     if(e.touches[0].clientX > play.barClientEntX){
         e.touches[0].clientX = play.barClientEntX;
     }*/
-    circle.style.left = parseInt(circle.style.left) + e.touches[0].clientX - play.touchStartX +"px";
-    if(parseInt(circle.style.left) < 0){
+    circle.style.left = parseFloat(circle.style.left) + e.touches[0].clientX - play.touchStartX +"px";
+    if(parseFloat(circle.style.left) < 0){
         circle.style.left = 0;
     }
-    if(parseInt(circle.style.left) > parseInt(getComputedStyle(progressBar).width)){
+    if(parseFloat(circle.style.left) > parseFloat(getComputedStyle(progressBar).width)){
         circle.style.left = getComputedStyle(progressBar).width;
     }
     barActive.style.width = circle.style.left;
@@ -208,7 +211,7 @@ circle.addEventListener("touchmove",(e)=>{
 circle.addEventListener("touchend",(e)=>{
     circle.className = "circle";
     play.touchEndX = e.changedTouches[0].clientX;
-    let addTime = (play.touchEndX-play.touchInitX)*play.duration/parseInt(getComputedStyle(progressBar).width);
+    let addTime = (play.touchEndX-play.touchInitX)*play.duration/parseFloat(getComputedStyle(progressBar).width);
     video.currentTime +=addTime;
     video.play();
     return false;
@@ -217,15 +220,28 @@ circle.addEventListener("touchend",(e)=>{
  * 活动屏幕进行快进和后退
  */
 video.addEventListener("touchstart",(e)=>{
-    console.log(1);
+    video.pause();
+    play.speedAndBackStart = e.touches[0].clientX;
     return false;
 });
 video.addEventListener("touchmove",(e)=>{
-    console.log(2);
     return false;
 });
 video.addEventListener("touchend",(e)=>{
-    console.log(3);
+    play.speedAndBackEnd = e.changedTouches[0].clientX;
+    let speedDuration = parseFloat(getComputedStyle(progressBar).width)*(play.speedAndBackEnd-play.speedAndBackStart)/parseFloat(getComputedStyle(video).width);
+    let speedTime = play.duration*(play.speedAndBackEnd-play.speedAndBackStart)/parseFloat(getComputedStyle(video).width)/5;/*5这个系数为了不让快进的太快*/
+    let currentLeft = parseFloat(getComputedStyle(circle).left);
+    if(currentLeft+speedDuration < 0 ){
+        circle.style.left = 0;
+        video.currentTime = 0;
+    }
+    if(currentLeft+speedDuration > parseFloat(getComputedStyle(progressBar).width)){
+        circle.style.left = parseFloat(getComputedStyle(progressBar).width)+"px";
+        video.currentTime = play.duration;
+    }
+    video.currentTime += speedTime;
+    video.play();
     return false;
 });
 /**
@@ -291,6 +307,4 @@ function barCss(currentTime,duration){
 }
 window.onload = function(){
     hideBar(bar);
-    console.log(play.barClientStartX);
-    console.log(play.barClientEntX);
 };
