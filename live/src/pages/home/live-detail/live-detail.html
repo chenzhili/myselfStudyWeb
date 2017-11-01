@@ -1,0 +1,114 @@
+<!--
+  Generated template for the LiveDetailPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>直播间</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="live-gb">
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-round-down" pullingText="下拉刷新" refreshingSpinner="circles"></ion-refresher-content>
+  </ion-refresher>
+  <div class="live_loading">
+    <div class="conts-list" *ngIf="liveShow == 0 ? true:false">
+      <div class="conts-item">
+        <div class="items-view">
+          <div class="live_detail_logo">
+            <img-lazy-load [src]="sowing?.main_logo"></img-lazy-load>
+          </div>
+          <p class="name_size">{{sowing?.main_name}}</p>
+        </div>
+        <div class="items-view">
+          <p>{{sowing?.classify}}</p>
+
+          <p>{{sowing?.time*1000 | date:'MM-dd HH:mm'}}</p>
+
+          <p class="vs-size">VS</p>
+
+          <!--<p class="live_btn" (click)="show()">观看直播</p>-->
+          <p class="live_btn" *ngIf="linesStatus == 1? false:true" (click)="SelectionRoute()">观看直播</p>
+          <p class="live_btn" *ngIf="linesStatus == 1? true:false">比赛中...</p>
+        </div>
+        <div class="items-view">
+          <div class="live_detail_logo">
+            <img-lazy-load [src]="sowing?.visit_logo"></img-lazy-load>
+          </div>
+          <p class="name_size">{{sowing?.visit_name}}</p>
+        </div>
+      </div>
+    </div>
+    <!-- iframe-->
+    <div class="live-display" [ngClass]="liveShow == 1 ? 'live-block':''">
+      <!-- 链接播放-->
+      <div class="live-display" [ngClass]="sowing?.is_source == 1 ? 'live-block':''">
+        <iframe height="100%" width="100%" src="http://pub.pptv.com/player/iframe/index.html#showList=0&id=300163"
+                frameborder="0"></iframe>
+      </div>
+      <!--视屏直播 flv.js-->
+      <div class="live-display" [ngClass]="sowing?.is_source == 0 ? 'live-block':''">
+        <!--<div class="live-display"  [ngClass]="adMsg == '广告' ? 'live-block':''">-->
+        <!--&lt;!&ndash;<img-lazy-load [src]="adLive[0].img"></img-lazy-load>&ndash;&gt;-->
+        <!--</div>-->
+        <video id="videoElement" width="100%" height="100%" controls autoplay></video>
+      </div>
+    </div>
+  </div>
+  <div class="live_adStyle">
+    <div class="gif-style">
+      <!-- 选择路线 记得隐藏-->
+      <div class="live_lines" *ngIf="linesStatus == 1 ? true:false">
+        <div class="live-broadcast">
+          <div class="live-broadcast-text">请选择直播信号</div>
+          <div class="live-broadcast-btn">
+            <span>
+              <img src="assets/image/shauxin.png" alt=""/>
+            </span>
+            <span (click)="CloseSelectionRoute()">
+              <img src="assets/image/gbi.png" alt=""/>
+            </span>
+          </div>
+        </div>
+        <div class="lines_lives">
+          <ul>
+            <li (click)="show()">龙珠直播(无插件)</li>
+            <li>欧冠欧冠直播8(PPTV插件--高清流畅)</li>
+            <li>欧冠欧联直播8(PPTV网页)</li>
+            <li>QQ直播(腾讯视频插件--高清流畅)</li>
+            <li>新浪直播(Sinatv)</li>
+            <li>足球比分</li>
+            <li>新人送108元(金山彩票)</li>
+          </ul>
+        </div>
+      </div>
+       <!-- 动态图 -->
+      <div class="xiaosa">
+        <img src="assets/image/load/xiaosa.gif" alt=""/>
+      </div>
+    </div>
+    <!--广告资源位置-->
+    <div>
+      <div class="advertising_div" *ngIf="adStatus == 0 ? true:false">
+        <div>广告资源位</div>
+        <div (click)="CloseAd()">
+          <img src="assets/image/close.png" alt=""/>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+   <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="正在加载...">
+   </ion-infinite-scroll-content>
+ </ion-infinite-scroll> -->
+</ion-content>

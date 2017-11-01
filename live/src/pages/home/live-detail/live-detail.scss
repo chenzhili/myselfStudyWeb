@@ -1,0 +1,167 @@
+page-live-detail {
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+  li {
+    list-style: none;
+  }
+  .toolbar-background-ios {
+    background-color: #874aa7 !important;
+  }
+  .toolbar-title-ios {
+    color: #fff !important;
+  }
+  .bar-button-default-ios, .bar-button-default.bar-button-ios-default, .bar-button-clear-ios-default {
+    color: #fff !important;
+  }
+  .live-gb {
+    background-color: #f3f3f3 !important
+  }
+  .live_loading {
+    background: url("../assets/image/cczb.png") no-repeat;
+    //background-color: red;
+    background-size: 100% 100%;
+    padding: 1.8rem 0;
+    color: #fff;
+  }
+  .conts-list {
+    overflow: hidden;
+    padding: 8px 12px;
+    position: relative;
+  }
+  .conts-item {
+    overflow: hidden;
+  }
+  .items-view {
+    float: left;
+    width: 33%;
+    height: auto;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .live_detail_logo {
+    width: 60px;
+    height: 70px;
+    margin-bottom: 1rem;
+    img {
+      width: 100%;
+    }
+  }
+  .vs-size {
+    font-size: 1.6rem;
+    padding: 0.2rem 0;
+  }
+  .name_size {
+    font-size: 1.6rem;
+  }
+  .live_btn {
+    background-color: #57b846;
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 6px;
+  }
+  .live_box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #000;
+    width: 100%;
+    height: 100%;
+  }
+  .live-display {
+    display: none;
+  }
+  .live-block {
+    display: block;
+  }
+  .live_adStyle {
+    //height: auto;
+    width: 100%;
+    height: 800px;
+    background-color: #874aa7;
+
+    .gif-style {
+      padding: 0.5rem;
+      position: relative;
+      //height: 800px;
+      background-color: #874aa7;
+      .live_lines {
+        position: absolute;
+        height: auto;
+        //border: 1px solid red;
+        background-color: #fff;
+        width: 100%;
+        top: 0;
+        left: 0;
+        .live-broadcast {
+          height: 3.5rem;
+          //border: 1px solid black;
+          background-color: #7f87dd;
+          color: #fff;
+          display: flex;
+          align-items: center;
+          .live-broadcast-text {
+            font-size: 1.6rem;
+            padding-left: 2rem;
+            width: 70%;
+          }
+        }
+        .lines_lives {
+          ul {
+            padding: 0 2rem;
+            li {
+              border-bottom: 1px solid #e0e0e0;
+              height: 3.5rem;
+              line-height: 3.5rem;
+            }
+          }
+
+        }
+        .live-broadcast-btn {
+          width: 30%;
+          display: flex;
+          align-items: center;
+          span {
+            display: inline-block;
+            height: 19px;
+            width: 19px;
+            margin-left: 1.6rem;
+            img {
+              width: 100%;
+            }
+          }
+        }
+      }
+      .xiaosa {
+        background-color: #fff;
+      }
+    }
+  }
+
+  .advertising_div {
+    display: flex;
+    align-items: center;
+    height: 5rem;
+    background-color: #6d318f;
+    //border-bottom: 5px solid #8f4eb1;
+    margin-bottom: 5px;
+    div:nth-child(1) {
+      font-size: 1.6rem;
+      color: #fff;
+      width: 90%;
+      text-align: center;
+    }
+    div:nth-child(2) {
+      width: 25px;
+      height: 25px;
+      img {
+        width: 100%;
+      }
+    }
+  }
+
+}
