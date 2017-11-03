@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild,Pipe, PipeTransform,NgZone  } from '@angular/core';
 import { NavController, Slides, NavParams } from 'ionic-angular';
 import { LiveDetailPage } from './live-detail/live-detail';
 import { RepeatProvider } from '../../providers/repeat/repeat';
@@ -21,10 +21,22 @@ export class HomePage {
     secList:[],
     startTime:"",
     endTime:"",
-    teamList:[]
+    teamList:{},
+    idMenu:0,
+    deg:0,
+    adStatus:1,
+    refresh:{
+      startTime:"",
+      endTime:""
+    },
+    infinite:{
+      startTime:"",
+      endTime:""
+    },
+    fixed:""
   };
 
-  constructor(private goP:RepeatProvider, public navCtrl:NavController, public navParams: NavParams ) {
+  constructor(private goP:RepeatProvider, public navCtrl:NavController, public navParams: NavParams,private zone: NgZone ) {
     //保存this 这里面执行的很快
     me = this;
 
@@ -35,14 +47,60 @@ export class HomePage {
     me._getFirstGameList();
     //初始化二级菜单
     me._getSecMenu();
+    //获取今天到后七天的毫秒数
+    me._getStartToEnd();
   }
 
 //  获取当天0点到后七天0点的毫秒数
   _getStartToEnd(){
-    let nowEnd = new Date(new Date().setHours(23, 59, 59, 0));
+    let nowEnd = new Date(new Date().setHours(0, 0, 0, 0));
     let sevenTime = 24*60*60*7*1000;
     me.mess.startTime = nowEnd.getTime();
+    me.mess.refresh.startTime = me.mess.startTime;
     me.mess.endTime = Number(nowEnd.getTime()) + sevenTime;
+    me.mess.infinite.endTime = me.mess.endTime;
+  }
+//  对于获取前七天或者后七天的时间进行赛选分类
+  //让对象也能用 ngFor
+  getKeys(obj){
+    return Object.keys(obj);
+  }
+  //n代表说是向后还是向前
+  _getAfterSeven(now,arr,n){
+    let nowSeconds = now;
+    let oneDay = 24*60*60; //秒数
+    let obj = {};
+    let tempTime = (new Date(new Date(nowSeconds*1000).toLocaleDateString()).getTime())/1000;
+    obj[tempTime+n*oneDay] = [];
+    obj[tempTime+n*2*oneDay] = [];
+    obj[tempTime+n*3*oneDay] = [];
+    obj[tempTime+n*4*oneDay] = [];
+    obj[tempTime+n*5*oneDay] = [];
+    obj[tempTime+n*6*oneDay] = [];
+    if(n == 1){
+      obj[tempTime]=[];
+    }
+    if(n == -1){
+      obj[tempTime+n*7*oneDay] = [];
+    }
+
+    for(let i=0;i<arr.length;i++){
+      let time = (new Date(new Date(arr[i].time*1000).toLocaleDateString()).getTime())/1000;
+      obj[time].push(arr[i]);
+    }
+    return obj;
+  }
+//  获取不同联赛
+  getDiffGameList(idMenu){
+    me.mess.idMenu = idMenu;
+    me._getStartToEnd();
+    let payload = {
+      start_time: me.mess.startTime/1000,
+      end_time: me.mess.endTime / 1000,
+      classify_id: me.mess.idMenu
+    };
+    me.mess.teamList = {};
+    me._getTeamList(payload,1)
   }
 //  一级菜单发生变化
   firstMenuChange(e){
@@ -59,6 +117,46 @@ export class HomePage {
       me.goP.presentToast(err);
     });
   }
+//对于固定日期的方法
+  _fixedDate(){
+    me.scroll = document.getElementsByClassName("scroll-content")[0];
+    setTimeout(()=>{
+      me.dateList = $(".date");
+      let dateTopObj = {};
+      for(let i=0;i<me.dateList.length;i++){
+        dateTopObj[i] = {
+          offsetTop:me.dateList[i].offsetTop,
+          text:me.dateList[i].innerText
+        };
+      }
+      me.scroll.addEventListener("scroll",(e)=>{
+        let scrollDistance = me.scroll.scrollTop;
+        for(let key in dateTopObj){
+          if(key == me.dateList.length){
+            if(scrollDistance > dateTopObj[key].offsetTop){
+              me.mess.fixed = dateTopObj[key].text;
+              // me.dateList[key].style.top = scrollDistance-dateTopObj[key].offsetTop+"px";
+              // dateList[key].className = "date date_fix";
+            }else{
+              me.mess.fixed = "";
+              // me.dateList[key].style.top = 0;
+              // dateList[key].className = "date";
+            }
+          }
+          if(scrollDistance>dateTopObj[key].offsetTop && scrollDistance < dateTopObj [Number(key)+1].offsetTop){
+            me.mess.fixed = dateTopObj[key].text;
+            console.log(me.mess.fixed);
+            // me.dateList[key].style.top = scrollDistance-dateTopObj[key].offsetTop+"px";
+            // dateList[key].className = "date date_fix";
+          }else{
+            me.mess.fixed = "";
+            // me.dateList[key].style.top = 0;
+            // dateList[key].className = "date";
+          }
+        }
+      })
+    },500);
+  }
 //获取二级菜单
   _getSecMenu() {
     let payload = {
@@ -66,21 +164,41 @@ export class HomePage {
     };
     me.goP.yikeData('classify/classify', payload).then(data => {
       let menu = data.json();
-      console.log(menu);
       me.mess.secList = menu.data;
+      let payload = {
+        start_time: me.mess.startTime/1000,
+        end_time: me.mess.endTime / 1000,
+        classify_id: me.mess.idMenu
+      };
+      me._getTeamList(payload,1)
     }).catch(err => {
       me.goP.presentToast(err);
     })
   }
 //  获取某段时间内的所有对应id下的球队列表
-  _getTeamList(payload){
+  _getTeamList(payload,n,refresh){
     me.goP.yikeGet('match/index', payload).then(data => {
       let list = data.json();
-      for(let i = 0;i<list.data.length;i++){
-        list.data[i].dateTime = me._formatTime(list.data[i].time);
-        list.data[i].beginTiem = new Date(list.data[i].time*1000).getHours()+":"+new Date(list.data[i].time*1000).getMinutes();
+      if(list.data.length > 0){
+        for(let i = 0;i<list.data.length;i++){
+          list.data[i].beginTiem = new Date(list.data[i].time*1000).getHours()+":"+new Date(list.data[i].time*1000).getMinutes();
+        }
       }
-      me.mess.teamList = list.data;
+      if(Object.keys(me.mess.teamList).length == 0){
+        me.mess.teamList = me._getAfterSeven(payload.start_time,list.data,n);
+      }else{
+        // 合并对象
+        if(n == -1){
+          Object.assign(me.mess.teamList,me._getAfterSeven(payload.end_time,list.data,n));
+        }
+        if(n == 1){
+          Object.assign(me.mess.teamList,me._getAfterSeven(payload.start_time,list.data,n));
+        }
+      }
+      if(refresh){
+        refresh.complete();
+      }
+      me._fixedDate();
     }).catch(err => {
       this.goP.presentToast(err);
     })
@@ -90,7 +208,7 @@ export class HomePage {
     n = n.toString();
     return n[1] ? n : '0' + n
   }
-  _formatTime(number) {
+  formatTime(number) {
 
     let year ,month,day,dateN;
 
@@ -110,5 +228,46 @@ export class HomePage {
       case 6:dateN = "六";break;
     }
     return `${year}年${month}月${day}日 星期${dateN}`;
+  }
+  //下拉刷新
+  doRefresh(refresh){
+    let tempTime = me.mess.refresh.startTime;
+    let sevenTime = 24*60*60*7*1000;
+    me.mess.refresh.startTime = tempTime - sevenTime;
+    me.mess.refresh.endTime = tempTime;
+
+    let payload = {
+      start_time: me.mess.refresh.startTime/1000,
+      end_time: me.mess.refresh.endTime / 1000,
+      classify_id: me.mess.idMenu
+    };
+    me._getTeamList(payload,-1,refresh);
+  }
+  //上拉加载
+  doInfinite(infinite){
+    let tempTime = me.mess.infinite.endTime;
+    let sevenTime = 24*60*60*7*1000;
+    me.mess.infinite.startTime = tempTime;
+    me.mess.infinite.endTime = tempTime + sevenTime;
+
+    let payload = {
+      start_time: me.mess.infinite.startTime/1000,
+      end_time: me.mess.infinite.endTime / 1000,
+      classify_id: me.mess.idMenu
+    };
+    me._getTeamList(payload,1,infinite);
+  }
+  //回到顶部
+  goBack(){
+    me.mess.deg += 180;
+    document.getElementById("img").style.transform = "rotate(" + me.mess.deg + "deg)";
+  }
+  //关闭广告资源
+  CloseAd() {
+    me.mess.adStatus = 0;
+  }
+//  进入直播
+  goLive(id){
+    me.navCtrl.push(LiveDetailPage, {item: id});
   }
 }

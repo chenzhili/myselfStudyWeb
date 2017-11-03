@@ -1,7 +1,4 @@
 <ion-header>
-      <!--<select name="" id="" [(ngModel)]="states" (ngModelChange)="states=$event;setInfo()">-->
-        <!--<option *ngFor="let one of oneMenu,let i= index" [value]='one.id' (click)="getSecMenu()">{{one?.name}}</option>-->
-      <!--</select>-->
     <ion-select [(ngModel)]="mess.type" (ngModelChange)="firstMenuChange($event)" okText="确定" cancelText="取消" placeholder="暂时没有类别" interface="action-sheet">
       <ion-option [value]="f.id" *ngFor="let f of mess.firstList">{{f.name}}</ion-option>
     </ion-select>
@@ -9,29 +6,31 @@
   <ion-toolbar no-border-top style="padding: 0">
     <div class="nav-slider">
       <ion-slides slidesPerView="6">
-        <ion-slide class="nav-imgslider">
+        <ion-slide class="nav-imgslider" (click)="getDiffGameList(0)">
           <img-lazy-load [src]="'assets/image/zuqiu.png'"></img-lazy-load>
-          <span class="nav-hmspan ">全部</span>
+          <span class="nav-hmspan" [ngClass]="{nav_active:mess.idMenu == 0}">全部</span>
         </ion-slide>
-        <ion-slide class="nav-imgslider">
+        <ion-slide class="nav-imgslider" (click)="getDiffGameList(-1)">
           <img-lazy-load [src]="'assets/image/hot.png'"></img-lazy-load>
-          <span class="nav-hmspan ">热门</span>
+          <span class="nav-hmspan" [ngClass]="{nav_active:mess.idMenu == -1}">热门</span>
         </ion-slide>
-        <ion-slide class="nav-imgslider" *ngFor="let secMenu of mess.secList">
+        <ion-slide class="nav-imgslider" *ngFor="let secMenu of mess.secList" (click)="getDiffGameList(secMenu.id)">
           <img-lazy-load [src]="secMenu?.img"></img-lazy-load>
-          <span class="nav-hmspan ">{{secMenu?.name}}</span>
+          <span class="nav-hmspan" [ngClass]="{nav_active:mess.idMenu == secMenu.id}">{{secMenu?.name}}</span>
         </ion-slide>
       </ion-slides>
     </div>
   </ion-toolbar>
 </ion-header>
-
+<div class="fixed">
+  {{mess.fixed}}
+</div>
 <ion-content class="gsbg">
-  <!--<ion-refresher (ionRefresh)="doRefresh($event)">-->
-    <!--<ion-refresher-content pullingIcon="arrow-round-down" pullingText="下拉刷新" refreshingSpinner="circles">-->
-    <!--</ion-refresher-content>-->
-  <!--</ion-refresher>-->
-    <div class="adv_banner">
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-round-down" pullingText="下拉刷新" refreshingSpinner="circles">
+    </ion-refresher-content>
+  </ion-refresher>
+    <div class="adv_banner" *ngIf="mess.idMenu == 0">
       <ion-slides pager="true" zoom="true" autoplay="1500" loop="true">
         <ion-slide>
           <img-lazy-load [src]="'assets/image/home/banner_1.jpg'"></img-lazy-load>
@@ -45,42 +44,48 @@
 
       </ion-slides>
     </div>
-    <!--<div class="game_list">-->
-      <!--<div class="game_item" *ngFor="let fied of classiFied">-->
-        <!--<div class="date">-->
-          <!--{{fied.dateTime}}-->
-        <!--</div>-->
-        <!--<div class="game_details_item clear-float" [ngClass]="{hot:fied.hot == 1}">-->
-          <!--<div class="team fl">-->
-            <!--<img [src]="fied.main_logo">-->
-            <!--<div class="name">{{fied.main_name}}</div>-->
-          <!--</div>-->
-          <!--<div class="game_introduce fl">-->
-            <!--<div class="play_state" [ngClass]="{not_begin:fied.is_open != 1}">-->
-              <!--<img [src]="'assets/image/team/living.png'" *ngIf="fied.is_open == 1">-->
-              <!--&nbsp;{{fied.is_open == 1?"直播中":"未开始"}}-->
-            <!--</div>-->
-            <!--<div class="play_date">-->
-              <!--{{fied.beginTiem}}-->
-            <!--</div>-->
-            <!--<div class="play_num">-->
-              <!--{{fied.classify}} {{fied.nature}}-->
-            <!--</div>-->
-          <!--</div>-->
-          <!--<div class="team fl">-->
-            <!--<img [src]="fied.visit_logo">-->
-            <!--<div class="name">{{fied.visit_name}}</div>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</div>-->
-    <!--</div>-->
+    <div class="game_list">
+      <div class="game_item" *ngFor="let item of getKeys(mess.teamList)">
+        <div class="date">
+          {{mess.teamList[item].length >0?formatTime(item):""}}
+        </div>
+        <div class="game_details_item clear-float" *ngFor="let fied of mess.teamList[item];" [ngClass]="{hot:fied.hot == 1 && mess.idMenu == -1}" (click)="goLive(fied.id)">
+          <div class="team fl">
+            <img [src]="fied.main_logo">
+            <div class="name">{{fied.main_name}}</div>
+          </div>
+          <div class="game_introduce fl">
+            <div class="play_state" [ngClass]="{not_begin:fied.is_open != 1}">
+              <img [src]="'assets/image/team/living.png'" *ngIf="fied.is_open == 1">
+              &nbsp;{{fied.is_open == 1?"直播中":"未开始"}}
+            </div>
+            <div class="play_date">
+              {{fied.beginTiem}}
+            </div>
+            <div class="play_num">
+              {{fied.classify}} {{fied.nature}}
+            </div>
+          </div>
+          <div class="team fl">
+            <img [src]="fied.visit_logo">
+            <div class="name">{{fied.visit_name}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="加载中">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
 <!-- 返回顶部 -->
-<!--<div id="img" class="return-top Rotation" (click)="goBack()"></div>-->
-<!--<div class="footer-bottom" *ngIf="adStatus == 0 ? true:false">-->
-  <!--<div class="ad_content">广告资源位</div>-->
-  <!--<div class="ad_close" (click)="CloseAd()">-->
-    <!--<img src="assets/image/close.png" alt=""/>-->
-  <!--</div>-->
-<!--</div>-->
+<div id="img" class="return-top Rotation" (click)="goBack()"></div>
+<div class="footer-bottom" *ngIf="mess.adStatus ? true:false">
+  <div class="ad_content">广告资源位</div>
+  <div class="ad_close" (click)="CloseAd()">
+    <img src="assets/image/close.png" alt=""/>
+  </div>
+</div>
 
