@@ -32,9 +32,9 @@ export class HomePage {
     infinite:{
       startTime:"",
       endTime:""
-    },
-    fixed:""
+    }
   };
+    fixText = "";
 
   constructor(private goP:RepeatProvider, public navCtrl:NavController, public navParams: NavParams,private zone: NgZone ) {
     //保存this 这里面执行的很快
@@ -49,6 +49,7 @@ export class HomePage {
     me._getSecMenu();
     //获取今天到后七天的毫秒数
     me._getStartToEnd();
+    
   }
 
 //  获取当天0点到后七天0点的毫秒数
@@ -120,39 +121,41 @@ export class HomePage {
 //对于固定日期的方法
   _fixedDate(){
     me.scroll = document.getElementsByClassName("scroll-content")[0];
+
     setTimeout(()=>{
       me.dateList = $(".date");
-      let dateTopObj = {};
+      me.dateTopObj = {};
       for(let i=0;i<me.dateList.length;i++){
-        dateTopObj[i] = {
+        me.dateTopObj[i] = {
           offsetTop:me.dateList[i].offsetTop,
           text:me.dateList[i].innerText
         };
       }
       me.scroll.addEventListener("scroll",(e)=>{
+        
         let scrollDistance = me.scroll.scrollTop;
-        for(let key in dateTopObj){
-          if(key == me.dateList.length){
-            if(scrollDistance > dateTopObj[key].offsetTop){
-              me.mess.fixed = dateTopObj[key].text;
-              // me.dateList[key].style.top = scrollDistance-dateTopObj[key].offsetTop+"px";
-              // dateList[key].className = "date date_fix";
-            }else{
-              me.mess.fixed = "";
-              // me.dateList[key].style.top = 0;
-              // dateList[key].className = "date";
+        if((function(scrollDistance){
+          for(let key in me.dateTopObj){
+            if(Number(key)+1 == me.dateList.length){
+              if(scrollDistance > me.dateTopObj[key].offsetTop){
+                me.fixText = me.dateTopObj[key].text;
+                if($(".fixed").length > 0){
+                  $(".fixed")[0].style.top = $("ion-header").css("height");
+                }
+                return false;
+              }
             }
-          }
-          if(scrollDistance>dateTopObj[key].offsetTop && scrollDistance < dateTopObj [Number(key)+1].offsetTop){
-            me.mess.fixed = dateTopObj[key].text;
-            console.log(me.mess.fixed);
-            // me.dateList[key].style.top = scrollDistance-dateTopObj[key].offsetTop+"px";
-            // dateList[key].className = "date date_fix";
-          }else{
-            me.mess.fixed = "";
-            // me.dateList[key].style.top = 0;
-            // dateList[key].className = "date";
-          }
+            if(scrollDistance>me.dateTopObj[key].offsetTop && scrollDistance < me.dateTopObj[Number(key)+1].offsetTop){
+              me.fixText = me.dateTopObj[key].text;
+              if($(".fixed").length > 0){
+                $(".fixed")[0].style.top = $("ion-header").css("height");
+              }
+              return false;
+            }
+          }    
+            return true;
+        })(scrollDistance)){
+           me.fixText = "";
         }
       })
     },500);

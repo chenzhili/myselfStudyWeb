@@ -22,8 +22,8 @@
     </div>
   </ion-toolbar>
 </ion-header>
-<div class="fixed">
-  {{mess.fixed}}
+<div class="fixed" *ngIf="fixText">
+  {{fixText}}
 </div>
 <ion-content class="gsbg">
   <ion-refresher (ionRefresh)="doRefresh($event)">
