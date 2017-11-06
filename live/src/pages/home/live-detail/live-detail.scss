@@ -73,10 +73,23 @@ page-live-detail {
     height: 100%;
   }
   .live-display {
+    position:relative;
     display: none;
+  }
+  .adv{
+    position:absolute;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    img{
+      width:100%;
+      height:100%;
+    }
   }
   .live-block {
     display: block;
+    height:164px;
   }
   .live_adStyle {
     //height: auto;
@@ -163,5 +176,14 @@ page-live-detail {
       }
     }
   }
-
 }
+/*控制条*/
+.progressbar{position:absolute;bottom:0;width:100%;height:30px;background:-webkit-linear-gradient(top,rgba(0,0,0,.4),rgba(0,0,0,.6));}
+.progressbar>div{height:30px;}
+.progressbar .img{width:10%;display:flex;}
+.progressbar .img img{width:20px;height:20px;vertical-align:middle;margin:auto;}
+.progressbar .time{width:10%;line-height:30px;color:#fff;font-size:12px;text-align:center;}
+.progressbar .bar{width:70%;display:flex;}
+.progress-bar{position:relative;width:80%;margin:auto;height:2px;background-color:#000;border-radius:2px;}
+.circle{position:absolute;width:8px;height:8px;background-color:#FF6921;border-radius:50%;bottom:-3px;left:0;}
+.bar-active{width:0;height:100%;background-color:#FF6921;}

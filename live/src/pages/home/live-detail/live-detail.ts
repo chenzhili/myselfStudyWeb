@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { RepeatProvider } from '../../../providers/repeat/repeat';
 declare var CKobject: any, Hls: any,flvjs:any ;
+import * as $ from "jquery";
 var $scope;
 @IonicPage()
 @Component({
@@ -16,11 +17,20 @@ export class LiveDetailPage {
     $scope=this;
     $scope.liveShow = 0;
     $scope.linesStatus = 0;
+    $scope.isStart = true;
     $scope.adStatus = 0;
+    $scope.advShow = 1;
     //获取上个页面的id
     $scope.liveId = this.navParams.get('item');
     this.getDetail();
     this.getAdLive();
+    window.addEventListener('deviceorientation', function(event) {
+      // 以设备坐标系z轴为轴，旋转alpha度。alpha的作用域为(0, 360)
+      // 以设备坐标系x轴为轴，旋转beta度。beta的作用域为(-180, 180)
+      // 已设备坐标系y轴为轴，旋转gamma度。gamma的作用域为(-90, 90)
+      console.log(window.orientation);
+    });
+
   }
 
   //下拉刷新
@@ -41,55 +51,98 @@ export class LiveDetailPage {
     this.goP.yikeGet('match/details', payload).then(data => {
       let menu = data.json();
       //直播详情
+      console.log(menu);
       $scope.liveMsg = menu.msg;
-      console.log($scope.liveMsg );
       $scope.sowing = menu.data;
-      console.log($scope.sowing);
     }).catch(err => {
       this.goP.presentToast(err);
     })
   }
-  //观看直播
-  show(){
-    $scope.liveShow = 1;
-    if (flvjs.isSupported()) {
-      var videoElement = document.getElementById('videoElement');
-      var flvPlayer = flvjs.createPlayer({
-        type: 'flv',
-        isLive: true,
-        url: 'http://live.yike1908.com/yike_live/aaa.flv'
+  //监听播放进度
+  updateTime(){
+    if($scope.videoElement.length > 0){
+      $scope.videoElement.addEventListener("timeupdate",(e)=>{
+        console.log(e);
       });
-      flvPlayer.attachMediaElement(videoElement);
-      flvPlayer.load();
-      flvPlayer.play();
     }
-    $scope.linesStatus = 0;
-
+  }
+  //观看直播
+  livePlay(){
+    $scope.liveShow = 1;
+    setTimeout(()=>{
+      $scope.advShow = 0;
+      if (flvjs.isSupported()) {
+        $scope.videoElement = document.getElementById('videoElement');
+        $scope.updateTime();
+        $scope.flvPlayer = flvjs.createPlayer({
+          type: 'flv',
+          isLive: true,
+          url: "http://live.yike1908.com/yike_live/asd.flv"
+        });
+        $scope.flvPlayer.attachMediaElement($scope.videoElement);
+        $scope.flvPlayer.load();
+        $scope.flvPlayer.play();
+        console.log($scope.flvPlayer);
+      }
+    },3000);
   }
 
+  //格式化时间
+  convertTime(time){
+    let h,hSplit,m,s;
+    h = Math.floor(time/60/60);
+    h = h < 10?"0"+h:h;
+    h = Number(h) || "";
+    hSplit = h?h+":":"";
+    m = Math.floor((time-h*60*60)/60);
+    m = m < 10?"0"+m:m;
+    s = Math.floor(time%60);
+    s = s < 10?"0"+s:s;
+    return `${hSplit}${m}:${s}`
+  }
 
   //获取广告
   getAdLive(){
-    console.log(1231231231);
     let payload = {
-      type: 1
+      type: 3
     };
     this.goP.yikeGet('ad/index',payload).then(data => {
       let ad = data.json();
       //直播广告
-      $scope.adMsg = ad.msg;
-      console.log(ad);
-      $scope.adLive = ad.data;
-      console.log($scope.adLive);
+      $scope.adLive = ad.data[0].img;
     }).catch(err => {
       this.goP.presentToast(err);
     })
   }
-
-  //选择路线
-  SelectionRoute(){
-    $scope.linesStatus = 1;
+  //暂停或者开始
+  flv_pause(){
+    if($scope.isStart){
+      $scope.flvPlayer.pause();
+    }else{
+      $scope.flvPlayer.start();
+    }
   }
+  //  全屏
+  fullScreen(){
+    $scope.videoElement.webkitRequestFullScreen();
+  }
+  //选择路线
+  // SelectionRoute(){
+  //   // $scope.linesStatus = 1;
+  //   $scope.liveShow = 1;
+  //   if (flvjs.isSupported()) {
+  //     var videoElement = document.getElementById('videoElement');
+  //     var flvPlayer = flvjs.createPlayer({
+  //       type: 'flv',
+  //       isLive: true,
+  //       url: 'http://live.yike1908.com/yike_live/英超.flv'
+  //     });
+  //     flvPlayer.attachMediaElement(videoElement);
+  //     flvPlayer.load();
+  //     flvPlayer.play();
+  //   }
+  //   $scope.linesStatus = 0;
+  // }
   //关闭线路
   CloseSelectionRoute(){
     $scope.linesStatus = 0;

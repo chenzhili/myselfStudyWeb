@@ -13,6 +13,7 @@ let me;
   }
 })
 export class HomePage {
+  @ViewChild(Slides) slides: Slides;
   //初始化变量
   mess = {
     type:"7",
@@ -34,7 +35,8 @@ export class HomePage {
       endTime:""
     }
   };
-    fixText = "";
+  fixText = "";
+  bannerList = [];
 
   constructor(private goP:RepeatProvider, public navCtrl:NavController, public navParams: NavParams,private zone: NgZone ) {
     //保存this 这里面执行的很快
@@ -43,13 +45,15 @@ export class HomePage {
   }
 //  初始化数据
   ngOnInit(){
+    //获取banner图
+    me._getBanners();
     //初始化一级菜单
     me._getFirstGameList();
     //初始化二级菜单
     me._getSecMenu();
     //获取今天到后七天的毫秒数
     me._getStartToEnd();
-    
+
   }
 
 //  获取当天0点到后七天0点的毫秒数
@@ -90,6 +94,19 @@ export class HomePage {
       obj[time].push(arr[i]);
     }
     return obj;
+  }
+//  获取banner图
+  _getBanners(){
+    let payload = {
+      type: 1
+    };
+    this.goP.yikeGet('ad/index',payload).then(data => {
+      let ad = data.json();
+      //直播广告
+      me.bannerList = ad.data;
+    }).catch(err => {
+      this.goP.presentToast(err);
+    })
   }
 //  获取不同联赛
   getDiffGameList(idMenu){
@@ -132,7 +149,7 @@ export class HomePage {
         };
       }
       me.scroll.addEventListener("scroll",(e)=>{
-        
+
         let scrollDistance = me.scroll.scrollTop;
         if((function(scrollDistance){
           for(let key in me.dateTopObj){
@@ -152,7 +169,7 @@ export class HomePage {
               }
               return false;
             }
-          }    
+          }
             return true;
         })(scrollDistance)){
            me.fixText = "";
@@ -264,6 +281,7 @@ export class HomePage {
   goBack(){
     me.mess.deg += 180;
     document.getElementById("img").style.transform = "rotate(" + me.mess.deg + "deg)";
+    me.scroll.scrollTop = 0;
   }
   //关闭广告资源
   CloseAd() {
