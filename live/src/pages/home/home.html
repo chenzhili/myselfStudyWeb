@@ -31,13 +31,10 @@
     </ion-refresher-content>
   </ion-refresher>
     <div class="adv_banner" *ngIf="mess.idMenu == 0">
-      <ion-slides pager="true" autoplay="1500" loop="true">
+      <ion-slides pager="true" autoplay="1500" loop="true" *ngIf="bannerLength > 0">
         <ion-slide *ngFor="let item of bannerList">
-          1111
-        </ion-slide>
-        <!--<ion-slide *ngFor="let item of bannerList">
           <img [src]="item.img">
-        </ion-slide>-->
+        </ion-slide>
       </ion-slides>
     </div>
     <div class="game_list">

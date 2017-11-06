@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { RepeatProvider } from '../../../providers/repeat/repeat';
-declare var CKobject: any, Hls: any,flvjs:any ;
+declare var CKobject: any, Hls: any,flvjs:any,screen:any ;
 import * as $ from "jquery";
 var $scope;
 @IonicPage()
@@ -24,13 +24,13 @@ export class LiveDetailPage {
     $scope.liveId = this.navParams.get('item');
     this.getDetail();
     this.getAdLive();
-    window.addEventListener('deviceorientation', function(event) {
-      // 以设备坐标系z轴为轴，旋转alpha度。alpha的作用域为(0, 360)
-      // 以设备坐标系x轴为轴，旋转beta度。beta的作用域为(-180, 180)
-      // 已设备坐标系y轴为轴，旋转gamma度。gamma的作用域为(-90, 90)
-      console.log(window.orientation);
-    });
-
+    // window.addEventListener('deviceorientation', function(event) {
+    //   // 以设备坐标系z轴为轴，旋转alpha度。alpha的作用域为(0, 360)
+    //   // 以设备坐标系x轴为轴，旋转beta度。beta的作用域为(-180, 180)
+    //   // 已设备坐标系y轴为轴，旋转gamma度。gamma的作用域为(-90, 90)
+    //   console.log(window.orientation);
+    // });
+    console.log(screen);
   }
 
   //下拉刷新
@@ -58,14 +58,7 @@ export class LiveDetailPage {
       this.goP.presentToast(err);
     })
   }
-  //监听播放进度
-  updateTime(){
-    if($scope.videoElement.length > 0){
-      $scope.videoElement.addEventListener("timeupdate",(e)=>{
-        console.log(e);
-      });
-    }
-  }
+  
   //观看直播
   livePlay(){
     $scope.liveShow = 1;
@@ -73,7 +66,8 @@ export class LiveDetailPage {
       $scope.advShow = 0;
       if (flvjs.isSupported()) {
         $scope.videoElement = document.getElementById('videoElement');
-        $scope.updateTime();
+        // http://www.cnblogs.com/babuge/p/6894797.html
+        screen.orientation.unlock();
         $scope.flvPlayer = flvjs.createPlayer({
           type: 'flv',
           isLive: true,

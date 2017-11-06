@@ -104,6 +104,7 @@ export class HomePage {
       let ad = data.json();
       //直播广告
       me.bannerList = ad.data;
+      me.bannerLength = me.bannerList.length;
     }).catch(err => {
       this.goP.presentToast(err);
     })
@@ -137,7 +138,7 @@ export class HomePage {
   }
 //对于固定日期的方法
   _fixedDate(){
-    me.scroll = document.getElementsByClassName("scroll-content")[0];
+    me.scroll = document.getElementsByClassName("scroll-content")[0]; 
 
     setTimeout(()=>{
       me.dateList = $(".date");
