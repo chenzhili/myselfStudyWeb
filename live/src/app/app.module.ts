@@ -11,6 +11,7 @@ import { IonicStorageModule } from '@ionic/storage'; //存储
 import { Camera } from '@ionic-native/camera';  //相机
 import { Network } from '@ionic-native/network'; //网络
 import { InAppBrowser } from '@ionic-native/in-app-browser'; //打开浏览器
+import { ScreenOrientation } from '@ionic-native/screen-orientation'; //允许横屏
 
 //页面module
 import { TabsPage } from '../pages/tabs/tabs';
@@ -41,7 +42,7 @@ import { RepeatProvider } from '../providers/repeat/repeat';
   ],
   providers: [
     StatusBar,
-    SplashScreen, Camera, Network,InAppBrowser,
+    SplashScreen, Camera, Network,InAppBrowser,ScreenOrientation,
     RepeatProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]

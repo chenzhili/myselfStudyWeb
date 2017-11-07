@@ -22,12 +22,16 @@ page-live-detail {
     background: url("../assets/image/cczb.png") no-repeat;
     //background-color: red;
     background-size: 100% 100%;
-    padding: 1.8rem 0;
     color: #fff;
+    p{
+      margin:0;
+      padding:0;
+      line-height:20px;
+    }
   }
   .conts-list {
     overflow: hidden;
-    padding: 8px 12px;
+    padding: 30px 12px;
     position: relative;
   }
   .conts-item {
@@ -72,9 +76,13 @@ page-live-detail {
     width: 100%;
     height: 100%;
   }
+  .live-container{
+    position:relative;
+    height:186px;
+  }
   .live-display {
     position:relative;
-    display: none;
+    height:186px;
   }
   .adv{
     position:absolute;
@@ -86,10 +94,6 @@ page-live-detail {
       width:100%;
       height:100%;
     }
-  }
-  .live-block {
-    display: block;
-    height:164px;
   }
   .live_adStyle {
     //height: auto;
@@ -187,3 +191,28 @@ page-live-detail {
 .progress-bar{position:relative;width:80%;margin:auto;height:2px;background-color:#000;border-radius:2px;}
 .circle{position:absolute;width:8px;height:8px;background-color:#FF6921;border-radius:50%;bottom:-3px;left:0;}
 .bar-active{width:0;height:100%;background-color:#FF6921;}
+#videoElement{object-fit:fill;}
+@media only screen and (orientation: portrait) {
+
+}
+
+/* 全景（横屏）模式 */
+@media screen and (orientation: landscape) {
+  .live-container{
+    position:absolute !important;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    height:100% !important;
+    .live-display{
+      position:absolute !important;
+      width:100%;
+      height:100%;
+      z-index:100;
+    }
+  }
+  .live_adStyle{
+    display:none;
+  }
+}
