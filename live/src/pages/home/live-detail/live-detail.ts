@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { RepeatProvider } from '../../../providers/repeat/repeat';
 import { ScreenOrientation } from '@ionic-native/screen-orientation'; //允许横屏
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 import * as $ from "jquery";
 declare var CKobject: any, Hls: any,flvjs:any;
 var $scope;
@@ -13,33 +14,54 @@ var $scope;
 export class LiveDetailPage {
   liveShow:string;
   linesStatus:string;
-  adStatus:string;
-  constructor(public goP: RepeatProvider, public navCtrl: NavController, public navParams: NavParams,public screenOrientation:ScreenOrientation) {
+  constructor(public goP: RepeatProvider, public navCtrl: NavController, public navParams: NavParams,public screenOrientation:ScreenOrientation,public web:InAppBrowser) {
     $scope=this;
     $scope.liveShow = 0;
     $scope.linesStatus = 0;
     $scope.isStart = true;
-    $scope.adStatus = 0;
     $scope.advShow = 1;
+    $scope.sowing = {};
     $scope.headerIsShow = true;
     $scope.playOrPause = "data:image/png;base64,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";
     //获取上个页面的id
-    $scope.liveId = this.navParams.get('item');
+    $scope.liveId = this.navParams.get('item').id;
+    $scope.sowing.main_logo = this.navParams.get('item').main_logo;
+    $scope.sowing.visit_logo = this.navParams.get('item').visit_logo;
     this.getDetail();
     this.getAdLive();
+    this._adv();
     this.screenOrientation.onChange().subscribe(
       () => {
         console.log(this.screenOrientation.type);
       }
     );
   }
+  //  获取底部广告
+  _adv(){
+    let payload = {
+      type: 2
+    };
+    this.goP.yikeGet('ad/index',payload).then(data => {
+      let ad = data.json();
+      //直播广告
+      if(ad.data.length > 0){
+        for(let i=0;i<ad.data.length;i++){
+          ad.data[i].adStatus = 1;
+        }
+        $scope.adv = ad.data;
+      }
+    }).catch(err => {
+      this.goP.presentToast(err);
+    })
+  }
+  //  跳转网页
+  toWeb(url){
+    let browser = this.web.create(url,"_blank");
+    browser.show();
+  }
   //返回
   back(){
     this.navCtrl.pop();
-  }
-  //页面加载完成
-  ionViewDidEnter(){
-    $(".back-button").css("display","none");
   }
   //页面即将离开
   ionViewWillLeave(){
@@ -54,10 +76,8 @@ export class LiveDetailPage {
     refresher != undefined ? refresher.complete() : '';
     this.getDetail();
     this.getAdLive();
+    this._adv();
   }
-
-
-
 
   //获取详情
   getDetail() {
@@ -75,25 +95,25 @@ export class LiveDetailPage {
   }
   //隐藏或者显示头部和控制条
   hideOrShow(){
-    $(".scroll-content").css("marginTop","0px");
     $scope.headerIsShow = !$scope.headerIsShow;
   }
   //观看直播
   livePlay(){
     $scope.headerIsShow = false;
-    $(".scroll-content").css("marginTop","0px");
     $scope.liveShow = 1;
     this.screenOrientation.unlock();
     setTimeout(()=>{
-      $scope.advShow = 0;
       $scope.videoElement = document.getElementById('videoElement');
       $scope.flvPlayer = flvjs.createPlayer({
         type: 'flv',
         isLive: true,
-        url: "http://live.yike1908.com/yike_live/as.flv"
+        url: $scope.sowing.url_flv
       });
       $scope.flvPlayer.attachMediaElement($scope.videoElement);
       $scope.flvPlayer.load();
+    },100);
+    setTimeout(()=>{
+      $scope.advShow = 0;
       if (flvjs.isSupported()) {
         $scope.flvPlayer.play();
         $scope.headerIsShow = true;
@@ -170,8 +190,8 @@ export class LiveDetailPage {
     $scope.linesStatus = 0;
   }
   //关闭广告资源
-  CloseAd(){
-    $scope.adStatus = 1;
+  CloseAd(item){
+    item.adStatus = 0;
   }
 
 

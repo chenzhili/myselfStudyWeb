@@ -28,13 +28,13 @@ import { RepeatProvider } from '../providers/repeat/repeat';
     BrowserModule,
     HomeModule,
     HttpModule,
-    IonicModule.forRoot(MyApp,{
+    IonicModule.forRoot(MyApp,{  //初始化设置
       backButtonText: '', // 配置返回按钮的文字s
       tabsHideOnSubPages: 'true',
       iconMode: 'ios',
       mode: 'ios',
     }),
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot()  //只是为了在app中配置对应的存储功能的初始化，可以在任何组件中用 import { Storage } from "@ionic/storage"
   ],
   bootstrap: [IonicApp],
   entryComponents: [

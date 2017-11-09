@@ -2,6 +2,8 @@ import { Component, ViewChild,Pipe, PipeTransform,NgZone  } from '@angular/core'
 import { NavController, Slides, NavParams } from 'ionic-angular';
 import { LiveDetailPage } from './live-detail/live-detail';
 import { RepeatProvider } from '../../providers/repeat/repeat';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { ScreenOrientation } from '@ionic-native/screen-orientation'; //允许横屏
 import * as $ from "jquery";
 declare let $:any;
 let me;
@@ -38,15 +40,17 @@ export class HomePage {
   fixText = "";
   bannerList = [];
 
-  constructor(private goP:RepeatProvider, public navCtrl:NavController, public navParams: NavParams,private zone: NgZone ) {
+  constructor(private goP:RepeatProvider, public navCtrl:NavController, public navParams: NavParams,private zone: NgZone,public web:InAppBrowser,public screenOrientation:ScreenOrientation) {
     //保存this 这里面执行的很快
     me = this;
-
+    me.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
   }
 //  初始化数据
   ngOnInit(){
     //获取banner图
     me._getBanners();
+    //获取底部广告
+    me._adv();
     //初始化一级菜单
     me._getFirstGameList();
     //初始化二级菜单
@@ -54,6 +58,11 @@ export class HomePage {
     //获取今天到后七天的毫秒数
     me._getStartToEnd();
 
+  }
+//  跳转网页
+  toWeb(url){
+    let browser = this.web.create(url,"_blank");
+    browser.show();
   }
 
 //  获取当天0点到后七天0点的毫秒数
@@ -94,6 +103,21 @@ export class HomePage {
       obj[time].push(arr[i]);
     }
     return obj;
+  }
+//  获取底部广告
+  _adv(){
+    let payload = {
+      type: 2
+    };
+    this.goP.yikeGet('ad/index',payload).then(data => {
+      let ad = data.json();
+      //直播广告
+      if(ad.data.length > 0){
+        me.adv = ad.data[0];
+      }
+    }).catch(err => {
+      this.goP.presentToast(err);
+    })
   }
 //  获取banner图
   _getBanners(){
@@ -138,7 +162,7 @@ export class HomePage {
   }
 //对于固定日期的方法
   _fixedDate(){
-    me.scroll = document.getElementsByClassName("scroll-content")[0]; 
+    me.scroll = document.getElementsByClassName("scroll-content")[0];
 
     setTimeout(()=>{
       me.dateList = $(".date");
@@ -289,7 +313,7 @@ export class HomePage {
     me.mess.adStatus = 0;
   }
 //  进入直播
-  goLive(id){
-    me.navCtrl.push(LiveDetailPage, {item: id});
+  goLive(fied){
+    me.navCtrl.push(LiveDetailPage, {item: fied});
   }
 }

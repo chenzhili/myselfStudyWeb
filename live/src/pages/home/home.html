@@ -42,26 +42,31 @@
         <div class="date">
           {{mess.teamList[item].length >0?formatTime(item):""}}
         </div>
-        <div class="game_details_item clear-float" *ngFor="let fied of mess.teamList[item];" [ngClass]="{hot:fied.hot == 1 && mess.idMenu == -1}" (click)="goLive(fied.id)">
-          <div class="team fl">
-            <img [src]="fied.main_logo">
-            <div class="name">{{fied.main_name}}</div>
+        <div *ngFor="let fied of mess.teamList[item];" [ngClass]="{hot:fied.hot == 1 && mess.idMenu == -1}">
+          <div class="game_details_item clear-float" (click)="goLive(fied)">
+            <div class="team fl">
+              <img [src]="fied.main_logo">
+              <div class="name">{{fied.main_name}}</div>
+            </div>
+            <div class="game_introduce fl">
+              <div class="play_state" [ngClass]="{not_begin:fied.is_open != 1}">
+                <img [src]="'assets/image/team/living.png'" *ngIf="fied.is_open == 1">
+                &nbsp;{{fied.is_open == 1?"直播中":"未开始"}}
+              </div>
+              <div class="play_date">
+                {{fied.beginTiem}}
+              </div>
+              <div class="play_num">
+                {{fied.classify}} {{fied.nature}}
+              </div>
+            </div>
+            <div class="team fl">
+              <img [src]="fied.visit_logo">
+              <div class="name">{{fied.visit_name}}</div>
+            </div>
           </div>
-          <div class="game_introduce fl">
-            <div class="play_state" [ngClass]="{not_begin:fied.is_open != 1}">
-              <img [src]="'assets/image/team/living.png'" *ngIf="fied.is_open == 1">
-              &nbsp;{{fied.is_open == 1?"直播中":"未开始"}}
-            </div>
-            <div class="play_date">
-              {{fied.beginTiem}}
-            </div>
-            <div class="play_num">
-              {{fied.classify}} {{fied.nature}}
-            </div>
-          </div>
-          <div class="team fl">
-            <img [src]="fied.visit_logo">
-            <div class="name">{{fied.visit_name}}</div>
+          <div class="ad_img" *ngIf="fied.ad_open" (click)="toWeb(fied.ad.url)">
+            <img [src]="fied.ad.img">
           </div>
         </div>
       </div>
@@ -75,8 +80,7 @@
 </ion-content>
 <!-- 返回顶部 -->
 <div id="img" class="return-top Rotation" (click)="goBack()"></div>
-<div class="footer-bottom" *ngIf="mess.adStatus ? true:false">
-  <div class="ad_content">广告资源位</div>
+<div class="footer-bottom" *ngIf="mess.adStatus && adv" [ngStyle]="{background:'url('+adv?.img+') no-repeat center center',backgroundSize:'100% 100%'}" (click)="toWeb(adv?.url)">
   <div class="ad_close" (click)="CloseAd()">
     <img src="assets/image/close.png" alt=""/>
   </div>
