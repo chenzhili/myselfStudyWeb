@@ -16,34 +16,34 @@ import * as $ from "jquery";
   for more info on providers and Angular 2 DI.
 */
 declare var AliPay: any;
-@Component({
-  selector: 'md-exa',
-  template: '<div class="modal-bg"><div class="modal-a"><div class="modal-hdt">' +
-  '<div class="modal-hd"><div class="modal-recb"><h2>{{modal.title||"123"}}</h2></div><p>{{modal.cont||"test"}}</p></div>' +
-  '</div><div class="box-cr left-cr"></div><div class="box-cr right-cr"></div>' +
-  '<div class="modal-btn">' +
-  '<button ion-button class="btn"  (click)="ok()">{{modal.ok||"确认"}}</button>' +
-  '<button ion-button class="gray" (click)="cancel()">{{modal.canel||"取消"}}</button>' +
-  '</div></div></div>'
-})
-export class ModalExample {
-  modal: {
-    title?: string,
-    cont?: any,
-    ok?: string,
-    cancel?: string
-  }
-  constructor() { }
-  create(params: any) {
-    this.modal = params;
-  }
-  ok(fn) {
-    fn();
-  }
-  cancel(fn) {
-    fn();
-  }
-}
+// @Component({
+//   selector: 'md-exa',
+//   template: '<div class="modal-bg"><div class="modal-a"><div class="modal-hdt">' +
+//   '<div class="modal-hd"><div class="modal-recb"><h2>{{modal.title||"123"}}</h2></div><p>{{modal.cont||"test"}}</p></div>' +
+//   '</div><div class="box-cr left-cr"></div><div class="box-cr right-cr"></div>' +
+//   '<div class="modal-btn">' +
+//   '<button ion-button class="btn"  (click)="ok()">{{modal.ok||"确认"}}</button>' +
+//   '<button ion-button class="gray" (click)="cancel()">{{modal.canel||"取消"}}</button>' +
+//   '</div></div></div>'
+// })
+// export class ModalExample {
+//   modal: {
+//     title?: string,
+//     cont?: any,
+//     ok?: string,
+//     cancel?: string
+//   }
+//   constructor() { }
+//   create(params: any) {
+//     this.modal = params;
+//   }
+//   ok(fn) {
+//     fn();
+//   }
+//   cancel(fn) {
+//     fn();
+//   }
+// }
 
 /**
  * 简单封装的一些公共函数
@@ -56,7 +56,7 @@ export class RepeatProvider {
   constructor(public storage: Storage, public network: Network, public camera: Camera, public http: Http, public toast: ToastController, public loadingCtrl: LoadingController, public web: InAppBrowser) {
     this.i=5;
    }
-  
+
   //发起post请求
   yikeData(mod: string, payload?: any, url?: string) {
     // var url = (url || 'http://118.190.138.112/index.php/api/') + mod;

@@ -14,9 +14,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser'; //打开浏览器
 import { ScreenOrientation } from '@ionic-native/screen-orientation'; //允许横屏
 
 //页面module
-import { TabsPage } from '../pages/tabs/tabs';
 import { HomeModule } from '../pages/home/home.module';
-
 //自定义
 import { RepeatProvider } from '../providers/repeat/repeat';
 
@@ -28,7 +26,7 @@ import { RepeatProvider } from '../providers/repeat/repeat';
     BrowserModule,
     HomeModule,
     HttpModule,
-    IonicModule.forRoot(MyApp,{  //初始化设置
+    IonicModule.forRoot(MyApp,{  //初始化设置，这里面含有 commonModule这个里含有公共的 ngIf ngFor等公共指令的模块
       backButtonText: '', // 配置返回按钮的文字s
       tabsHideOnSubPages: 'true',
       iconMode: 'ios',
