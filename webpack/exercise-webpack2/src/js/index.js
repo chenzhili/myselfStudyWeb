@@ -1,3 +1,12 @@
+//引入css
+import "../css/style.css";
+
+//引入scss
+import "../css/test-scss.scss"
+
+import pause from "../img/pause.png";
+import full from "../img/full.png";
+
 /*视频播放*/
 let video = document.getElementById("video");
 let videoContainer= document.getElementsByClassName("video-container")[0]; /*为了不让触摸和点击事件相互干扰，点击事件绑定到container上*/

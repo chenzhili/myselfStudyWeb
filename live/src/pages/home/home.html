@@ -49,9 +49,9 @@
               <div class="name">{{fied.main_name}}</div>
             </div>
             <div class="game_introduce fl">
-              <div class="play_state" [ngClass]="{not_begin:fied.is_open != 1}">
-                <img [src]="'assets/image/team/living.png'" *ngIf="fied.is_open == 1">
-                &nbsp;{{fied.is_open == 1?"直播中":"未开始"}}
+              <div class="play_state" [ngClass]="{not_begin:fied.is_open != 1 || fied.is_end == 1}">
+                <img [src]="'assets/image/team/living.png'" *ngIf="fied.is_open == 1 && fied.is_end != 1">
+                &nbsp;{{fied.is_open == 0?"未开始":(fied.is_end == 1?"已结束":"直播中")}}
               </div>
               <div class="play_date">
                 {{fied.beginTiem}}

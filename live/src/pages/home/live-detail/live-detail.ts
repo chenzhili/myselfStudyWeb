@@ -61,6 +61,15 @@ export class LiveDetailPage {
   }
   //返回
   back(){
+    if($scope.flvPlayer){
+      $scope.flvPlayer.destroy();
+    }
+    if($scope.initTimeout){
+      clearTimeout($scope.initTimeout);
+    }
+    if($scope.playTimeout){
+      clearTimeout($scope.playTimeout);
+    }
     this.navCtrl.pop();
   }
   //页面即将离开
@@ -99,26 +108,34 @@ export class LiveDetailPage {
   }
   //观看直播
   livePlay(){
-    $scope.headerIsShow = false;
-    $scope.liveShow = 1;
-    this.screenOrientation.unlock();
-    setTimeout(()=>{
-      $scope.videoElement = document.getElementById('videoElement');
-      $scope.flvPlayer = flvjs.createPlayer({
-        type: 'flv',
-        isLive: true,
-        url: $scope.sowing.url_flv
-      });
-      $scope.flvPlayer.attachMediaElement($scope.videoElement);
-      $scope.flvPlayer.load();
-    },100);
-    setTimeout(()=>{
-      $scope.advShow = 0;
-      if (flvjs.isSupported()) {
-        $scope.flvPlayer.play();
-        $scope.headerIsShow = true;
+    if($scope.sowing.is_open == 0){
+      this.goP.presentToast("直播尚未开始");
+    }else{
+      if($scope.sowing.is_end == 1){
+        this.goP.presentToast("直播已结束");
+      }else{
+        $scope.headerIsShow = false;
+        $scope.liveShow = 1;
+        this.screenOrientation.unlock();
+        $scope.initTimeout = setTimeout(()=>{
+          $scope.videoElement = document.getElementById('videoElement');
+          $scope.flvPlayer = flvjs.createPlayer({
+            type: 'flv',
+            isLive: true,
+            url: $scope.sowing.url_flv
+          });
+          $scope.flvPlayer.attachMediaElement($scope.videoElement);
+          $scope.flvPlayer.load();
+        },100);
+        $scope.playTimeout = setTimeout(()=>{
+          $scope.advShow = 0;
+          if (flvjs.isSupported()) {
+            $scope.flvPlayer.play();
+            $scope.headerIsShow = true;
+          }
+        },3000);
       }
-    },3000);
+    }
   }
 
   //格式化时间
