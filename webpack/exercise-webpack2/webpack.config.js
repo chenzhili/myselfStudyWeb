@@ -1,11 +1,13 @@
 /**
  * Created by YK on 2017/11/13.
  */
-let cssExtract = require("extract-text-webpack-plugin");
-let htmlExtract = require("html-webpack-plugin");
-let path = require("path");
+const webpack = require("webpack");
+const cssExtract = require("extract-text-webpack-plugin");
+const htmlExtract = require("html-webpack-plugin");
+const path = require("path");
 
 module.exports={
+    // devtool: 'eval-source-map',
     entry:{
         //"css/style":path.join(__dirname,"src/css/style.css"), //这个为了把它单独隔离出来的css的入口文件
         //这个不要单独生成一个 js，这个最后需要 用插件的 提取成 单独的 css
@@ -13,7 +15,8 @@ module.exports={
     },
     output:{
         path:path.join(__dirname,"build/"), //这里要注意，这个是所有文件的 起始相对位置
-        filename:"[name].js"
+        filename:"[name].js",
+        // chunkFilename:'[name].chunk.js' //对于 用这个做 按需加载的问题，不咋清楚
     },
     module:{
         rules:[
