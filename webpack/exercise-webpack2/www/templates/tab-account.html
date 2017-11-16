@@ -1,0 +1,91 @@
+<ion-view view-title="" hide-nav-bar="true" id="account">
+  <div class="head-portrait">
+    <div class="account-user-pic">
+      <!--<img class="loginimg" ng-src="{{images || 'img/resethome/my/user.png'}}" ng-click="pickImage()"/>-->
+      <div>
+        <img class="loginimg" src="img/resethome/my/user.png" width="100%" height="100%" ng-click="pickImage()"/>
+      </div>
+
+      <p class="name">{{user.phone || user.email}}</p>
+
+      <!--<p class="cwvip" ui-sref="member-center">会员中心</p>-->
+    </div>
+  </div>
+  <ion-content class="has-tabs">
+    <div style="height: 203px"></div>
+    <div class="program list">
+      <div class="part item" ui-sref="my-scheme">
+        <img src="img/account/program.png" alt="">
+        <span>我的方案</span>
+      </div>
+      <div class="part item" ui-sref="modification-password">
+        <img src="img/account/lock.png" alt="">
+        <span>修改密码</span>
+      </div>
+      <!--<div class="part item" ng-click="goBindPhone()">
+        <img src="img/account/bind_phone.png" alt="">
+        <span>绑定手机</span>
+      </div>-->
+      <div class="part item" ui-sref="my-message">
+        <img src="img/account/message.png" alt="">
+        <span>我的消息</span>
+      </div>
+      <div class="part item" ng-click="openQQ()">
+        <img src="img/account/service.png" alt="">
+        <span>联系客服</span>
+      </div>
+      <div class="part item" ng-click="loginout()">
+        <img src="img/account/exit.png" alt="">
+        <span>退出登录</span>
+      </div>
+    </div>
+
+    <!--背景赛车-->
+    <!--<div class="bj-racing">
+      <div class="row">
+        <div class="col col-33 bj-my-table" ui-sref="my-scheme" style="text-align: center">
+          <div class="bj-my-box bj-my-box-active">
+            &lt;!&ndash;<img src="img/resethome/my/programme.png" alt="">&ndash;&gt;
+          </div>
+          <span>我的方案</span>
+        </div>
+        <div class="col col-33 bj-my-table" ui-sref="modification-password">
+          <div class="bj-my-box">
+            <img src="img/resethome/my/change.png" alt="">
+          </div>
+          <span>修改密码</span>
+        </div>
+        <div class="col col-33 bj-my-table" ng-click="goBindPhone()">
+          <div class="bj-my-box">
+            <img src="img/resethome/my/phone.png" alt="">
+          </div>
+          <span>绑定手机</span>
+        </div>
+      </div>
+      <div class="row">
+        &lt;!&ndash;<div class="col col-33" ui-sref="my-message">&ndash;&gt;
+        &lt;!&ndash;&lt;!&ndash;<img src="img/account/program.png" alt="">&ndash;&gt;&ndash;&gt;
+        &lt;!&ndash;<span>我的消息</span>&ndash;&gt;
+        &lt;!&ndash;</div>&ndash;&gt;
+        <div class="col col-33 bj-my-table" ui-sref="online-service">
+          <div class="bj-my-box">
+            <img src="img/resethome/my/customer_service.png" alt="">
+          </div>
+          <span>联系客服</span>
+        </div>
+        <div class="col col-33 bj-my-table" ng-click="loginout()">
+          <div class="bj-my-box">
+            <img src="img/resethome/my/message.png" alt="">
+          </div>
+          <span>我的消息</span>
+        </div>
+        <div class="col col-33 bj-my-table" ng-click="loginout()">
+          <div class="bj-my-box">
+            <img src="img/resethome/my/out.png" alt="">
+          </div>
+          <span>退出登录</span>
+        </div>
+      </div>
+    </div>-->
+  </ion-content>
+</ion-view>

@@ -1,0 +1,42 @@
+<ion-view view-title="会员中心" hide-nav-bar="true">
+  <ion-header-bar align-title="center" style="background-color:#00E1AB;">
+    <div class="buttons">
+      <button class="button button-clear ion-chevron-left white" ui-sref="tab.account"></button>
+    </div>
+    <h1 class="title" style="color:#fff;">会员中心</h1>
+  </ion-header-bar>
+   <ion-content style="background-color:#eee;">
+      <div class="center-header">
+          <p ng-if="!isvip"><span class="nvip"></span>当前未开通</p>
+          <p ng-if="isvip"><span class="yvip"></span>尊贵的会员，您好！</p>
+          <a ng-if="isvip" class="cbtn" href="javascript:;" ui-sref='tab.home'>回到首页</a>
+          <a ng-if="!isvip" class="cbtn" href="javascript:;" ng-click="superVIP()">¥12 立即开通</a>
+      </div>
+      <div class="center-cont">
+          <div class="cont-hea">
+             <span>会员尊享</span>
+             <span class="yvip"></span>
+          </div>
+          <div class="row cont-heabox">
+               <div class="col col-33">
+                   <img src="img/yem.png" alt="">
+                   <p>会员独有标识</p>
+               </div>
+               <div class="col col-33">
+                   <img src="img/push1.png" alt="">
+                   <p>会员独家推送</p>
+               </div>
+               <div class="col col-33">
+                   <img src="img/sale.png" alt="">
+                   <p>官网周边抽奖</p>
+               </div>
+          </div>
+      </div>
+      <div class="center-cont">
+          <div class="cont-hea">
+             <span class="yvip"></span>
+             <span>敬请期待更多会员内容</span>
+          </div>
+      </div>
+   </ion-content>
+</ion-view>

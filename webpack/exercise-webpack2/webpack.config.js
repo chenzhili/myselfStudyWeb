@@ -7,7 +7,7 @@ const htmlExtract = require("html-webpack-plugin");
 const path = require("path");
 
 module.exports={
-    // devtool: 'eval-source-map',
+    devtool: 'eval-source-map', //这个是为了对于 程序调试 很有用，当你的源码经过压缩和混淆变得无法调试时
     entry:{
         //"css/style":path.join(__dirname,"src/css/style.css"), //这个为了把它单独隔离出来的css的入口文件
         //这个不要单独生成一个 js，这个最后需要 用插件的 提取成 单独的 css
@@ -83,9 +83,18 @@ module.exports={
                     }
                 ]
             }*/
+            {
+                test:/\.js$/,
+                loader:"babel-loader",
+                exclude:/node_modules/
+            }
         ]
     },
     plugins:[
+        // new webpack.DefinePlugin({
+        //     'process.env': {NODE_ENV: '"production"'}
+        // }),
+        new webpack.optimize.UglifyJsPlugin(), //这里要注意 对于 js文件 ，这个方法 识别不了 es6的语法
         new cssExtract("css/style.css"),
         new htmlExtract({
             filename:path.join(__dirname,"build/index.html"),
@@ -95,7 +104,8 @@ module.exports={
                 removeComments:true,
                 collapseWhitespace:false
             }
-        })
+        }),
+
     ],
     /*本地服务器*/
     devServer: {

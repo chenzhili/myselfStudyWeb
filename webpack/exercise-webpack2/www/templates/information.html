@@ -1,0 +1,19 @@
+<ion-view view-title="资讯" hide-nav-bar="true" id="info">
+  <ion-header-bar align-title="center" class="bar-positive">
+    <div class="buttons">
+      <yike-back></yike-back>
+    </div>
+    <h1 class="title">资讯</h1>
+  </ion-header-bar>
+  <ion-content>
+    <div class="info-item padding clearfix" ng-repeat="item in infoList" ui-sref="information-details({id:item.id})">
+      <div class="fl">
+        <p class="info-title">{{item.title}}</p>
+        <p class="info-message">{{item.subtitle}}</p>
+      </div>
+      <div class="fr">
+        <img ng-src="{{item.image}}">
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

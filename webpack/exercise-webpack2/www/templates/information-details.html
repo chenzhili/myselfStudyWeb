@@ -1,0 +1,15 @@
+<ion-view view-title="资讯详情" hide-nav-bar="true" id="info">
+  <ion-header-bar align-title="center" class="bar-positive">
+    <div class="buttons">
+      <yike-back></yike-back>
+    </div>
+    <h1 class="title">资讯详情</h1>
+  </ion-header-bar>
+  <ion-content class="padding">
+    <p class="info-details-title">{{infoDetails.title}}</p>
+    <div class="info-details-name clearfix">
+      <span class="fr">{{infoDetails.create_time}}</span>
+    </div>
+    <div ng-bind-html="infoDetails.content"></div>
+  </ion-content>
+</ion-view>
