@@ -163,7 +163,6 @@ export class HomePage {
 //对于固定日期的方法
   _fixedDate(){
     me.scroll = document.getElementsByClassName("scroll-content")[0];
-
     setTimeout(()=>{
       me.dateList = $(".date");
       me.dateTopObj = {};
@@ -231,6 +230,9 @@ export class HomePage {
       }
       if(Object.keys(me.mess.teamList).length == 0){
         me.mess.teamList = me._getAfterSeven(payload.start_time,list.data,n);
+        setTimeout(e=>{
+          me.gameFistItem = document.getElementsByClassName("game_item")[0];
+        },200);
       }else{
         // 合并对象
         if(n == -1){
@@ -304,9 +306,14 @@ export class HomePage {
   }
   //回到顶部
   goBack(){
+    console.log(me.gameFistItem.offsetTop);
     me.mess.deg += 180;
     document.getElementById("img").style.transform = "rotate(" + me.mess.deg + "deg)";
-    me.scroll.scrollTop = 0;
+    if(me.mess.idMenu == 0){
+      me.scroll.scrollTop = me.gameFistItem.offsetTop - 135;
+    }else{
+      me.scroll.scrollTop = me.gameFistItem.offsetTop;
+    }
   }
   //关闭广告资源
   CloseAd() {
