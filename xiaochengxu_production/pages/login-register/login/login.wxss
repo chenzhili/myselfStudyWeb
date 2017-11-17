@@ -1,0 +1,10 @@
+/* pages/login-register/login/login.wxss */
+.login_form{width:70%;margin:20% auto;}
+.login_item{display:block;width:100%;border-bottom:1px solid #ddd;padding:10px;}
+.login_item image{width:10%;}
+.login_item input{width:90%;padding-left:10px;box-sizing:border-box;}
+.login_menu{line-height:30px;font-size:14px;color:#333;}
+.register{text-align:center;line-height:30px;color:#333;}
+.register navigator{color:#00ABF3;text-decoration:underline;}
+.kf{background:#fff;padding:0;margin:0;font-size:14px;color:#333;line-height:30px;text-align:left;}
+.kf:after{border:1px solid transparent;}

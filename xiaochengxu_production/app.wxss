@@ -1,0 +1,18 @@
+@import "pages/common/common.wxss";
+
+/*
+  样式重置
+  */
+  .body{font-size:14px;}
+  .fl{float:left;}
+  .fr{float:right;}
+  .clear-float:after{content:"";display:table;clear:both;}
+  .padding{padding:10px;}
+
+  /*公共样式  */
+    /*所有内容的容器  */
+   .view_content{position:relative;width:100%;top:44px;} 
+    /*内容容器的背景  */
+  .view_bg{background-color:#f7f7f7;}
+  /*统一的按钮样式  */
+  .btn{color:#fff;border:none;background-color:#00ABF3;width:90%;margin:0 auto;border-radius:30px;line-height:30px;}

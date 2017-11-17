@@ -1,0 +1,37 @@
+<import src="../../common/header-bar.wxml"/>
+
+<template is="header" data="{{...headerData}}"></template>
+<view class="view_content" style="position:absolute;top:44px;height:100%;background-color:#f1f1f1;">
+  <view class="padding title_right">
+    请选择授权类型
+  </view>
+  <view class="radio_list">
+    <block wx:for="{{$scope.allways}}">
+      <view class="radio_item padding clear-float {{page.radioIndex == item.id?'active':''}}" data-radio="{{item.id}}" data-price="{{item.price}}" bind:tap="makeRadio">
+        <view class="fl padding message">
+          <view class="clear-float new_color">
+            <view class="fl">
+              {{item.name}}
+            </view>
+            <view class="fr">
+              特价￥{{item.price}}
+            </view>
+          </view>
+          <view class="old_color">原价￥{{item.old_price}}</view>
+        </view>
+        <icon class="fr" type="success_no_circle" color="#444444" hidden="{{page.radioIndex != item.id}}"></icon>
+      </view>
+    </block>
+  </view>
+  <view class="rights_notes padding">
+    <view class="notes_item clear-float">
+      <view class="fl"><image src="../../../img/note.png" mode="widthFix"></image></view>
+      <view class="fl">标准版本：可看秘籍宝典，追号计划，更改计划。</view>
+    </view>
+    <view class="notes_item clear-float">
+      <view class="fl"><image src="../../../img/note.png" mode="widthFix"></image></view>
+      <view class="fl">专业版本：使用所有的秘籍宝典（每月更新赛车技巧玩法秘籍）、所有计划。</view>
+    </view>
+  </view>
+  <button class="btn" bindtap="next" style="margin-bottom:20px;">下一步</button>
+</view>

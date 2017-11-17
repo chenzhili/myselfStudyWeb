@@ -1,0 +1,2 @@
+/* pages/message/my-message/my-message.wxss */
+.message_item{padding:16px 10px;line-height:30px;border-bottom:1px solid #ddd;}

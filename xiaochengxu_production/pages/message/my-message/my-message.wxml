@@ -1,0 +1,16 @@
+<import src="../../common/header-bar.wxml"/>
+
+<template is="header" data="{{...headerData}}"></template>
+<view class="view_content">
+  <block>
+    <view class="message_item clear-float" wx:for="{{$scope.messageTitleList}}" data-id="{{item.id}}" bindtap="toDetails">
+      <view class="fl">
+        {{item.title}}
+      </view>
+      <view class="fr">
+        {{item.creation_time}}
+      </view>
+    </view>
+    <view hidden="{{!$scope.is_loadMore}}" style="text-align:center;">已加载全部</view>
+  </block>
+</view>

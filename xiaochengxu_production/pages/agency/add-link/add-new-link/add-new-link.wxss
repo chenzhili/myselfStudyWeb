@@ -1,0 +1,6 @@
+/* pages/agency/add-link/add-new-link/add-new-link.wxss */
+.user_form{width:90%;margin:10px auto;}
+.form_item{line-height:36px;margin-bottom:10px;}
+.form_item>view:first-child{width:30%;text-align:right;}
+.form_item input,.form_item .select{width:69%;border:1px solid #ddd;height:36px;padding-left:4px;box-sizing:border-box;}
+.note{text-align:right;color:#f00;font-size:12px;}

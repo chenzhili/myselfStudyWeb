@@ -1,0 +1,17 @@
+/* pages/account/account.wxss */
+#account .border_right{border-right:1px solid #F7F7F6;}
+#account .border_bottom{border-bottom:1px solid #F7F7F6;}
+#account .account_title{padding:10px 0;width:100%;height:130px;}
+#account .account_title .title{text-align:center;color:#fff;line-height:30px;}
+#account .account_title .user_img{width:70px;height:70px;border-radius:50%;margin:0 auto;overflow:hidden;}
+#account .account_title .user_img image{width:100%;height:100%;}
+#account .account_content{background-color:#fff;}
+#account .account_item{width:33.3%;height:100px;}
+#account .account_img{width:46%;margin:20px auto 10px auto;text-align:center;font-size:12px;color:#000;}
+#account .account_img image{width:70%;vertical-align:middle;}
+#account .account_img view{margin-top:6px;}
+#account .account_btn{width:90%;margin:0 auto;}
+#account .account_btn button{width:100%;text-align:center;color:#fff;background-color:#42AAF4;border-radius:40px;}
+#account .message{position:absolute;left:10px;top:8px;width:26px;}
+.kf{background-color:#fff;padding:0;} 
+.kf:after{border:1px solid transparent;}

@@ -1,0 +1,14 @@
+<import src="../common/header-bar.wxml"/>
+
+<template is="header" data="{{...headerData}}"></template>  
+<view class="view_content">
+  <view class="long-title padding">排行信息</view>
+  <view class="clear-float long-item padding" wx:for="{{$scope.longList}}">
+    <view class="fl">
+      {{item.name}}-{{item.type}}
+    </view>
+    <view class="fr">
+      {{item.num}}期
+    </view>
+  </view>
+</view>

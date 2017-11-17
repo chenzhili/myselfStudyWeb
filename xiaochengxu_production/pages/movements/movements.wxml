@@ -1,0 +1,76 @@
+<import src="../common/header-bar.wxml"/>
+
+<template is="header" data="{{...headerData}}"></template>
+<view class="view_content">
+  <scroll-view scroll-x="true" class="type">
+    <view class="type-item {{item.ob == $scope.movements.ob?'active':''}}" data-ob="{{item.ob}}" data-content="{{item.content}}" wx:for="{{$scope.pkScreen}}" bindtap="digitMovements">
+      {{item.content}}
+    </view>
+  </scroll-view>
+  <view class="heading clear-float">
+    <view class="fl">期号</view>
+    <view class="fl">奖号</view>
+    <view class="fl">
+      <view>冠军</view>
+      <view>
+        <view class="fl" wx:for="{{$scope.movementsNum}}">{{item}}</view>
+      </view>
+    </view>
+  </view>
+  <view class="container">
+    <view class="clear-float" wx:for="{{$scope.datas}}" wx:for-item="data">
+      <view class="fl">{{data.num}}</view>
+      <view class="fl">{{data.content}}</view>
+      <view class="fl clear-float">
+        <view class="fl" wx:for="{{$scope.movementsNum}}"><text class="{{data.ok==item?'num_active':''}}">{{item}}</text></view>
+      </view>
+    </view>
+  </view>
+  <view class="footer">
+    <view class="clear-float footer-title">
+      <view class="fl">总出现次数</view>
+      <view class="fl clear-float result">
+        <view class="fl">{{$scope.analysis[9].num}}</view>
+        <view class="fl">{{$scope.analysis[0].num}}</view>
+        <view class="fl">{{$scope.analysis[1].num}}</view>
+        <view class="fl">{{$scope.analysis[2].num}}</view>
+        <view class="fl">{{$scope.analysis[3].num}}</view>
+        <view class="fl">{{$scope.analysis[4].num}}</view>
+        <view class="fl">{{$scope.analysis[5].num}}</view>
+        <view class="fl">{{$scope.analysis[6].num}}</view>
+        <view class="fl">{{$scope.analysis[7].num}}</view>
+        <view class="fl">{{$scope.analysis[8].num}}</view>
+      </view>
+    </view>
+    <view class="clear-float footer-title">
+      <view class="fl">最大遗漏次数</view>
+      <view class="fl clear-float result second">
+        <view class="fl">{{$scope.analysis[9].not_num}}</view>
+        <view class="fl">{{$scope.analysis[0].not_num}}</view>
+        <view class="fl">{{$scope.analysis[1].not_num}}</view>
+        <view class="fl">{{$scope.analysis[2].not_num}}</view>
+        <view class="fl">{{$scope.analysis[3].not_num}}</view>
+        <view class="fl">{{$scope.analysis[4].not_num}}</view>
+        <view class="fl">{{$scope.analysis[5].not_num}}</view>
+        <view class="fl">{{$scope.analysis[6].not_num}}</view>
+        <view class="fl">{{$scope.analysis[7].not_num}}</view>
+        <view class="fl">{{$scope.analysis[8].not_num}}</view>
+      </view>
+    </view>
+    <view class="clear-float footer-title">
+      <view class="fl">最大连出次数</view>
+      <view class="fl clear-float result third">
+        <view class="fl">{{$scope.analysis[9].series}}</view>
+        <view class="fl">{{$scope.analysis[0].series}}</view>
+        <view class="fl">{{$scope.analysis[1].series}}</view>
+        <view class="fl">{{$scope.analysis[2].series}}</view>
+        <view class="fl">{{$scope.analysis[3].series}}</view>
+        <view class="fl">{{$scope.analysis[4].series}}</view>
+        <view class="fl">{{$scope.analysis[5].series}}</view>
+        <view class="fl">{{$scope.analysis[6].series}}</view>
+        <view class="fl">{{$scope.analysis[7].series}}</view>
+        <view class="fl">{{$scope.analysis[8].series}}</view>
+      </view>
+    </view>
+  </view>
+</view>

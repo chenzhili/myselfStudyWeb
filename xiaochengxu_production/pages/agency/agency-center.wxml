@@ -1,0 +1,47 @@
+
+<view class="view_content" style="position:absolute;top:0;height:100%;background-color:#f1f1f1;">
+  <view class="account_title" style="background:url('{{img.account_bg}}') no-repeat;background-size:100% 100%;">
+    <view class="title">代理中心</view>
+    <view class="user_img"><image src="../../img/icon.png"></image></view> 
+    <view class="title">{{$scope.user.name || $scope.user.phone}}</view>
+  </view>
+  <view class="agency_details clear-float">
+    <view class="fl agency_details_item">
+        <view>{{$scope.user.commission}}</view>
+        <view>我的佣金</view>
+    </view>
+    <view class="fl agency_details_item">
+      <view>{{$scope.agency.ratio}}</view>
+      <view>返佣系数</view>
+    </view>
+    <view class="fl agency_details_item">
+      <view>{{$scope.agency.count}}</view>
+      <view>团队人数</view>
+    </view>
+    <view class="fl agency_details_item">
+      <view>{{$scope.agency.count1 || 0}}</view>
+      <view>付费人数</view>
+    </view>
+  </view>
+  <view class="account_content clear-float">
+    <navigator class="fl account_item" open-type='navigateTo' url="user-list/user-list">
+      <view class="account_img">
+        <image src="../../img/account/account_kf.png" mode="widthFix"></image>
+        <view>会员列表</view>
+      </view>
+    </navigator>
+    <navigator class="fl account_item" open-type='navigateTo' url="add-members/add-members">
+      <view class="account_img">
+        <image src="../../img/agency/agency_add_user.png" mode="widthFix"></image>
+        <view>新增会员</view>
+      </view>
+    </navigator>
+    <navigator class="fl account_item" open-type='navigateTo' url="add-link/add-link">
+      <view class="account_img">
+        <image src="../../img/agency/agency_register_link.png" mode="widthFix"></image>
+        <view>注册链接</view>
+      </view>
+    </navigator>
+  </view>
+  <navigator class="btn" style="text-align:center;margin-top:60px;" open-type='navigateBack'>返回个人中心</navigator>
+</view>

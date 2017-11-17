@@ -1,0 +1,18 @@
+<!--pages/message/my-message-detail/my-message-detail.wxml-->
+<import src="../../common/header-bar.wxml"/>
+<!--富文本文件引入  -->
+<import src="../../common/wxParse/wxParse.wxml"/>
+
+<template is="header" data="{{...headerData}}"></template>
+<view class="view_content">
+  <view class="padding">
+    <view class="title">{{$scope.content.title}}</view>
+    <view class="clear-float">
+      <view class="fl">作者:{{$scope.content.source}}</view>
+      <view class="fr">{{$scope.content.creation_time}}</view>
+    </view>
+    <view>
+      <template is="wxParse" data="{{wxParseData:content.nodes}}"/>
+    </view>
+  </view>
+</view>

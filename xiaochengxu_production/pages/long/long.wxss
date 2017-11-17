@@ -1,0 +1,5 @@
+/* pages/long/long.wxss */
+.long-title{line-height:40px;font-size:18px;border-bottom:1px solid #EEEDEB;}
+.long-item{line-height:20px;}
+.long-item view:last-child{color:#f00;}
+.long-item:nth-child(even){background-color:#FBFAFF;}

@@ -1,0 +1,14 @@
+/* pages/rights/pay-rights/pay-rights.wxss */
+.title_right{line-height:20px;color:#a6a6a6;}
+.radio_list{background-color:#fff;}
+.radio_item{border-top:1px solid #ddd;}
+.radio_item:last-child{border-bottom:1px solid #ddd;}
+.radio_item .message{width:80%;line-height:30px;}
+.radio_item icon{margin-top:10px;}
+.new_color{color:#d63138;}
+.old_color{color:#a6a6a6;text-decoration:line-through;text-align:center;}
+.radio_item.active{background-color:#f1f1f1;}
+.notes_item>view:first-child{width:20%;}
+.notes_item>view:last-child{width:80%;}
+.notes_item image{display:block;margin:0 auto;width:50%;}
+.notes_item{line-height:20px;color:#a6a6a6;font-size:14px;margin-bottom:20px;}

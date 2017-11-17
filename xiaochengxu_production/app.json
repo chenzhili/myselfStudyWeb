@@ -1,0 +1,75 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/lottery/lottery",
+    "pages/movements/movements",
+    "pages/account/account",
+    "pages/news/news",
+    "pages/rights/pay-rights/pay-rights",
+    "pages/rights/pay-ways/pay-ways",
+    "pages/change-plans/change-plans",
+    "pages/long/long",
+    "pages/message/my-message/my-message",
+    "pages/rights/my-rights/my-rights",
+    "pages/modification-password/modification-password",
+    "pages/feed-back/feed-back",
+    "pages/about-us/about-us",
+    "pages/agency/agency-center",
+    "pages/agency/user-list/user-list",
+    "pages/agency/add-members/add-members",
+    "pages/agency/add-link/add-link",
+    "pages/agency/add-link/add-new-link/add-new-link",
+    "pages/login-register/login/login",
+    "pages/login-register/reset-password/reset-password",
+    "pages/login-register/register/register",
+    "pages/program-details/program-details",
+    "pages/program-details/search/search",
+    "pages/message/my-message-detail/my-message-detail",
+    "pages/news/more/more",
+    "pages/news/details/details"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "cc_pk10",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#444",
+    "selectedColor": "#00ABF3",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "iconPath": "img/tabs/tab_home.png",
+        "selectedIconPath": "img/tabs/tab_home_active.png",
+        "text": "追号计划"
+      },
+      {
+        "pagePath": "pages/lottery/lottery",
+        "iconPath": "img/tabs/lottery.png",
+        "selectedIconPath": "img/tabs/lottery_active.png",
+        "text": "历史开奖"
+      },
+      {
+        "pagePath": "pages/movements/movements",
+        "text": "数据分析",
+        "iconPath": "img/tabs/movements.png",
+        "selectedIconPath": "img/tabs/movements_active.png"
+      },
+      {
+        "pagePath": "pages/account/account",
+        "text": "个人中心",
+        "iconPath": "img/tabs/account.png",
+        "selectedIconPath": "img/tabs/account_active.png"
+      }
+    ]
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "connectSocket": 10000,
+    "uploadFile": 10000,
+    "downloadFile": 10000
+  },
+  "debug": false
+}

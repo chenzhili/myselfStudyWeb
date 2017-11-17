@@ -1,0 +1,24 @@
+<import src="../../../common/header-bar.wxml"/>
+
+<template is="header" data="{{...headerData}}"></template>
+<view class="view_content">
+  <view class="user_form">
+    <view class="form_item clear-float">
+      <view class="fl">用户类型:</view>
+      <picker class="fr select" mode="selector" value="{{message.type}}" range="{{message.typeArr}}" bindchange="selectType" 
+      style="background:url('{{message.down_black}}') no-repeat right center;background-size:20px;">
+        {{message.typeArr[message.type]}}
+      </picker>
+    </view>
+    <view class="form_item clear-float" style="margin-bottom:0;">
+      <view class="fl">使用最大次:</view>
+      <input class="fr" data-id="1" type="number" bindinput="bindinput" value="{{$scope.addLinkMessage.num}}"></input>
+    </view>
+    <view class="note">*最多可注册的用户数量</view>
+    <view class="form_item clear-float" hidden="{{message.type != 0}}">
+      <view class="fl">返点:</view>
+      <input class="fr" data-id="2" type="digit" bindinput="bindinput" value="{{$scope.addLinkMessage.ratio}}"></input>
+    </view>
+  </view>
+  <button class="btn" bindtap="generateLink">立即添加</button>
+</view>

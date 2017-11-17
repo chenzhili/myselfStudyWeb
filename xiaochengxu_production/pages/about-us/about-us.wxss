@@ -1,0 +1,4 @@
+/* pages/about-us/about-us.wxss */
+image{width:33.3%;display:block;margin:40px auto 0 auto;}
+text{display:block;}
+.company{text-align:right;}

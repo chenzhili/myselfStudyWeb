@@ -1,0 +1,30 @@
+<import src="../common/header-bar.wxml"/>
+
+<template is="header" data="{{...headerData}}"></template>
+<view class="view_content" style="position:absolute;top:44px;height:100%;background-color:#f1f1f1;">
+  <view class="plans_title">
+    <image src="../../img/home/arrow.png"></image>
+    <text>已选计划</text>
+  </view>
+  <view class="plans_content clear-float">
+    <view class="plans_item" wx:for="{{$scope.collect}}" bindtap="deleteCollect" data-id="{{item.id}}" data-index="{{index}}">
+      {{item.plan_name}}
+    </view>
+  </view>
+  <view class="plans_title">
+    <image src="../../img/home/arrow.png"></image>
+    <text>所有计划</text>
+  </view>
+  <block wx:for="{{$scope.allplans}}">
+    <view class="play_title">
+      {{item.name}}
+    </view>
+    <view class="plans_content clear-float">
+    <block wx:for="{{item.row}}" wx:for-item="i">
+      <view class="plans_item {{i.active==1?'active':''}}" data-id="{{i.id}}" bindtap="addcollect">
+        {{i.name}}
+      </view>
+    </block>
+  </view>
+  </block>
+</view>

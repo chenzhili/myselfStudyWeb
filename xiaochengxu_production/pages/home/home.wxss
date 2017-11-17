@@ -1,0 +1,26 @@
+/* pages/home/home.wxss */
+.banner image{width:100%;height:100%;}
+.container-note{position:relaotve;height:20px;overflow:hidden;border-radius:4px;padding-left:20px;font-size:12px;}
+.container-note image{position:absolute;width:20px;height:20px;left:10px;}
+.home-note{border-bottom:1px solid #ddd;border-top:1px solid #ddd;}
+.home-note swiper{height:20px;line-height:20px;font-size:12px;}
+.home_content{background-color:#F2F1EF;border-radius:6px;}
+.home_lottery{background-color:#fff;padding:0 10px;}
+.lottery_prev_now{line-height:36px;text-align:left;}
+.lottery_num{width:28px;line-height:28px;border-radius:50%;background-color:#00ABF3;text-align:center;color:#fff;margin-right:2px;}
+.href_link{width:100%;margin-top:6px;border-bottom:1px solid #F2F1EF;background-color:#FCFCFB;line-height:40px;padding:5px 0;}
+.link_item{width:33%;text-align:center;border-right:1px solid #F2F1EF;}
+.link_item:last-child{border:none;}
+.lottery_kai{margin-left:10px;}
+.his-list{margin-bottom:10px;}
+.his-list .collection{width: 100%;overflow: hidden;padding-bottom: 5px;padding-left:10px;padding-right:10px;}
+.his-list .collection:nth-child(even){background-color:#F3FAFF;}
+div.progressBar{background-color:#00ABF3;}
+.ding_new{display: inline-block;width: 16px;height: 16px;}
+.his-list-details view{margin-right:10px;}
+.his-list .collection:nth-child(even){background-color:#F3FAFF;}
+.container{position:relative;margin-top:7px;}
+.container progress{width:90%;}
+.container text{position:absolute;top:50%;left:45%;font-size:12px;color:#fff;transform:translateX(-50%) translateY(-50%)}
+.kf_modal{position:absolute;top:0;bottom:0;left:0;right:0;background:rgba(0,0,0,.4);z-index:100;}
+.kf_modal image{display:block;margin:90px auto;width:180px;height:180px;z-index:110;}

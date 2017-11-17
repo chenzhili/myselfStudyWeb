@@ -1,0 +1,5 @@
+/* pages/lottery/lottery.wxss */
+.lottery_item{background-color:#fff;margin:10px 0;line-height:30px;border-top:1px solid #e5e5e5;border-bottom:1px solid #e5e5e5;}
+.lottery_item .time{color:#939393;}
+.lottery_item .num_item{width:10%;}
+.lottery_item .num_item text{display:inline-block;width:28px;height:28px;text-align:center;line-height:28px;color:#fff;background-color:#00BFFD;border-radius:50%;}

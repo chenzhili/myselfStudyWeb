@@ -1,0 +1,62 @@
+<import src="../common/header-bar.wxml"/>
+
+<template is="header" data="{{...headerData}}"></template>
+<scroll-view scroll-y class="view_content">
+  <view class="kf_modal" hidden="{{$scope.isHiddenImg}}" catch:tap="isHiddenImg">
+    <image src="{{$scope.url}}" catch:tap="scanCode"></image>
+  </view>
+  <swiper indicator-dots="true" autoplay="true" interval="1500" duration="500" indicator-color="rgba(0,0,0,.2)" indicator-active-color="#fff" class="banner">
+    <swiper-item wx:for="{{$scope.banners}}" wx:key="id">
+      <image src="{{item.image}}" class="slide-image" bind:tap="clickTo"/>
+    </swiper-item>
+  </swiper>
+  <view class="home-note padding">
+      <view class="container-note">
+          <image src="../../img/home/trumpet_home.gif"></image>
+          <swiper autoplay='true' interval="2000" duration="300" vertical="true">
+            <block wx:for="{{$scope.noticeList}}" wx:key="id">
+              <swiper-item bindtap="toMessage" data-id="{{item.id}}">
+                <text>{{item.subtitle}}</text>
+              </swiper-item>
+            </block>
+          </swiper>
+      </view>
+  </view>
+  <view class="home_content">
+      <view class="home_lottery">
+          <view class="lottery_prev_now">第{{$scope.pk.num}}期开奖</view>
+          <view class="clear-float">
+              <view class="lottery_num fl" wx:for="{{$scope.pk.content}}">{{item}}</view>
+          </view>
+          <view class="lottery_prev_now">
+              第{{$scope.thispk}}期开奖倒计时
+              <text class="lottery_kai" hidden="{{$scope.playStatus.pkStatus != 0}}">正在开奖...</text>
+              <text class="lottery_kai" hidden="{{$scope.playStatus.pkStatus != 1}}">{{$scope.pktime}}</text>
+              <text class="lottery_kai" hidden="{{$scope.playStatus.pkStatus != 2}}">00:00:00</text>
+          </view>
+      </view>
+      <view class="href_link clear-float">
+          <view class="fl link_item" bindtap="news">宝典秘籍</view>
+          <view class="fl link_item" bindtap="rights">购买授权</view>
+          <view class="fl link_item" bindtap="changePlans">更改计划</view>
+      </view>
+  </view>
+  <view class="his-list">
+      <block wx:for="{{$scope.collectDetail}}">
+          <navigator class="collection" open-type='navigateTo' url="../program-details/program-details?id={{item.v5}}&type={{item.v6}}">
+              <view>
+                  <view style="display:inline-block;line-height:30px;margin:0;">{{item.v1}}</view>
+                  <view class="container" style="width:50%;display:inline-block;float:right;">
+                       <progress percent='{{item.v4}}' active stroke-width='16' activeColor='#00ABF3' backgroundColor='#ddd'/> 
+                       <text>{{item.v4}}</text>
+                  </view>
+              </view>
+              <view class="clear-float his-list-details">
+                  <view class="fl" style="font-size:14px;">{{item.v2}}</view>
+                  <view class="fl ding_new" style="background:url('../../img/home/home_new_ding.png') no-repeat;background-size:100% 100%;"></view>
+                  <text class="fl" style="font-size:12px;">{{item.v3}}</text>
+              </view>
+          </navigator>
+      </block>
+  </view>
+</scroll-view>

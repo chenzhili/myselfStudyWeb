@@ -1,0 +1,10 @@
+<import src="../common/header-bar.wxml"/>
+
+<template is="header" data="{{...headerData}}"></template>  
+<view class="view_content" style="position:absolute;top:44px;height:100%;background-color:#f1f1f1;">
+  <image src="../../img/login/logo.webp" mode="widthFix"></image>
+  <text class="padding" decode="true">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我们用专心的精神、持专注的态度、做专业的软件。本着这种务实的研发精神，串串系列软件在功能及操作方面独具创新，不仅功能强        大，而且使用极其简单， 界面功能一目了然，您只需花几分钟时间，即可精通软件全部操作流程！选择串串系列彩票软件，将让您摆脱繁琐复杂的操作流程，迅速把握投注时机，真正提高您的          投注效率，加上专业的分析功能，将使彩票投资的成本最低化、效益最大化！
+  </text>
+  <view class="company padding">串串</view>
+</view>

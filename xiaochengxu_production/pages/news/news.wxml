@@ -1,0 +1,29 @@
+<import src="../common/header-bar.wxml"/>
+
+<template is="header" data="{{...headerData}}"></template>
+<view id="news" class="view_content">
+  <view class="new-box">
+      <view class="new-box-center">
+        <view class="{{page.selectTab==1?'have-active':''}}" bindtap="selectTab" data-select="1">标准版用户</view>
+        <view class="{{page.selectTab==2?'have-active':''}}" bindtap="selectTab" data-select="2">专业版用户</view>
+      </view>
+  </view>
+  <view class="list-box" hidden="{{page.selectTab != 1}}" wx:for="{{$scope.data}}">
+      <view class="list" style="margin-bottom:0px;">
+          <view class="list-left">{{item.classify_name}}</view>
+          <view class="list-right" data-id="{{item.classify_id}}" bindtap="gomore">更多<image src="../../img/double_right.png" mode="widthFix"></image></view>
+      </view>
+      <view class="row" wx:for="{{item.row}}" wx:for-item="news" data-id="{{news.id}}" bindtap="godetails">
+            <view>{{news.name}}</view>
+      </view>
+  </view>
+  <view class="list-box" hidden="{{page.selectTab != 2}}" wx:for="{{$scope.datas}}">
+      <view class="list"  style="margin-bottom:0px;">
+          <view class="list-left">{{item.classify_name}}</view>
+          <view class="list-right" data-id="{{item.classify_id}}" bindtap="gomore">更多<image src="../../img/double_right.png" mode="widthFix"></image></view>
+      </view>
+      <view class="row" wx:for="{{item.row}}" wx:for-item="news" data-id="{{news.id}}" bindtap="godetails">
+            <view>{{news.name}}</view>
+      </view>
+  </view>
+</view>

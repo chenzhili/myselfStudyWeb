@@ -60,14 +60,14 @@ export class RepeatProvider {
   //发起post请求
   yikeData(mod: string, payload?: any, url?: string) {
     // var url = (url || 'http://118.190.138.112/index.php/api/') + mod;
-    var url = (url || 'http://realsports.yike1908.com/index.php/yike_live/') + mod;
+    var url = (url || 'http://www.24hzuqiu.com//index.php/yike_live/') + mod;
     return this.http.post(url, payload).toPromise();
   }
 
   //发起get请求
   yikeGet(mod: string, payload?: any, url?: string) {
     // var url = (url || 'http://118.190.138.112/index.php/api/') + mod;
-    var url = (url || 'http://realsports.yike1908.com/index.php/yike_live/') + mod;
+    var url = (url || 'http://www.24hzuqiu.com//index.php/yike_live/') + mod;
     return this.http.get(url + this.toQueryString(payload)).toPromise();
   }
 

@@ -1,0 +1,23 @@
+<import src="../../common/header-bar.wxml"/>
+
+<template is="header" data="{{...headerData}}"></template>
+<view class="view_content" style="position:absolute;top:44px;height:100%;background-color:#f1f1f1;">
+  <view class="padding title_right">
+    请选择支付方式
+  </view>
+  <view class="pay_ways_item padding clear-float" bindtap="selectType" data-type="1">
+    <view class="fl">
+      <image src="../../../img/alipay.png" mode="widthFix"></image>
+    </view>
+    <view class="fl">
+      <view>支付宝支付</view>
+      <view class="pay_note">推荐有支付宝账号的用户使用</view>
+    </view>
+    <view class="fl">
+      <view class="right_contain">
+        <icon type="success" color="#387EF5" size="30" hidden="{{message.selectType != 1}}"></icon>
+      </view>
+    </view>
+  </view>
+  <button class="btn special_btn">确认支付￥{{message.price}}</button>
+</view>

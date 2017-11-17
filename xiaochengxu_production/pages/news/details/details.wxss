@@ -1,0 +1,4 @@
+/* pages/news/details/details.wxss */
+/*富文本插件的样式  */
+@import "../../common/wxParse/wxParse.wxss";
+.title{text-align:center;line-height:38px;}

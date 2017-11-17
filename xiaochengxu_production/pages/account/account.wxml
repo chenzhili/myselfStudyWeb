@@ -1,0 +1,56 @@
+<!--pages/account/account.wxml-->
+<view id="account">
+    <view class="account_title" style="background:url('{{img.account_bg}}') no-repeat;background-size:100% 100%;">
+      <image src="../../img/message.png" class="message" mode="widthFix" bindtap="myMessage"></image>
+      <view class="title">个人中心</view>
+      <view class="user_img"><image src="{{$scope.user.image || message.userData.avatarUrl || '../../img/icon.png'}}" bindtap="chooseImage"></image></view> 
+      <view class="title">{{$scope.user.phone || message.userData.nickName}}</view>
+    </view>
+    <view class="account_content clear-float">
+      <navigator class="fl account_item" open-type='navigateTo' url="../rights/pay-rights/pay-rights">
+        <view class="account_img">
+          <image src="../../img/account/continue_right.png" mode="widthFix"></image>
+          <view>续费授权</view>
+        </view>
+      </navigator>
+       <navigator class="fl account_item"  open-type='navigateTo' url="../rights/my-rights/my-rights">
+        <view class="account_img">
+          <image src="../../img/account/my_rights.png" mode="widthFix"></image>
+          <view>我的授权</view>
+        </view>
+      </navigator>
+      <navigator class="fl account_item"  open-type='navigateTo' url="../modification-password/modification-password">
+        <view class="account_img">
+          <image src="../../img/account/password_manage.png" mode="widthFix"></image>
+          <view>密码管理</view>
+        </view>
+      </navigator>
+      <button class="fl account_item kf" open-type='contact'>
+        <view class="account_img">
+          <image src="../../img/account/account_kf.png" mode="widthFix"></image>
+          <view>在线客服</view>
+        </view>
+      </button>
+      <navigator class="fl account_item"  open-type='navigateTo' url="../feed-back/feed-back">
+        <view class="account_img">
+          <image src="../../img/account/suggestion.png" mode="widthFix"></image>
+          <view>意见反馈</view>
+        </view>
+      </navigator>
+      <navigator class="fl account_item"  open-type='navigateTo' url="../about-us/about-us">
+        <view class="account_img">
+          <image src="../../img/account/about_us.png" mode="widthFix"></image>
+          <view>关于我们</view>
+        </view>
+      </navigator>
+      <view class="fl account_item" bindtap="linkAgency">
+        <view class="account_img">
+          <image src="../../img/account/agency.png" mode="widthFix"></image>
+          <view>代理中心</view>
+        </view>
+      </view> 
+    </view>
+    <view class="account_btn">
+      <button bindtap="isOutLogin">退出登录</button>
+    </view>
+</view>

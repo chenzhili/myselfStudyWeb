@@ -1,0 +1,16 @@
+/* pages/agency/user-list/user-list.wxss */
+.user_form{width:90%;margin:10px auto;}
+.form_item{line-height:36px;margin-bottom:10px;}
+.form_item>view:first-child{width:30%;text-align:right;}
+.form_item input,.form_item .select{width:69%;border:1px solid #ddd;height:36px;padding-left:4px;box-sizing:border-box;}
+.select{position:relative;}
+.select_container{position:absolute;padding:0 4px;border:1px solid #44aefa;line-height:20px;width:100%;box-sizing:border-box;left:0;}
+.form_item .date{width:69%;height:36px;box-sizing:border-box;}
+.date picker{display:inline-block;width:46%;}
+.date text{display:inline-block;width:8%;}
+.date picker view{border:1px solid #ddd;font-size:14px;padding-left:4px;}
+.agency_table{margin-top:20px;}
+.agency_table>view:first-child{background-color:#00A9F6;color:#fff;}
+.agency_table .agengcy_tr{line-height:40px;}
+.agency_table .agency_table_items1{width:25%;text-align:center;font-size:14px;}
+.agency_table .agency_table_items2{width:50%;text-align:center;font-size:14px;}

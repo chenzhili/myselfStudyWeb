@@ -1,0 +1,48 @@
+/*样式重置*/
+html{font-size:16px;font-family:"microsoft yahei"}
+html,body,p,h1,h2,h3,h4,table,tbody,tfoot,thead,tr,td{padding:0;margin:0;}
+.fl{float:left;}
+.fr{float:right;}
+.clear-f:after{
+    content:"";
+    display:table;
+    clear:both;
+}
+
+/*弹幕容器*/
+.container{
+    width:100%;
+    height:180px;
+    background:rgba(0,0,0,.4);
+}
+.floor{
+    width:100%;
+    height:24px;
+    line-height:24px;
+    font-size:12px;
+    color:#fff;
+    position:relative;
+    overflow:hidden;
+}
+.floor_container,.floor_container2{
+    display:inline-block;
+    white-space:nowrap;
+    position:absolute;
+    /*right:calc(0px - 100%);*/
+}
+.barrage{
+    animation-name:barrage;/* 15s infinite;*/
+    /*animation-duration:10s;*/
+    /*animation-iteration-count: 1;*/
+    animation-timing-function:linear;
+}
+@-webkit-keyframes barrage {
+    0% {}
+    100% {right:100%;}
+}
+.container span:not(:last-child){
+    display:inline-block;
+    line-height:24px;
+    margin-right:10px;
+}
+

@@ -1,0 +1,48 @@
+<!-- 這是模仿ionic的 header-bar  -->
+<template name="header">
+   <view class="bar-container">
+      <view class="bar-left clear-float">
+        <navigator class="left-button fl" wx:if="{{isBackShow}}" open-type='navigateBack' delta="{{delta}}"> <!--只为了搜索页面假的delta-->
+          <image src="{{img || '../../img/back.png'}}"></image>
+        </navigator>
+        <view class="bar-text fl" wx:if="{{isLeftTextShow}}">
+          <view class="text">{{leftText}}</view>
+        </view>
+      </view>
+      <view class="title">{{title}}</view>
+      <view class="bar-right clear-float">
+        <view class="bar-text fr" wx:if="{{kf}}">
+          <button class="text kf" open-type="contact">客服</button>>
+        </view>
+        <view class="bar-text fr" wx:if="{{isRightTextShow}}" bindtap="link">
+          <view class="text">{{rightText}}</view>
+        </view>
+        <view class="bar-text fr" wx:if="{{isRightTextShowSecond}}" bindtap="linkSecond">
+          <view class="text">{{rightTextSecond}}</view>
+        </view>
+        <picker class="bar-text fr" wx:if="{{isDateShow}}" range="{{moeveDate}}" vale="{{dateIndex}}" bindchange='dateChange'>
+          <view class="text" style="margin-top:10px;">
+            {{moeveDate[dateIndex]}}
+            <image src="../../img/down.png" style="margin-bottom:2px;"></image> 
+          </view>
+        </picker>
+        <!-- <view class="bar-text fr" wx:if="{{isDateShow}}">
+          <view class="text" bindtap='isShow'>
+            最近30期
+            <image src="../../img/down.png"></image> 
+          </view>
+          <view class="date" wx:if="{{isDateList}}">
+            <view class="text">
+              最近30期
+            </view>
+            <view class="text">
+              最近60期
+            </view>
+            <view class="text">
+              最近90期
+            </view>
+          </view>
+        </view> -->
+      </view>
+   </view>
+</template>

@@ -1,0 +1,8 @@
+<import src="../common/header-bar.wxml"/>
+
+<template is="header" data="{{...headerData}}"></template>  
+<view class="view_content" style="position:absolute;top:44px;height:100%;background-color:#f1f1f1;">
+  <view class="back_title padding">请输入反馈内容</view>
+  <textarea vaule="{{$scope.content}}" focus='true' bindinput="bindinput"></textarea>
+  <button class="btn" style="margin-top:20px;" bindtap="confirm">提交反馈</button>
+</view>

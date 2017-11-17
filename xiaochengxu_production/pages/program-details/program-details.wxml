@@ -1,0 +1,71 @@
+<import src="../common/header-bar.wxml"/>
+
+<template is="header" data="{{...headerData}}"></template> 
+<view class="view_content">
+  <scroll-view scroll-x="true" class="play" scroll-with-animation="true" scroll-into-view="{{$scope.playId}}">
+  <view class="play-item {{$scope.playId==('play'+item[4])?'active':''}}" id="play{{item[4]}}" bindtap="changeDetails" wx:for="{{$scope.collectDetail}}">
+      {{item[1]}}
+    </view>  
+  </scroll-view>
+  <view class="num_kai">
+    <view class="text">第{{$scope.pk.num}}期开奖</view>
+    <view class="num_details">
+      <view class="num_item" wx:for="{{$scope.pk.content}}">
+        <view class="num">{{item}}</view>
+      </view>
+    </view>
+    <view class="text">{{$scope.pkDetail.win1.split(" ")[0]}} <text class="spectial_color" decode="true">&nbsp;&nbsp;预&nbsp;&nbsp;</text><text class="spectial_color" decode="true">{{$scope.pkDetail.win3}}&nbsp;</text></view>
+    <view>{{$scope.thispk}}期 <text decode='true'>&nbsp;{{$scope.pktime}}</text></view>
+  </view>
+  <view class="details clear-float">
+    <view class="fl">
+      准确率 <text class="spectial_color">{{$scope.params.rate}}%</text>
+    </view>
+    <view class="fl">
+      最大连队 <text class="spectial_color">{{$scope.params.maxRight}}</text>
+    </view>
+    <view class="fl">
+      最大连错 <text class="spectial_color">{{$scope.params.maxWrong}}</text>
+    </view>
+    <view class="fl">
+      当前连对/错 <text class="spectial_color">{{$scope.params.rw}}</text>
+    </view>
+    <view class="fl">
+      第一期中 <text class="spectial_color">{{$scope.params.firstRight}}</text>次
+    </view>
+    <view class="fl">
+      第二期中 <text class="spectial_color">{{$scope.params.secondRight}}</text>次
+    </view>
+    <view class="fl">
+      第三期中 <text class="spectial_color">{{$scope.params.thirdRight}}</text>次
+    </view>
+  </view>
+  <view class="container">
+    <view class="play_item" wx:for="{{$scope.pkDetailList}}" wx:for-item="win">
+      <view class="item_date">{{win.qishu}} <text decode='true' class="spectial_color">&nbsp;预&nbsp;</text> {{win.content}}</view>
+      <view class="item_details">
+        <view class="date_details">{{win.num}}</view>
+        <text decode='true'>&nbsp;{{win.periods + '期 '}}</text>
+        <text class="red_color" decode='true'>&nbsp;&nbsp;开&nbsp;&nbsp;</text>
+        <text class="red_color" decode="true">{{win.lottery}}</text>
+        <text decode='true' class="spectial_color"> {{win.is_win}}</text>
+      </view>
+    </view>
+     <view class="play_item">
+      <view class="item_date">{{$scope.pkDetail.win1.split(" ")[0]}} <text decode='true' class="spectial_color">&nbsp;预&nbsp;</text> {{$scope.pkDetail.win3}}</view>
+      <view class="item_details">
+        <text decode='true'>&nbsp;&nbsp;&nbsp;&nbsp;{{$scope.pkDetail.plan.periods + '期 '}}</text>
+        <text class="red_color" decode='true'>&nbsp;&nbsp;等待开奖...&nbsp;&nbsp;</text>
+      </view>
+    </view> 
+  </view>
+  <view class="footer">
+    <text decode='true' class="spectial_color">
+      上期开奖  {{$scope.pkDetail.win2.periods}}期  {{$scope.pkDetail.win2.lottery}}  {{$scope.pkDetail.win2.is_win}}
+    </text>
+    <text decode='true' class="spectial_color">
+      更新时间  2017年10月13日 15:53:00 开奖倒计时 {{$scope.pktime}}
+    </text>
+    <view class="company">串串追号计划 内容仅供参考</view>
+  </view>
+</view>

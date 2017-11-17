@@ -1,0 +1,23 @@
+<import src="../../common/header-bar.wxml"/>
+
+<template is="header" data="{{...headerData}}"></template>
+<view class="view_content" style="position:absolute;top:44px;height:100%;background-color:#f1f1f1;">
+  <view class="version padding clear-float">
+    <view class="fl">
+      版本
+    </view>
+    <view class="fr">
+      {{$scope.buystatus}}
+      <image src="../../../img/right.png" mode="widthFix"></image>
+    </view>
+  </view>
+  <view class="version padding clear-float">
+    <view class="fl">
+      有效时间
+    </view>
+    <view class="fr">
+      {{$scope.endtime}}
+      <image src="../../../img/right.png" mode="widthFix"></image>
+    </view>
+  </view>
+</view>

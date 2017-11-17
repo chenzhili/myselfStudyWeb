@@ -1,0 +1,19 @@
+<import src="../common/header-bar.wxml"/>
+
+<template is="header" data="{{...headerData}}"></template>  
+
+<view class="view_content view_bg">
+  <block wx:for="{{$scope.lotteryList}}" wx:ken="id">
+    <view class="padding lottery_item">
+      <view class="clear-float">
+        <view class="fl">第{{item.num}}期</view>
+        <view class="fr time">{{item.time}}</view>
+      </view>
+      <view class="clear-float">
+        <view class="fl num_item" wx:for="{{item.content}}" wx:for-item="con">
+          <text>{{con}}</text>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>

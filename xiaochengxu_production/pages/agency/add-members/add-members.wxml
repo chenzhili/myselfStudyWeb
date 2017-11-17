@@ -1,0 +1,28 @@
+<import src="../../common/header-bar.wxml"/>
+
+<template is="header" data="{{...headerData}}"></template>
+<view class="view_content">
+  <view class="user_form">
+    <view class="form_item clear-float">
+      <view class="fl">用户类型:</view>
+      <picker class="fr select" mode="selector" value="{{message.type}}" range="{{message.typeArr}}" bindchange="selectType" style="background:url('{{message.down_black}}') no-repeat right center;background-size:20px;">
+        {{message.typeArr[message.type]}}
+      </picker>
+    </view>
+    <view class="form_item clear-float" style="margin-bottom:0;">
+      <view class="fl">登录账号:</view>
+      <input class="fr" type="number" value="{{$scope.newMember.username}}" data-id="1" bindinput="bindinput" placeholder='请输入正确手机号'></input>
+    </view>
+    <view class="note">*会员登录平台所用的名称</view>
+    <view class="form_item clear-float" style="margin-bottom:0;">
+      <view class="fl">登录密码:</view>
+      <input class="fr" type="text" value="{{$scope.newMember.pwd}}" data-id="2" bindinput="bindinput" placeholder='请输入密码'></input>
+    </view>
+    <view class="note">*会员用户登录时使用的密码</view>
+    <view class="form_item clear-float">
+      <view class="fl">返点:</view>
+      <input class="fr" type="digit" value="{{$scope.newMember.ratio}}" data-id="3" bindinput="bindinput" placeholder='请填写返点'></input>
+    </view>
+  </view>
+  <button class="btn" bindtap="addMembers">立即添加</button>
+</view>

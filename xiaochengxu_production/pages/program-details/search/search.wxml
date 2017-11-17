@@ -1,0 +1,53 @@
+<import src="../../common/header-bar.wxml"/>
+
+<template is="header" data="{{...headerData}}"></template> 
+<view class="view_content" style="position:absolute;top:44px;height:100%;background-color:#f1f1f1;">
+  <view class="input_item borde-bottom padding">
+    定码个数:
+    <input type="number" data-id="1" value="{{$scope.searchitem.num}}" bindinput='bindinput'/>
+  </view>
+  <view class="input_item padding">
+    计划周期:
+    <input type="number" data-id="2" value="{{$scope.searchitem.code}}" bindinput="bindinput"/>
+  </view>
+  <view class="slider_item margin_top">
+    <view class="padding text_name">成绩</view>
+    <view class="double_slider">
+      <text class="bar"></text>
+      <view class="slider" id="slider11" style="left:{{message[0].slider11_first+'px'}};z-index:{{message[0].slide11Index}};" catchtouchstart="sliderStart" catchtouchmove="sliderMove" catchtouchend="sliderEnd">{{message[0].slide1_percent1}}</view>
+      <view class="slider" id="slider12" style="left:{{message[0].slider12_second+'px'}};z-index:{{message[0].slide12Index}};" catchtouchstart="sliderStart" catchtouchmove="sliderMove" catchtouchend="sliderEnd">{{message[0].slide1_percent2}}</view>
+      <view class="percent percent_first">{{message[0].low}}%</view>
+      <view class="percent percent_second">{{message[0].high}}%</view>
+    </view>
+  </view>
+  <view class="slider_item margin_top">
+    <view class="padding text_name">最大连队</view>
+    <view class="double_slider">
+      <text class="bar"></text>
+      <view class="slider" id="slider21" style="left:{{message[1].slider11_first+'px'}};z-index:{{message[1].slide11Index}};" catchtouchstart="sliderStart" catchtouchmove="sliderMove" catchtouchend="sliderEnd">{{message[1].slide1_percent1}}</view>
+      <view class="slider" id="slider22" style="left:{{message[1].slider12_second+'px'}};z-index:{{message[1].slide12Index}};" catchtouchstart="sliderStart" catchtouchmove="sliderMove" catchtouchend="sliderEnd">{{message[1].slide1_percent2}}</view>
+      <view class="percent percent_first">{{message[1].low}}</view>
+      <view class="percent percent_second">{{message[1].high}}</view>
+    </view>
+  </view>
+  <view class="slider_item margin_top">
+    <view class="padding text_name">最大连错</view>
+    <view class="double_slider">
+      <text class="bar"></text>
+      <view class="slider" id="slider31" style="left:{{message[2].slider11_first+'px'}};z-index:{{message[2].slide11Index}};" catchtouchstart="sliderStart" catchtouchmove="sliderMove" catchtouchend="sliderEnd">{{message[2].slide1_percent1}}</view>
+      <view class="slider" id="slider32" style="left:{{message[2].slider12_second+'px'}};z-index:{{message[2].slide12Index}};" catchtouchstart="sliderStart" catchtouchmove="sliderMove" catchtouchend="sliderEnd">{{message[2].slide1_percent2}}</view>
+      <view class="percent percent_first">{{message[2].low}}</view>
+      <view class="percent percent_second">{{message[2].high}}</view>
+    </view>
+  </view>
+  <view class="slider_item margin_top">
+    <view class="padding text_name">当前连对/错</view>
+    <view class="double_slider">
+      <text class="bar"></text>
+      <view class="slider" id="slider41" style="left:{{message[3].slider11_first+'px'}};z-index:{{message[3].slide11Index}};" catchtouchstart="sliderStart" catchtouchmove="sliderMove" catchtouchend="sliderEnd">{{message[3].slide1_percent1}}</view>
+      <view class="slider" id="slider42" style="left:{{message[3].slider12_second+'px'}};z-index:{{message[3].slide12Index}};" catchtouchstart="sliderStart" catchtouchmove="sliderMove" catchtouchend="sliderEnd">{{message[3].slide1_percent2}}</view>
+      <view class="percent percent_first">{{message[3].low}}</view>
+      <view class="percent percent_second">{{message[3].high}}</view>
+    </view>
+  </view>
+</view>

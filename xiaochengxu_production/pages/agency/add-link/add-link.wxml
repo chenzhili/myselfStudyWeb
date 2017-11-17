@@ -1,0 +1,35 @@
+<import src="../../common/header-bar.wxml"/>
+
+<template is="header" data="{{...headerData}}"></template>
+<view class="view_content" style="position:absolute;top:44px;height:100%;background-color:#f1f1f1;">
+  <view class="type_tabs">
+    <view class="tab_item tab_left {{message.activeTab==1?'active':''}}" id="1" bindtap="changeTab">
+      代理
+    </view>
+    <view class="tab_item tab_right {{message.activeTab==0?'active':''}}" id="0" bindtap="changeTab">
+      会员
+    </view>
+  </view>
+  <view class="add_link_content" wx:for="{{$scope.typeMessage.content}}">
+      <view class="link_content clear-float">
+          <label class="fl">注册链接</label>
+          <view class="fl" style="word-wrap:break-word;">{{item.url}}</view>
+      </view>
+      <view class="link_content clear-float">
+          <label class="fl">使用最大次数</label>
+          <input class="fl" type="text" value="{{item.num}}" disabled='true'/>
+      </view>
+      <view class="link_content clear-float">
+          <label class="fl">返点</label>
+          <input class="fl" type="text" value="{{item.ratio}}"/>
+      </view>
+      <view class="btn-type clear-float">
+          <view class="fl">
+              <button bindtap="copyLink" data-url="{{item.url}}">复制链接</button>
+          </view>
+          <view class="fl">
+              <button bindtap="delLink" data-id="{{item.id}}">删除链接</button>
+          </view>
+      </view>
+  </view>
+</view>

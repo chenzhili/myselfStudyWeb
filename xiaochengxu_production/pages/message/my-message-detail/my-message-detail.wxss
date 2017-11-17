@@ -1,0 +1,5 @@
+/* pages/message/my-message-detail/my-message-detail.wxss */
+/*富文本插件的样式  */
+@import "../../common/wxParse/wxParse.wxss";
+
+.title{font-size:18px;line-height:40px;text-align:center;}

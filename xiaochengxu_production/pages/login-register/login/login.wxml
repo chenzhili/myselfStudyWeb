@@ -1,0 +1,21 @@
+<import src="../../common/header-bar.wxml"/>
+
+<template is="header" data="{{...headerData}}"></template>  
+<view class="view_content" style="position:absolute;top:44px;height:100%;background-color:#f1f1f1;background:url('{{img.login_bg}}') no-repeat bottom center;background-size:100%;">
+  <view class="login_form">
+    <label class="login_item clear-float">
+      <image class="fl" src="../../../img/login/login_user.png" mode="widthFix"></image>
+      <input class="fl" data-id="1" type="number" placeholder='请输入您的账户' vaule="{{meessage.user.email}}" focus="true" bindinput="bindinput"></input>
+    </label>
+    <label class="login_item clear-float">
+      <image class="fl" src="../../../img/login/login_paasword.png" mode="widthFix"></image>
+      <input class="fl" data-id="2" type="text" placeholder='请输入您的登录密码' password='true' vaule="{{meessage.user.password}}" bindinput="bindinput"></input>
+    </label>
+    <view class="login_menu clear-float">
+       <button class="fl kf" open-type="contact">联系客服</button> 
+      <navigator class="fr" open-type='navigateTo' url="../reset-password/reset-password">忘记密码?</navigator>
+    </view>
+    <button class="btn" style="line-height:40px;" bindtap="login">登录</button>
+    <view class="register">没有账号？马上<navigator style="display:inline-block;" open-type='navigateTo' url="../register/register">注册</navigator></view>
+  </view>
+</view>

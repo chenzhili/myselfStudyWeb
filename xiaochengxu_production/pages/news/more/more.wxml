@@ -1,0 +1,9 @@
+<!--pages/news/more/more.wxml-->
+<import src="../../common/header-bar.wxml"/>
+
+<template is="header" data="{{...headerData}}"></template>
+<view class="view_content">
+  <view class="padding item" wx:for="{{$scope.word}}" data-id="{{item.id}}" bindtap="todetail">
+    {{item.name}}
+  </view>
+</view>

@@ -1,0 +1,11 @@
+/* pages/rights/pay-ways/pay-ways.wxss */
+.title_right{line-height:20px;color:#a6a6a6;}
+.pay_ways_item{background-color:#fff;border-top:1px solid #ddd;}
+.pay_ways_item:last-child{border-bottom:1px solid #ddd;}
+.pay_ways_item>view:first-child{display:flex;width:15%;}
+.pay_ways_item>view:nth-child(2){width:65%;padding-left:5%;line-height:25px;}
+.pay_ways_item>view:last-child{display:flex;width:15%;height:50px;}
+.pay_ways_item image{display:block;width:100%;}
+.right_contain{width:30px;height:30px;border-radius:50%;border:1px solid #ddd;margin:auto;}
+.pay_note{font-size:14px;color:#a6a6a6;}
+.special_btn{position:absolute;bottom:70px;margin-left:5%;}

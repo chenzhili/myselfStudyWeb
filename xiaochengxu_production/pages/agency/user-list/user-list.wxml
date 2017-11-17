@@ -1,0 +1,63 @@
+<import src="../../common/header-bar.wxml"/>
+
+<template is="header" data="{{...headerData}}"></template>
+<view class="view_content">
+  <view class="user_form">
+    <view class="form_item clear-float">
+      <view class="fl">用户账号:</view>
+      <input class="fr" type="text" focus='true' bindinput='bindinput'></input>
+    </view>
+    <view class="form_item clear-float">
+      <view class="fl">用户类型:</view>
+      <picker class="fr select" mode="selector" value="{{message.type}}" range="{{message.typeArr}}" bindchange="selectType" style="background:url('{{message.down_black}}') no-repeat right center;background-size:20px;">
+        {{message.typeArr[message.type]}}
+      </picker>
+      <!-- <view class="fr select" style="background:url('../../../img/down_black.png') no-repeat right center;background-size:20px;">
+        全部
+        <view class="select_container" hidden="{{true}}">
+          <view>全部</view>
+          <view>代理</view>
+          <view>会员</view>
+        </view>
+      </view> -->
+    </view>
+    <view class="form_item clear-float">
+      <view class="fl">在线状态:</view>
+      <view class="fr date">
+        <picker mode="date" value="{{message.picker1}}" bindchange="dateChange" id="1">
+          <view>{{message.picker1}}</view>
+        </picker>
+        <text>至</text>
+        <picker mode="date" value="{{message.picker2}}" bindchange="dateChange" id="2">
+          <view>{{message.picker2}}</view>
+        </picker>
+      </view>
+    </view>
+  </view>
+  <button class="btn" style="margin-bottom:20px;" bindtap="_query">查询</button>
+  <view class="agency_table">
+      <view class="clear-float agengcy_tr">
+          <view class="fl agency_table_items1">
+              登录账号
+          </view>
+          <view class="fl agency_table_items1">
+              用户类型
+          </view>
+          <view class="fl agency_table_items2">
+              注册时间
+          </view>
+      </view>
+      <view class="clear-float agengcy_tr" wx:for="{{$scope.memberList}}">
+          <view class="fl agency_table_items1" style="font-size:12px;">
+              {{item.phone}}
+          </view>
+          <view class="fl agency_table_items1">
+              {{item.is_agency=="0"?"会员":"代理"}}
+          </view>
+          <view class="fl agency_table_items2">
+              {{item.create_time}}
+          </view>
+      </view>
+  </view>
+  <view hidden="{{!$scope.noMoreItemsAvailable}}" style="text-align:center;">已加载全部</view>
+</view>

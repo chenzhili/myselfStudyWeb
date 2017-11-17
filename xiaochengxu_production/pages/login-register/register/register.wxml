@@ -1,0 +1,30 @@
+<import src="../../common/header-bar.wxml"/>
+
+<template is="header" data="{{...headerData}}"></template>
+<view class="view_content" style="position:absolute;top:44px;height:100%;background-color:#f1f1f1;background:url('{{img.login_bg}}') no-repeat bottom center;background-size:100%;">
+  <view class="login_form">
+    <label class="login_item clear-float">
+      <image class="fl" src="../../../img/login/login_user.png" mode="widthFix"></image>
+      <input data-id="1" class="fl" type="number" placeholder='请输入手机号' bindinput="bindinput"></input>
+    </label>
+    <label class="login_item_special clear-float">
+      <image class="fl" src="../../../img/login/login_code.png" mode="widthFix"></image>
+      <input data-id="2" type="number" placeholder='请输入验证码' bindinput="bindinput"></input>
+      <view class="fr" bindtap="sendMsg">{{$scope.msgCotent}}</view>
+    </label>
+    <label class="login_item clear-float">
+      <image class="fl" src="../../../img/login/login_qq.png" mode="widthFix"></image>
+      <input data-id="3" class="fl" type="number" placeholder='请输入qq' bindinput="bindinput"></input>
+    </label>
+    <label class="login_item clear-float">
+      <image class="fl" src="../../../img/login/login_paasword.png" mode="widthFix"></image>
+      <input data-id="4" class="fl" type="text" placeholder='请输入密码' password='true' bindinput="bindinput"></input>
+    </label>
+    <label class="login_item clear-float">
+      <image class="fl" src="../../../img/login/login_paasword1.png" mode="widthFix"></image>
+      <input data-id="5" class="fl" type="text" placeholder='请再次输入密码' password='true' bindinput="bindinput"></input>
+    </label>
+    <button class="btn" style="margin-top:10px;line-height:40px;" bindtap="register">注册</button>
+    <view class="register">没有账号？马上<navigator style="display:inline-block;" open-type='navigateBack'>登录</navigator></view>
+  </view>
+</view>

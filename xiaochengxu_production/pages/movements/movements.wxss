@@ -1,0 +1,26 @@
+/* pages/movements/movements.wxss */
+.type-item{width:20%;line-height:34px;text-align:center;display:inline-block;}
+.type{white-space:nowrap;position:fixed;width:100%;top:44px;z-index:100;background-color:#fff;}
+.type-item.active{color:#00ABF3;}
+.heading{background-color:#00AEF5;height:44px;position:fixed;top:78px;width:100%;z-index:100;}
+.heading > view{color: #fff;border-right:1px solid #fff;font-size: 13px}
+.heading > view:nth-child(1){width: 23%;box-sizing:border-box;background:transparent;line-height: 44px;text-align: center;}
+.heading > view:nth-child(2){width: 15%;box-sizing:border-box;background:transparent;line-height: 44px;text-align: center;}
+.heading > view:nth-child(3){width: 62%;box-sizing:border-box;background:transparent;border: 0}
+.heading > view:nth-child(3) view{width: 100%;height: 20px;margin: 0;padding: 0;border-bottom: 1px solid #fff;line-height: 20px;color: #fff;font-size: 13px;text-align: center}
+.heading > view:nth-child(3) view{width: 100%;height: 22px;overflow: hidden;}
+.heading > view:nth-child(3) view view{display:inline-block;box-sizing:border-box;width: 10%;line-height: 22px;border-right: 1px solid #fff;text-align: center;}
+.heading > view:nth-child(3) view view:last-child{border:0}
+.footer{position:fixed;bottom:0;width:100%;height:72px;z-index:100;background-color:#fff;}
+.footer-title{line-height:24px;text-align:center;color:#fff;}
+.footer-title>view:first-child{width:38%;background-color:#00ABF3;border-bottom:1px solid #ddd;}
+.footer-title .result{width:62%;border-bottom:1px solid #ddd;}
+.footer-title .result>view{width:10%;color:#09B3F3;}
+.footer-title .result.second>view{color:#FF9300;}
+.footer-title .result.third>view{color:#FF3936;} 
+.container{width:100%;overflow:hidden;position:relative;padding-bottom:75px;padding-top:78px;z-index:1;font-size:13px;}
+.container>view view:first-child{width:23%;box-sizing:border-box;line-height:24px;text-align: center;border-bottom:1px solid #ddd;border-right:1px solid #ddd;}
+.container>view view:nth-child(2){width:15%;box-sizing:border-box;line-height:24px;text-align: center;border-bottom:1px solid #ddd;border-right:1px solid #ddd;}
+.container>view view:nth-child(3){width:62%;box-sizing:border-box;line-height:24px;text-align: center;}
+.container>view view:nth-child(3) view{width:10%;line-height:24px;border-bottom:1px solid #ddd;border-right:1px solid #ddd;box-sizing:border-box;}
+.num_active{display:inline-block;width:20px;height:20px;border-radius:50%;color:#fff;background-color:#FFB231;margin-top:2px;line-height:20px;}
