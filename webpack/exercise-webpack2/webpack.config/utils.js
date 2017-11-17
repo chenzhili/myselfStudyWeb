@@ -14,12 +14,11 @@ function getAllFiles(dirRoot, type){
             if (!state.isDirectory()) {
                 // 过滤相对应的文件
                 filterReg.test(pathname) && res.push(pathname);
-                // res.push(pathname.replace(dir_root+'/', ''))
             }else{
                 res = res.concat(getAllFileFromDir(pathname))
             }
-        })
-        console.log(res.length);
+        });
+        return res;
     }
     return getAllFileFromDir(dirRoot)
 }
@@ -35,8 +34,7 @@ function getEntry(files, replaces){
     }
     return entry
 }
-getAllFiles(path.join(__dirname,"../www"),"js");
-// module.exports = {
-//     getAllFiles,
-//     getEntry
-// }
+module.exports = {
+    getAllFiles,
+    getEntry
+};
