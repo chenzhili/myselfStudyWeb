@@ -3,8 +3,9 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { RepeatProvider } from '../../../providers/repeat/repeat';
 import { ScreenOrientation } from '@ionic-native/screen-orientation'; //允许横屏
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { Device } from '@ionic-native/device';
 import * as $ from "jquery";
-declare var CKobject: any, Hls: any,flvjs:any;
+declare var CKobject: any, Hls: any,flvjs:any,returnCitySN:any;
 var $scope;
 @IonicPage()
 @Component({
@@ -14,7 +15,8 @@ var $scope;
 export class LiveDetailPage {
   liveShow:string;
   linesStatus:string;
-  constructor(public goP: RepeatProvider, public navCtrl: NavController, public navParams: NavParams,public screenOrientation:ScreenOrientation,public web:InAppBrowser) {
+  constructor(public goP: RepeatProvider, public navCtrl: NavController, public navParams: NavParams,
+              public screenOrientation:ScreenOrientation,public web:InAppBrowser,private device: Device) {
     $scope=this;
     $scope.liveShow = 0;
     $scope.linesStatus = 0;
@@ -35,6 +37,16 @@ export class LiveDetailPage {
         console.log(this.screenOrientation.type);
       }
     );
+  }
+  ionViewWillEnter(){
+    this.tryHeight();
+  }
+  //自适应广告的高度
+  tryHeight(){
+    setTimeout(()=>{
+      let footer = document.getElementsByTagName("ion-footer")[0];
+      $scope.bottom = getComputedStyle(footer).height;
+    },200);
   }
   //  获取底部广告
   _adv(){
@@ -91,7 +103,8 @@ export class LiveDetailPage {
   //获取详情
   getDetail() {
     let payload = {
-      id: $scope.liveId
+      id: $scope.liveId,
+      ip:returnCitySN["cip"]
     };
     this.goP.yikeGet('match/details', payload).then(data => {
       let menu = data.json();
@@ -162,7 +175,7 @@ export class LiveDetailPage {
       //直播广告
       $scope.adLive = ad.data[0].img;
     }).catch(err => {
-      this.goP.presentToast(err);
+      console.log(err);
     })
   }
   //暂停或者开始
@@ -183,31 +196,14 @@ export class LiveDetailPage {
     }else{
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
     }
-
   }
-  //选择路线
-  // SelectionRoute(){
-  //   // $scope.linesStatus = 1;
-  //   $scope.liveShow = 1;
-  //   if (flvjs.isSupported()) {
-  //     var videoElement = document.getElementById('videoElement');
-  //     var flvPlayer = flvjs.createPlayer({
-  //       type: 'flv',
-  //       isLive: true,
-  //       url: 'http://live.yike1908.com/yike_live/英超.flv'
-  //     });
-  //     flvPlayer.attachMediaElement(videoElement);
-  //     flvPlayer.load();
-  //     flvPlayer.play();
-  //   }
-  //   $scope.linesStatus = 0;
-  // }
   //关闭线路
   CloseSelectionRoute(){
     $scope.linesStatus = 0;
   }
   //关闭广告资源
   CloseAd(item){
+    this.tryHeight();
     item.adStatus = 0;
   }
 

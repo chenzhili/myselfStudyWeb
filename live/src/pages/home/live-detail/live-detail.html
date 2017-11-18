@@ -1,15 +1,13 @@
-<ion-content class="live-gb">
-  <ion-refresher (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content pullingIcon="arrow-round-down" pullingText="下拉刷新" refreshingSpinner="circles"></ion-refresher-content>
-  </ion-refresher>
-  <div class="back-buttons" *ngIf="headerIsShow">
-    <ion-buttons>
-      <button ion-button icon-only color="white" (click)="back()" style="background-color:transparent;">
-        <ion-icon name="arrow-back"></ion-icon>
-      </button>
-    </ion-buttons>
-  </div>
+<ion-header class="detail_header">
   <div class="live_loading">
+    <div class="back-buttons" *ngIf="headerIsShow">
+      <ion-buttons>
+        <button ion-button icon-only color="white" (click)="back()" style="background-color:transparent;">
+          <ion-icon name="arrow-back"></ion-icon>
+        </button>
+      </ion-buttons>
+    </div>
+    <div class="person_number">{{sowing?.num}}人在线</div>
     <div class="conts-list" *ngIf="liveShow == 0 ? true:false">
       <div class="conts-item">
         <div class="items-view">
@@ -66,24 +64,26 @@
       </div>
     </div>
   </div>
+</ion-header>
+<ion-content class="live-gb" [ngStyle]="{bottom:bottom?bottom:0}">
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-round-down" pullingText="下拉刷新" refreshingSpinner="circles"></ion-refresher-content>
+  </ion-refresher>
   <div class="live_adStyle">
     <div class="gif-style">
-      <div class="xiaosa">
-        <img src="assets/image/load/xiaosa.gif" alt=""/>
-        <div>
-          这是文字
-        </div>
-      </div>
+      <div class="xiaosa" [innerHTML]="sowing?.aaaaaaaa?.contents"></div>
     </div>
-    <!--广告资源位置-->
-    <div class="adv_container">
-      <div *ngFor="let item of adv;let index = index;">
-        <div class="advertising_div" *ngIf="item.adStatus && index < 3" [ngStyle]="{background:'url('+item?.img+') no-repeat center center',backgroundSize:'100% 100%'}" (click)="toWeb(item?.url)">
-          <div class="ad_close" (click)="CloseAd(item)">
-            <img src="assets/image/close.png" alt=""/>
-          </div>
+  </div>
+</ion-content>
+<ion-footer>
+  <!--广告资源位置-->
+  <div class="adv_container">
+    <div *ngFor="let item of adv;let index = index;" style="margin-top:2px;">
+      <div class="advertising_div" *ngIf="item.adStatus && index < 3" [ngStyle]="{background:'url('+item?.img+') no-repeat center center',backgroundSize:'100% 100%'}" (click)="toWeb(item?.url)">
+        <div class="ad_close" (click)="CloseAd(item)">
+          <img src="assets/image/close.png" alt=""/>
         </div>
       </div>
     </div>
   </div>
-</ion-content>
+</ion-footer>

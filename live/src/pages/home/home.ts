@@ -135,6 +135,7 @@ export class HomePage {
   }
 //  获取不同联赛
   getDiffGameList(idMenu){
+    me._getBanners();
     me.mess.idMenu = idMenu;
     me._getStartToEnd();
     let payload = {
@@ -278,6 +279,7 @@ export class HomePage {
   }
   //下拉刷新
   doRefresh(refresh){
+    me._getBanners();
     let tempTime = me.mess.refresh.startTime;
     let sevenTime = 24*60*60*7*1000;
     me.mess.refresh.startTime = tempTime - sevenTime;
@@ -292,6 +294,7 @@ export class HomePage {
   }
   //上拉加载
   doInfinite(infinite){
+    me._getBanners();
     let tempTime = me.mess.infinite.endTime;
     let sevenTime = 24*60*60*7*1000;
     me.mess.infinite.startTime = tempTime;
