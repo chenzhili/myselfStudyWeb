@@ -130,12 +130,17 @@ export class LiveDetailPage {
         $scope.headerIsShow = false;
         $scope.liveShow = 1;
         this.screenOrientation.unlock();
-        $scope.initTimeout = setTimeout(()=>{
+        $scope.playTimeout = setTimeout(()=>{
+          $scope.advShow = 0;
+          $scope.sourceSrc = $scope.sowing.url_m3u8;
+        },3000);
+        // $("#videoSource")[0].src = $scope.sowing.url_m3u8;
+        /*$scope.initTimeout = setTimeout(()=>{
           $scope.videoElement = document.getElementById('videoElement');
           $scope.flvPlayer = flvjs.createPlayer({
-            type: 'flv',
+            type: 'm3u8',
             isLive: true,
-            url: $scope.sowing.url_flv
+            url: $scope.sowing.url_m3u8
           });
           $scope.flvPlayer.attachMediaElement($scope.videoElement);
           $scope.flvPlayer.load();
@@ -146,7 +151,7 @@ export class LiveDetailPage {
             $scope.flvPlayer.play();
             $scope.headerIsShow = true;
           }
-        },3000);
+        },3000);*/
       }
     }
   }
