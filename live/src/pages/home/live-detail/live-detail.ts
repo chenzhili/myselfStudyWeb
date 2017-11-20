@@ -229,17 +229,17 @@ export class LiveDetailPage {
       let flag = false;
       //http://live.hkstv.hk.lxdns.com/live/hks/playlist.m3u8
       //console.log( hls.loadSource('http://ztest.qiniudn.com/sintel.m3u8'));
-     // hls.loadSource('http://live.hkstv.hk.lxdns.com/live/hks/playlist.m3u8');
+      // hls.loadSource('http://live.hkstv.hk.lxdns.com/live/hks/playlist.m3u8');
       hls.attachMedia(video);
       hls.on(Hls.Events.MANIFEST_PARSED,()=>{
-         video.play();
-         flag = true;
-         this.goP.LoadingHide();
+        video.play();
+        flag = true;
+        this.goP.LoadingHide();
       });
       let timer = setTimeout(()=>{
-         clearTimeout(timer);
-         this.goP.LoadingHide();
-         flag == false ?this.goP.presentToast('加载失败'):"";
+        clearTimeout(timer);
+        this.goP.LoadingHide();
+        flag == false ?this.goP.presentToast('加载失败'):"";
       }, 3000);
     } else {
       this.goP.presentToast('加载失败');
