@@ -132,7 +132,7 @@ export class LiveDetailPage {
         this.screenOrientation.unlock();
         $scope.playTimeout = setTimeout(()=>{
           $scope.advShow = 0;
-          $scope.sourceSrc = $scope.sowing.url_m3u8;
+          // $scope.sourceSrc = $scope.sowing.url_m3u8;
         },3000);
         // $("#videoSource")[0].src = $scope.sowing.url_m3u8;
         /*$scope.initTimeout = setTimeout(()=>{

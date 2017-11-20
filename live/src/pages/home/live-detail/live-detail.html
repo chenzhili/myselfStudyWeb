@@ -46,7 +46,7 @@
           <img [src]="adLive">
         </div>
         <video id="videoElement" width="100%" height="100%" autoplay (click)="hideOrShow()">
-          <source [src]="sourceSrc">
+          <source [src]="sowing?.url_m3u8">
         </video>
         <!--<div class="progressbar clear-float " *ngIf="headerIsShow">
           <div class="img fl" (click)="flv_pause()">
