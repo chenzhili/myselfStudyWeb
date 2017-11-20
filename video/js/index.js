@@ -306,5 +306,35 @@ function barCss(currentTime,duration){
     circle.style.left = currentDistance+"px";
 }
 window.onload = function(){
-    hideBar(bar);
+    /*hideBar(bar);*/
+    let vidElement = document.querySelector('video');
+    console.log(MediaSource.isTypeSupported("audio/webm; codecs=vorbis"));
+    if (window.MediaSource) {
+        let mediaSource = new MediaSource();
+        // alert(URL.createObjectURL(mediaSource));
+        vidElement.src = URL.createObjectURL(mediaSource);
+        // mediaSource.addEventListener('sourceopen', sourceOpen);
+    } else {
+        alert("The Media Source Extensions API is not supported.")
+    }
+
+    function sourceOpen(e) {
+        URL.revokeObjectURL(vidElement.src);
+        let mime = 'video/webm; codecs="opus, vp9"';
+        let mediaSource = e.target;
+        let sourceBuffer = mediaSource.addSourceBuffer(mime);
+        let videoUrl = 'droid.webm';
+        fetch(videoUrl)
+            .then(function(response) {
+                return response.arrayBuffer();
+            })
+            .then(function(arrayBuffer) {
+                sourceBuffer.addEventListener('updateend', function(e) {
+                    if (!sourceBuffer.updating && mediaSource.readyState === 'open') {
+                        mediaSource.endOfStream();
+                    }
+                });
+                sourceBuffer.appendBuffer(arrayBuffer);
+            });
+    }
 };
