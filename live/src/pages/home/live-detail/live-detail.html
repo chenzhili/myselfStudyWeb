@@ -46,11 +46,12 @@
           <img [src]="adLive">
         </div>
         <!--这种原声播放，在pc端调试 m3u8 看不了-->
-        <!--<video id="videoElement">
+        <video id="videoElement">
           <source [src]="sowing?.url_m3u8">
-        </video>-->
+        </video>
         <!--这种用 HLS 插件，可以在pc端播放了-->
-        <video id="videoElement"></video>
+        <!--<video id="videoElement"></video>-->
+
         <div class="progressbar clear-float " *ngIf="headerIsShow">
           <div class="img fl" (click)="flv_pause()">
             <img class="play-pause" [src]="playOrPause">

@@ -5,7 +5,7 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation'; //允许�
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { Device } from '@ionic-native/device';
 import * as $ from "jquery";
-declare var CKobject: any, Hls: any,flvjs:any,returnCitySN:any,Hls:any;
+declare var CKobject: any, Hls: any,flvjs:any,returnCitySN:any,Hls:any; //获取ip地址: returnCitySN["cip"]
 var $scope;
 @IonicPage()
 @Component({
@@ -38,8 +38,37 @@ export class LiveDetailPage {
       }
     );
   }
+  //页面即将进入
   ionViewWillEnter(){
     this.tryHeight();
+    document.addEventListener("visibilitychange",$scope._visibilityChange)
+  }
+  //只是用于监听事件的回调函数
+  _visibilityChange(){
+    if($scope.liveShow){
+      if(document.hidden){
+        let payload = {
+          id: $scope.liveId,
+          op:"out"
+        };
+        $scope.goP.yikeGet('match/play',payload);
+      }else{
+        let payload = {
+          id: $scope.liveId,
+          op:"in"
+        };
+        $scope.goP.yikeGet('match/play',payload);
+      }
+    }
+  }
+  //页面即将离开
+  ionViewWillLeave(){
+    document.removeEventListener("visibilitychange",$scope._visibilityChange);
+    try{
+      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
+    }catch(err){
+      console.log(err);
+    }
   }
   //自适应广告的高度
   tryHeight(){
@@ -84,14 +113,6 @@ export class LiveDetailPage {
     }
     this.navCtrl.pop();
   }
-  //页面即将离开
-  ionViewWillLeave(){
-    try{
-      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
-    }catch(err){
-      console.log(err);
-    }
-  }
   //下拉刷新
   doRefresh(refresher) {
     refresher != undefined ? refresher.complete() : '';
@@ -119,6 +140,14 @@ export class LiveDetailPage {
   hideOrShow(){
     $scope.headerIsShow = !$scope.headerIsShow;
   }
+  //获取人数值
+  getPerson(){
+    let payload = {
+      id: $scope.liveId,
+      op:"in"
+    };
+    $scope.goP.yikeGet('match/play',payload);
+  }
   //观看直播
   livePlay(){
     if($scope.sowing.is_open == 0){
@@ -127,13 +156,14 @@ export class LiveDetailPage {
       if($scope.sowing.is_end == 1){
         this.goP.presentToast("直播已结束");
       }else{
+        this.getPerson();
         $scope.headerIsShow = false;
         $scope.liveShow = 1;
         this.screenOrientation.unlock();
         /*这种原声播放，在pc端调试 m3u8 看不了*/
-        /*$scope.playTimeout = setTimeout(()=>{
+        $scope.playTimeout = setTimeout(()=>{
           $scope.advShow = 0;
-        },3000);*/
+        },3000);
         /*这个是播放 flv 格式的 视频*/
         /*$scope.initTimeout = setTimeout(()=>{
           $scope.videoElement = document.getElementById('videoElement');
@@ -146,7 +176,7 @@ export class LiveDetailPage {
           $scope.flvPlayer.load();
         },100);*/
         /*这种用 HLS 插件，可以在pc端播放了*/
-        $scope.playTimeout = setTimeout(()=>{
+        /*$scope.playTimeout = setTimeout(()=>{
           $scope.advShow = 0;
           if(Hls.isSupported()) {
             $scope.video = document.getElementById('videoElement');
@@ -157,7 +187,7 @@ export class LiveDetailPage {
               $scope.video.play();
             });
           }
-        },3000);
+        },3000);*/
       }
     }
   }
