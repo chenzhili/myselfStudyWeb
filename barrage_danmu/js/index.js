@@ -80,6 +80,7 @@ window.onload = function(){
     let styleSheets = document.styleSheets[0].cssRules;
     for(let i=0;i<styleSheets.length;i++){
         if(styleSheets[i].type == 7 && styleSheets[i].name == "try"){
+            styleSheets[i].deleteRule("0");
             console.log(styleSheets[i]);
         }
     }
