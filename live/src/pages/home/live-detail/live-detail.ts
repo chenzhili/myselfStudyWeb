@@ -38,8 +38,37 @@ export class LiveDetailPage {
       }
     );
   }
+  //页面即将进入
   ionViewWillEnter(){
     this.tryHeight();
+    document.addEventListener("visibilitychange",$scope._visibilityChange)
+  }
+  //只是用于监听事件的回调函数
+  _visibilityChange(){
+    if($scope.liveShow){
+      if(document.hidden){
+        let payload = {
+          id: $scope.liveId,
+          op:"out"
+        };
+        $scope.goP.yikeGet('match/play',payload);
+      }else{
+        let payload = {
+          id: $scope.liveId,
+          op:"in"
+        };
+        $scope.goP.yikeGet('match/play',payload);
+      }
+    }
+  }
+  //页面即将离开
+  ionViewWillLeave(){
+    document.removeEventListener("visibilitychange",$scope._visibilityChange);
+    try{
+      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
+    }catch(err){
+      console.log(err);
+    }
   }
   //自适应广告的高度
   tryHeight(){
@@ -84,14 +113,6 @@ export class LiveDetailPage {
     }
     this.navCtrl.pop();
   }
-  //页面即将离开
-  ionViewWillLeave(){
-    try{
-      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
-    }catch(err){
-      console.log(err);
-    }
-  }
   //下拉刷新
   doRefresh(refresher) {
     refresher != undefined ? refresher.complete() : '';
@@ -99,7 +120,14 @@ export class LiveDetailPage {
     this.getAdLive();
     this._adv();
   }
-
+  //传人数
+  getPerson(){
+    let payload = {
+      id: $scope.liveId,
+      op:"in"
+    };
+    $scope.goP.yikeGet('match/play',payload);
+  }
   //获取详情
   getDetail() {
     let payload = {
@@ -127,6 +155,7 @@ export class LiveDetailPage {
       if($scope.sowing.is_end == 1){
         this.goP.presentToast("直播已结束");
       }else{
+        this.getPerson();
         $scope.headerIsShow = false;
         $scope.liveShow = 1;
         this.screenOrientation.unlock();
