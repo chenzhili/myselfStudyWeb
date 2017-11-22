@@ -12,7 +12,7 @@
       <div class="conts-item">
         <div class="items-view">
           <div class="live_detail_logo">
-            <img-lazy-load [src]="sowing?.main_logo"></img-lazy-load>
+            <img [src]="sowing?.main_logo">
           </div>
           <p class="name_size">{{sowing?.main_name}}</p>
         </div>
@@ -27,7 +27,7 @@
         </div>
         <div class="items-view">
           <div class="live_detail_logo">
-            <img-lazy-load [src]="sowing?.visit_logo"></img-lazy-load>
+            <img [src]="sowing?.visit_logo">
           </div>
           <p class="name_size">{{sowing?.visit_name}}</p>
         </div>
@@ -37,8 +37,10 @@
     <div class="live-container" *ngIf="liveShow == 1">
       <!-- 链接播放-->
       <div class="live-display" *ngIf="sowing?.is_source == 1">
-        <iframe height="100%" width="100%" src="http://pub.pptv.com/player/iframe/index.html#showList=0&id=300163"
-                frameborder="0"></iframe>
+        <div class="adv" *ngIf="advShow == 1">
+          <img [src]="adLive">
+        </div>
+        <iframe height="100%" width="100%" id="iframe" frameborder="0"></iframe>
       </div>
       <!--视屏直播 flv.js-->
       <div class="live-display" *ngIf="sowing?.is_source == 0">

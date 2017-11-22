@@ -7,15 +7,15 @@
     <div class="nav-slider">
       <ion-slides slidesPerView="6">
         <ion-slide class="nav-imgslider" (click)="getDiffGameList(0)">
-          <img-lazy-load [src]="mess.type == 7?'assets/image/zuqiu.png':'assets/image/lanqiu.png'"></img-lazy-load>
+          <img [src]="mess.type == 7?'assets/image/zuqiu.png':'assets/image/lanqiu.png'">
           <span class="nav-hmspan" [ngClass]="{nav_active:mess.idMenu == 0}">全部</span>
         </ion-slide>
         <ion-slide class="nav-imgslider" (click)="getDiffGameList(-1)">
-          <img-lazy-load [src]="'assets/image/hot.png'"></img-lazy-load>
+          <img [src]="'assets/image/hot.png'">
           <span class="nav-hmspan" [ngClass]="{nav_active:mess.idMenu == -1}">热门</span>
         </ion-slide>
         <ion-slide class="nav-imgslider" *ngFor="let secMenu of mess.secList" (click)="getDiffGameList(secMenu.id)">
-          <img-lazy-load [src]="secMenu?.img"></img-lazy-load>
+          <img [src]="secMenu?.img">
           <span class="nav-hmspan" [ngClass]="{nav_active:mess.idMenu == secMenu.id}">{{secMenu?.name}}</span>
         </ion-slide>
       </ion-slides>

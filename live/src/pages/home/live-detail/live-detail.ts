@@ -163,16 +163,23 @@ export class LiveDetailPage {
         $scope.liveShow = 1;
         // this.screenOrientation.unlock();
         //chplayer做了兼容,这个在移动端的终极版本，可以兼容 android 和 ios都能播放
-        $scope.playTimeout = setTimeout(()=>{
-          $scope.advShow = 0;
-          let videoObject = {
-            container: '#videoElement',//“#”代表容器的ID，“.”或“”代表容器的class
-            variable: 'player',//该属性必需设置，值等于下面的new chplayer()的对象
-            live: true, //是否是直播
-            video:$scope.sowing.url_m3u8//视频地址
-          };
-          let player=new chplayer(videoObject);
-        },3000);
+        if(!$scope.sowing.is_source){
+          $scope.playTimeout = setTimeout(()=>{
+            $scope.advShow = 0;
+            let videoObject = {
+              container: '#videoElement',//“#”代表容器的ID，“.”或“”代表容器的class
+              variable: 'player',//该属性必需设置，值等于下面的new chplayer()的对象
+              live: true, //是否是直播
+              video:$scope.sowing.url_m3u8//视频地址
+            };
+            let player=new chplayer(videoObject);
+          },3000);
+        }else{
+          $scope.playTimeout = setTimeout(()=>{
+            $scope.advShow = 0;
+            $("#iframe")[0].src = $scope.sowing.url_flv;
+          },3000);
+        }
         /*这种原声播放，在pc端调试 m3u8 看不了,android的浏览器播不了*/
         /*$scope.playTimeout = setTimeout(()=>{
           $scope.advShow = 0;
