@@ -43,7 +43,7 @@ export class HomePage {
   constructor(private goP:RepeatProvider, public navCtrl:NavController, public navParams: NavParams,private zone: NgZone,public web:InAppBrowser,public screenOrientation:ScreenOrientation) {
     //保存this 这里面执行的很快
     me = this;
-    me.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
+    // me.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
   }
 //  初始化数据
   ngOnInit(){

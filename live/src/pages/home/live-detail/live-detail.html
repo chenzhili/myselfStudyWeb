@@ -1,5 +1,5 @@
 <ion-header class="detail_header">
-  <div class="live_loading" (click)="hideOrShow()">
+  <div class="live_loading" (click)="hideOrShow()"> <!-- (click)="hideOrShow()" 这个的兼容性-->
     <div class="back-buttons" *ngIf="headerIsShow">
       <ion-buttons>
         <button ion-button icon-only color="white" (click)="back()" style="background-color:transparent;">
@@ -46,13 +46,14 @@
           <img [src]="adLive">
         </div>
         <!--这种原声播放，在pc端调试 m3u8 看不了-->
-        <video id="videoElement">
+        <!--<video id="videoElement">
           <source [src]="sowing?.url_m3u8">
-        </video>
+        </video>-->
         <!--这种用 HLS 插件，可以在pc端播放了-->
         <!--<video id="videoElement"></video>-->
-
-        <div class="progressbar clear-float " *ngIf="headerIsShow">
+        <!--用CKplayer的用法-->
+        <div id="videoElement"></div>
+        <!--<div class="progressbar clear-float " *ngIf="headerIsShow">
           <div class="img fl" (click)="flv_pause()">
             <img class="play-pause" [src]="playOrPause">
           </div>
@@ -66,7 +67,7 @@
           <div class="img fl full" (click)="fullScreen()">
             <img src="data:image/png;base64,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">
           </div>
-        </div>
+        </div>-->
       </div>
     </div>
   </div>

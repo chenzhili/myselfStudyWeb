@@ -5,7 +5,7 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation'; //允许�
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { Device } from '@ionic-native/device';
 import * as $ from "jquery";
-declare var CKobject: any, Hls: any,flvjs:any,returnCitySN:any,Hls:any; //获取ip地址: returnCitySN["cip"]
+declare let chplayer: any, Hls: any,flvjs:any,returnCitySN:any; //获取ip地址: returnCitySN["cip"]
 var $scope;
 @IonicPage()
 @Component({
@@ -32,11 +32,11 @@ export class LiveDetailPage {
     this.getDetail();
     this.getAdLive();
     this._adv();
-    this.screenOrientation.onChange().subscribe(
+    /*this.screenOrientation.onChange().subscribe(
       () => {
         console.log(this.screenOrientation.type);
       }
-    );
+    );*/
   }
   //页面即将进入
   ionViewWillEnter(){
@@ -64,11 +64,11 @@ export class LiveDetailPage {
   //页面即将离开
   ionViewWillLeave(){
     document.removeEventListener("visibilitychange",$scope._visibilityChange);
-    try{
+    /*try{
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
     }catch(err){
       console.log(err);
-    }
+    }*/
   }
   //自适应广告的高度
   tryHeight(){
@@ -102,16 +102,18 @@ export class LiveDetailPage {
   }
   //返回
   back(){
-    if($scope.flvPlayer){
-      $scope.flvPlayer.destroy();
-    }
     if($scope.initTimeout){
       clearTimeout($scope.initTimeout);
     }
     if($scope.playTimeout){
       clearTimeout($scope.playTimeout);
     }
-    this.navCtrl.pop();
+    if($scope.liveShow){
+      $scope.liveShow = !$scope.liveShow;
+      $scope.advShow = 1;
+    }else{
+      this.navCtrl.pop();
+    }
   }
   //下拉刷新
   doRefresh(refresher) {
@@ -159,11 +161,22 @@ export class LiveDetailPage {
         this.getPerson();
         $scope.headerIsShow = false;
         $scope.liveShow = 1;
-        this.screenOrientation.unlock();
-        /*这种原声播放，在pc端调试 m3u8 看不了*/
+        // this.screenOrientation.unlock();
+        //chplayer做了兼容,这个在移动端的终极版本，可以兼容 android 和 ios都能播放
         $scope.playTimeout = setTimeout(()=>{
           $scope.advShow = 0;
+          let videoObject = {
+            container: '#videoElement',//“#”代表容器的ID，“.”或“”代表容器的class
+            variable: 'player',//该属性必需设置，值等于下面的new chplayer()的对象
+            live: true, //是否是直播
+            video:$scope.sowing.url_m3u8//视频地址
+          };
+          let player=new chplayer(videoObject);
         },3000);
+        /*这种原声播放，在pc端调试 m3u8 看不了,android的浏览器播不了*/
+        /*$scope.playTimeout = setTimeout(()=>{
+          $scope.advShow = 0;
+        },3000);*/
         /*这个是播放 flv 格式的 视频*/
         /*$scope.initTimeout = setTimeout(()=>{
           $scope.videoElement = document.getElementById('videoElement');
@@ -232,11 +245,11 @@ export class LiveDetailPage {
   }
   //  全屏
   fullScreen(){
-    if(this.screenOrientation.type == "portrait-primary"){
+    /*if(this.screenOrientation.type == "portrait-primary"){
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE);
     }else{
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
-    }
+    }*/
   }
   //关闭线路
   CloseSelectionRoute(){
@@ -287,26 +300,6 @@ export class LiveDetailPage {
       this.goP.LoadingHide();
     }
   }
-
-  playerInit(dom, src?) {
-    //this.playerInit(dom, 'http://www.streambox.fr/playlists/test_001/stream.m3u8');
-    var st = encodeURIComponent(src);
-    let flashvars = {
-      f: 'assets/ckplayer/m3u8.swf',
-      a: st,
-      s: 4,
-      c: 0,
-      p: 1,
-      b: 0,
-      lv: 1,//注意，如果是直播，需设置lv:1
-      i: 'http://www.ckplayer.com/static/images/cqdw.jpg'
-    };
-    let video = [src + '->video/m3u8'];
-    //let video = [src];
-    var params = { bgcolor: '#FFF', allowFullScreen: true, allowScriptAccess: 'always', wmode: 'transparent' };
-    CKobject.embed('assets/ckplayer/ckplayer.swf', dom, 'ckplayer_a1', '100%', '400', false, flashvars, video, params);
-  }
-
   ionViewDidLoad() {
     //let dom = document.getElementsByClassName('live_box')[0];
     //this.goP.LoadingShow('正在加载~');
