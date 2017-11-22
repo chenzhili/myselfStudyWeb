@@ -7,7 +7,7 @@
     <div class="nav-slider">
       <ion-slides slidesPerView="6">
         <ion-slide class="nav-imgslider" (click)="getDiffGameList(0)">
-          <img-lazy-load [src]="'assets/image/zuqiu.png'"></img-lazy-load>
+          <img-lazy-load [src]="mess.type == 7?'assets/image/zuqiu.png':'assets/image/lanqiu.png'"></img-lazy-load>
           <span class="nav-hmspan" [ngClass]="{nav_active:mess.idMenu == 0}">全部</span>
         </ion-slide>
         <ion-slide class="nav-imgslider" (click)="getDiffGameList(-1)">

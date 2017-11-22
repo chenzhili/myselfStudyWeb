@@ -75,6 +75,14 @@ window.onload = function(){
     }).catch(function(err){
         console.log(err);
     });
+    /*用js 控制 keyframes*/
+    let frames = document.getElementsByClassName("control_keyframes")[0];
+    let styleSheets = document.styleSheets[0].cssRules;
+    for(let i=0;i<styleSheets.length;i++){
+        if(styleSheets[i].type == 7 && styleSheets[i].name == "try"){
+            console.log(styleSheets[i]);
+        }
+    }
 
 };
 

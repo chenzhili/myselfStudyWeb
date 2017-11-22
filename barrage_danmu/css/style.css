@@ -46,3 +46,23 @@ html,body,p,h1,h2,h3,h4,table,tbody,tfoot,thead,tr,td{padding:0;margin:0;}
     margin-right:10px;
 }
 
+/*控制 keyframes 通过 js*/
+.control_keyframes{
+    width:100px;
+    height:100px;
+    background-color:#ff0;
+    animation:try;
+    animation-duration:2s;
+    animation-fill-mode: forwards;
+}
+@keyframes try {
+    0% {
+        transform :translateX(0) scale(1);
+        opacity:0;
+    }
+    100% {
+        transform :translateX(100px) scale(1);
+        opacity:1;
+    }
+}
+

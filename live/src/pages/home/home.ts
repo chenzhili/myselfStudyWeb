@@ -149,7 +149,17 @@ export class HomePage {
 //  一级菜单发生变化
   firstMenuChange(e){
     me.mess.type = e;
+    me.mess.teamList = {};
+    //获取banner图
+    me._getBanners();
+    //获取底部广告
+    me._adv();
+    //初始化一级菜单
+    me._getFirstGameList();
+    //初始化二级菜单
     me._getSecMenu();
+    //获取今天到后七天的毫秒数
+    me._getStartToEnd();
   }
 //  获取一级类型
   _getFirstGameList(){
