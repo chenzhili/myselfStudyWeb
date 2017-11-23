@@ -114,6 +114,11 @@ export class LiveDetailPage {
     if($scope.playTimeout){
       clearTimeout($scope.playTimeout);
     }
+    let payload = {
+      id: $scope.liveId,
+      op:"out"
+    };
+    $scope.goP.yikeGet('match/play',payload);
     this.navCtrl.pop();
   }
   //下拉刷新
