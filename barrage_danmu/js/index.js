@@ -76,15 +76,47 @@ window.onload = function(){
         console.log(err);
     });
     /*用js 控制 keyframes*/
-    let frames = document.getElementsByClassName("control_keyframes")[0];
-    let styleSheets = document.styleSheets[0].cssRules;
-    for(let i=0;i<styleSheets.length;i++){
-        if(styleSheets[i].type == 7 && styleSheets[i].name == "try"){
-            styleSheets[i].deleteRule("0");
-            console.log(styleSheets[i]);
+    //这里看清楚是 哪个对象 含有 deleteRule 和 insertRule 方法
+    /*
+    * document.styleSheets[0].deleteRule(index); 对应的 索引
+    * document.styleSheets[0].insertRule("string样式",position); 也是对应的 索引
+    * */
+    function changeKeyframes(name,newCss,position){
+        let styleSheets = document.styleSheets[0];
+        /*这里有两种 , 分辨 keyframes 的用 name （就是 animation 的名字）,如果是普通的css 分辨通过 selectorText的值（对应的 选择器值 ）*/
+        for(let i=0;i<styleSheets.cssRules.length;i++){
+            if(styleSheets.cssRules[i].type == 7 && styleSheets.cssRules[i].name == name){
+                styleSheets.deleteRule(i);
+                styleSheets.insertRule(newCss,position);
+            }
         }
     }
+    changeKeyframes("try",`@keyframes try {  
+    0% {
+        transform :translateX(100%) scale(1);
+        opacity:0;
+    }
+    100% {
+        transform :translateX(100px) scale(2);
+        opacity:1;
+    }
+}`,1);
 
+    let animation = document.getElementById("animation");
+    let aniTime;
+    animation.addEventListener("click",(e)=>{
+        // clearTimeout(aniTime);
+        // document.body.style.animation = "inout";
+        // document.body.style.animationDuration = "1s";
+        // document.body.style.animationFillMode = "forwards";
+        document.body.className = "in_out";
+        aniTime = setTimeout(()=>{
+            // document.body.style.animation = "";
+            // document.body.style.animationDuration = "";
+            // document.body.style.animationFillMode = "";
+            document.body.className = "";
+        },1000)
+    })
 };
 
 /*请求接口*/
