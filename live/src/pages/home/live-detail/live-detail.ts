@@ -42,7 +42,6 @@ export class LiveDetailPage {
   //页面即将进入
   ionViewWillEnter(){
     this.tryHeight();
-    document.addEventListener("visibilitychange",$scope._visibilityChange)
   }
   //只是用于监听事件的回调函数
   _visibilityChange(){
@@ -64,7 +63,7 @@ export class LiveDetailPage {
   }
   //页面即将离开
   ionViewWillLeave(){
-    document.removeEventListener("visibilitychange",$scope._visibilityChange);
+    // document.removeEventListener("visibilitychange",$scope._visibilityChange);
     /*try{
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
     }catch(err){
@@ -118,6 +117,7 @@ export class LiveDetailPage {
       $scope.goP.yikeGet('match/play',payload);
       $scope.liveShow = !$scope.liveShow;
       $scope.advShow = 1;
+      document.removeEventListener("visibilitychange",$scope._visibilityChange);
     }else{
       this.navCtrl.pop();
     }
@@ -159,6 +159,7 @@ export class LiveDetailPage {
   }
   //观看直播
   livePlay(){
+    document.addEventListener("visibilitychange",$scope._visibilityChange);
     if($scope.sowing.is_open == 0){
       this.goP.presentToast("直播尚未开始");
     }else{

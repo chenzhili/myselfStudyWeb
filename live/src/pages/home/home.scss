@@ -8,6 +8,13 @@
   background: url("../assets/image/r_top.png") no-repeat;
   background-size: 100%;
 }
+.adv_banner{
+  .swiper-slide{
+    img{
+      width:100%;
+    }
+  }
+}
 //头部样式
 ion-header{
   background-color: #AE62BB;
