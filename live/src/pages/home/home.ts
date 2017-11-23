@@ -107,7 +107,8 @@ export class HomePage {
 //  获取底部广告
   _adv(){
     let payload = {
-      type: 2
+      type: 2,
+      class:me.mess.type
     };
     this.goP.yikeGet('ad/index',payload).then(data => {
       let ad = data.json();
@@ -122,7 +123,8 @@ export class HomePage {
 //  获取banner图
   _getBanners(){
     let payload = {
-      type: 1
+      type: 1,
+      class:me.mess.type
     };
     this.goP.yikeGet('ad/index',payload).then(data => {
       let ad = data.json();
@@ -141,7 +143,8 @@ export class HomePage {
     let payload = {
       start_time: me.mess.startTime/1000,
       end_time: me.mess.endTime / 1000,
-      classify_id: me.mess.idMenu
+      classify_id: me.mess.idMenu,
+      class:me.mess.type
     };
     me.mess.teamList = {};
     me._getTeamList(payload,1)
@@ -223,7 +226,8 @@ export class HomePage {
       let payload = {
         start_time: me.mess.startTime/1000,
         end_time: me.mess.endTime / 1000,
-        classify_id: me.mess.idMenu
+        classify_id: me.mess.idMenu,
+        class:me.mess.type
       };
       me._getTeamList(payload,1)
     }).catch(err => {
@@ -298,7 +302,8 @@ export class HomePage {
     let payload = {
       start_time: me.mess.refresh.startTime/1000,
       end_time: me.mess.refresh.endTime / 1000,
-      classify_id: me.mess.idMenu
+      classify_id: me.mess.idMenu,
+      class:me.mess.type
     };
     me._getTeamList(payload,-1,refresh);
   }
@@ -313,7 +318,8 @@ export class HomePage {
     let payload = {
       start_time: me.mess.infinite.startTime/1000,
       end_time: me.mess.infinite.endTime / 1000,
-      classify_id: me.mess.idMenu
+      classify_id: me.mess.idMenu,
+      class:me.mess.type
     };
     me._getTeamList(payload,1,infinite);
   }
@@ -334,6 +340,6 @@ export class HomePage {
   }
 //  进入直播
   goLive(fied){
-    me.navCtrl.push(LiveDetailPage, {item: fied});
+    me.navCtrl.push(LiveDetailPage, {item: fied,class:me.mess.type});
   }
 }
