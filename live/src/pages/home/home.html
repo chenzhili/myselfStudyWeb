@@ -71,7 +71,7 @@
         </div>
       </div>
     </div>
-  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="!infinitState"><!--$event.waitFor(doInfinite()) doInfinite($event)-->
     <ion-infinite-scroll-content
       loadingSpinner="bubbles"
       loadingText="加载中">

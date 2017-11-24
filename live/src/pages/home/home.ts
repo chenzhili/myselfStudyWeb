@@ -235,7 +235,7 @@ export class HomePage {
     })
   }
 //  获取某段时间内的所有对应id下的球队列表
-  _getTeamList(payload,n,refresh){
+  _getTeamList(payload,n,refresh,isInfinit){
     me.goP.yikeGet('match/index', payload).then(data => {
       let list = data.json();
       if(list.data.length > 0){
@@ -258,7 +258,13 @@ export class HomePage {
         }
       }
       if(refresh){
+        if(isInfinit){
+          me.infinitState = 1;
+        }
         refresh.complete();
+        setTimeout(()=>{
+          me.infinitState = 0;
+        },1500)
       }
       me._fixedDate();
     }).catch(err => {
@@ -309,7 +315,6 @@ export class HomePage {
   }
   //上拉加载
   doInfinite(infinite){
-    me._getBanners();
     let tempTime = me.mess.infinite.endTime;
     let sevenTime = 24*60*60*7*1000;
     me.mess.infinite.startTime = tempTime;
@@ -321,7 +326,7 @@ export class HomePage {
       classify_id: me.mess.idMenu,
       "class":me.mess.type
     };
-    me._getTeamList(payload,1,infinite);
+    me._getTeamList(payload,1,infinite,1);
   }
   //回到顶部
   goBack(){
