@@ -1,0 +1,46 @@
+ion-content{
+  .name{
+    line-height:30px;
+    text-align:center;
+    color:#595C60;
+  }
+  .exchange_item{
+    color:#595C60;
+    .exchange{
+      width:30%;
+      line-height:60px;
+      text-align:center;
+      color:#fff;
+      &.exchanged{
+        background-color:#87674F;
+      }
+      &.exchange_to{
+        background-color:#007E83;
+      }
+    }
+    .exchange_content{
+      width:70%;
+      height:60px;
+      line-height:60px;
+      padding-left:20px;
+      background-color:#23252D;
+      input{
+        width:100%;
+        line-height:60px;
+        border:none;
+        outline:none;
+        background-color:#23252D;
+        padding-right:10px;
+        margin:0;
+      }
+    }
+  }
+  .exchange_icon{
+    text-align:center;
+    img{
+      width:15px;
+      height:25px;
+      padding:4px 0;
+    }
+  }
+}

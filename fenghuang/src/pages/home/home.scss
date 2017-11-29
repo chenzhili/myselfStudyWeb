@@ -1,0 +1,39 @@
+ion-content.content-ios{
+  background-color:#191924;
+  .item{
+    width:32%;
+    background-color:#23252D;
+    color:#595C60;
+    text-align:center;
+    height:116px;
+    margin-bottom:8px;
+    img{
+      width:40px;
+      height:40px;
+      vertical-align:middle;
+      margin-top:30px;
+      margin-bottom:4px;
+    }
+  }
+  .test{width:100px;height:100px;color:#fff;text-align:center;}
+  @media (max-width:320px) {
+    .item{
+      height:98px;
+      margin-bottom:6px;
+    }
+  }
+}
+.rotate{
+  transform-origin: 50% 50%;
+  animation-name:rotatedeg;
+  animation-timing-function:linear;
+  animation-duration:.5s;
+}
+@keyframes rotatedeg {
+  0%{
+      transform:rotateY(0deg);
+  }
+  100%{
+    transform:rotateY(360deg);
+  }
+}

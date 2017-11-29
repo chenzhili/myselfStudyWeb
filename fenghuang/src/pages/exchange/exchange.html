@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>转换</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div class="name">
+    {{type}}:国际单位:{{allList[type][0]}}
+  </div>
+  <div class="exchange_item clear-float">
+    <div class="fl exchange exchanged" (click)="toDetail(type,beExchanged,1)">
+      {{beExchanged}}
+    </div>
+    <div class="fl exchange_content">
+      <ion-input type="number" placeholder="请输入换算内容" [(ngModel)]="exchangeValue" (ngModelChange)="exchangeChange(exchangeValue)"></ion-input>
+    </div>
+  </div>
+  <div class="exchange_icon">
+    <img src="assets/image/exchange.png">
+  </div>
+  <div class="exchange_item clear-float" *ngFor="let item of exchangeArr">
+    <div class="fl exchange exchange_to" (click)="toDetail(type,exchangeArr,2)">
+      {{item.name}}
+    </div>
+    <div class="fl exchange_content">
+      {{item.value}}
+    </div>
+  </div>
+</ion-content>

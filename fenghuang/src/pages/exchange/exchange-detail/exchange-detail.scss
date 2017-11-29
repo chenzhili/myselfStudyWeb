@@ -1,0 +1,86 @@
+ion-content{
+  .container{
+    width:100%;
+    height:100%;
+    .menu{
+      position:relative;
+      width:30%;
+      height:100%;
+      &>div:not(:last-child){
+        width:100%;
+        color:#fff;
+        text-align:center;
+        line-height:60px;
+      }
+      .kg{
+        margin-top:30px;
+        margin-bottom:30px;
+        background-color:#87674F;
+      }
+      .g{
+        height:60px;
+        background-color:#007E83;
+      }
+      .confirm{
+        display:flex;
+        color:#fff;
+        text-align:center;
+        background-color:#F5A042;
+        span{
+          display:inline-block;
+          margin:auto;
+        }
+      }
+    }
+    .select{
+      width:70%;
+      padding:0 10px;
+      color:#595C60;
+      .select-item{
+        line-height:50px;
+        padding-left:10px;
+        border-bottom:1px solid #595C60;
+        &.selected{
+          background:url("../assets/image/selected.png") no-repeat calc(100% - 10px) center;
+          background-size:20px;
+        }
+      }
+    }
+  }
+}
+.confirm_in{
+  position:absolute;
+  width:100%;
+  animation-name:opacityIn;
+  animation-duration:1s;
+  animation-timing-function:ease-out;
+}
+@keyframes opacityIn {
+  0%{
+    opacity:0;
+    bottom:-100%;
+  }
+  100%{
+    opacity:1;
+    bottom:-44px;
+  }
+}
+.select_in{
+  position:absolute;
+  width:100%;
+  animation-name:selectIn;
+  animation-duration:1s;
+  animation-timing-function:ease-out;
+  left:30%;
+  background-color:#191924;
+}
+@keyframes selectIn {
+  0%{
+    opacity:0;
+    top:-100%;
+  }
+  100%{
+    opacity:1;
+    top:0;
+  }
+}

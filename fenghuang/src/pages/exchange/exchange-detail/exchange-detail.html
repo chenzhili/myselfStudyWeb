@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{type}}</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div class="clear-float container">
+    <div class="fl menu">
+      <div class="kg">
+        {{allList[type][0].name}}
+      </div>
+      <div class="g" *ngIf="kind == 1">
+        {{itemName}}
+      </div>
+      <div class="kind2" *ngIf="kind == 2">
+        <ng-container *ngFor="let item of allList[type]">
+          <div class="g" *ngIf="item.state">
+            {{item.name}}
+          </div>
+        </ng-container>
+      </div>
+      <div class="confirm" [ngClass]="{confirm_in: 1}" (click)="backResult(itemName)">
+        <span>确定</span>
+      </div>
+    </div>
+    <div class="fl select" *ngIf="kind ==1" [ngClass]="{select_in:1}">
+      <div class="select-item" *ngFor="let item of allList[type];let i = index;" (click)="clickSelect(item.name)" [ngClass]="{selected: itemName == item.name}">{{item.name}}</div>
+    </div>
+    <div class="fl select" *ngIf="kind == 2" [ngClass]="{select_in:1}">
+      <div class="select-item" *ngFor="let item of allList[type]" (click)="clickSelect(item.name)" [ngClass]="{selected:item.state}">{{item.name}}</div>
+    </div>
+  </div>
+</ion-content>

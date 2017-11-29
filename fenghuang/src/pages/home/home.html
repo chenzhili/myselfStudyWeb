@@ -1,0 +1,12 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>凤凰汇</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="clear-float">
+  <div class="item fl" *ngFor="let item of messList;let i =index;" [ngStyle]="{marginRight: i%3!=2?'2%':''}" [ngClass]="{rotate: item.state}" (click)="toDetail(item)">
+    <img [src]="item.img">
+    <div>{{item.type}}</div>
+  </div>
+</ion-content>
+
