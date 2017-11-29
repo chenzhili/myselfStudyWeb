@@ -240,7 +240,8 @@ export class HomePage {
       let list = data.json();
       if(list.data.length > 0){
         for(let i = 0;i<list.data.length;i++){
-          list.data[i].beginTiem = new Date(list.data[i].time*1000).getHours()+":"+(new Date(list.data[i].time*1000).getMinutes()==0?"00":new Date(list.data[i].time*1000).getMinutes());
+          let tempHours = new Date(list.data[i].time*1000).getHours();
+          list.data[i].beginTiem = (tempHours<10?`0${tempHours}`:tempHours)+":"+(new Date(list.data[i].time*1000).getMinutes()==0?"00":new Date(list.data[i].time*1000).getMinutes());
         }
       }
       if(Object.keys(me.mess.teamList).length == 0){
