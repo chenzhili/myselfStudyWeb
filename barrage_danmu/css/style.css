@@ -79,3 +79,15 @@ html,body,p,h1,h2,h3,h4,table,tbody,tfoot,thead,tr,td{padding:0;margin:0;}
     }
 }
 
+/*防抖动实例*/
+.debounce{
+    margin-left:100px;
+    width:100px;
+    height:150px;
+    word-wrap:break-word;
+    overflow-y:scroll;
+    border:1px solid #ddd;
+    margin-top:10px;
+    margin-bottom:100px;
+}
+

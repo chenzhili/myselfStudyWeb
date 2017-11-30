@@ -116,7 +116,41 @@ window.onload = function(){
             // document.body.style.animationFillMode = "";
             document.body.className = "";
         },1000)
-    })
+    });
+
+    /*防抖（Debounce）和节流（throttle）都是用来控制某个函数在一定时间内执行多少次的技巧，两者相似而又不同*/
+    //对应的网址：http://www.css88.com/archives/7010
+    //连带这篇文章里的东西: https://juejin.im/entry/5a1f54bb51882554bd50d34e
+    //连带 这个是 前端现在 从 框架=》打包=》代码管理=》语法检测=》业务逻辑检测 所有流行的框架 网址：http://www.css88.com/archives/7421
+    //这个网址里的东西还要好好看看，这周六把
+    /**
+     * debounce：把触发非常频繁的事件（比如按键）合并成一次执行。
+     * throttle：保证每 X 毫秒恒定的执行次数，比如每200ms检查下滚动位置，并触发 CSS 动画。
+     * requestAnimationFrame：可替代 throttle ，函数需要重新计算和渲染屏幕上的元素时，想保证动画或变化的平滑性，可以用它。注意：IE9 不支持。
+     */
+    /*去抖动，就是对于像 监听滚动 事件 这种，每次发生会触发很多次，为了对触发事件进行控制*/
+    let debounce = document.getElementsByClassName("debounce")[0];
+    function debounceFun(fun,delay){
+        let time = null;
+        return function(){
+            let content = this; //记得 this 的指向 永远是 真正调用的 环境
+            clearTimeout(time);
+            time = setTimeout(()=>{
+                fun();
+            },delay)
+        }
+    }
+    /*setInterval(()=>{
+        let timeOut = setInterval(()=>{
+            console.log(1);
+        },60);
+        console.log(timeOut);
+        clearInterval(timeOut);
+    },60);*/
+    let fun = function(){
+        console.log("这是隔段时间的");
+    };
+    debounce.addEventListener("scroll",debounceFun(fun,1000));
 };
 
 /*请求接口*/
