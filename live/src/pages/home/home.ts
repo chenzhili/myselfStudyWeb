@@ -241,7 +241,8 @@ export class HomePage {
       if(list.data.length > 0){
         for(let i = 0;i<list.data.length;i++){
           let tempHours = new Date(list.data[i].time*1000).getHours();
-          list.data[i].beginTiem = (tempHours<10?`0${tempHours}`:tempHours)+":"+(new Date(list.data[i].time*1000).getMinutes()==0?"00":new Date(list.data[i].time*1000).getMinutes());
+          let tempMinutes = new Date(list.data[i].time*1000).getMinutes();
+          list.data[i].beginTiem = (tempHours<10?`0${tempHours}`:tempHours)+":"+(tempMinutes< 10?`0${tempMinutes}`:tempMinutes);
         }
       }
       if(Object.keys(me.mess.teamList).length == 0){

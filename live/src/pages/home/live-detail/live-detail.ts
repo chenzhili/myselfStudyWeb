@@ -43,6 +43,17 @@ export class LiveDetailPage {
   ionViewWillEnter(){
     this.tryHeight();
   }
+  //用户进行页面刷新的时候
+  _refreshWindow(){
+    if($scope.liveShow){
+      let payload = {
+        id: $scope.liveId,
+        op:"out"
+      };
+      $scope.goP.yikeGet('match/play',payload);
+    }
+    return;
+  }
   //只是用于监听事件的回调函数
   _visibilityChange(){
     if($scope.liveShow){
@@ -118,6 +129,7 @@ export class LiveDetailPage {
       $scope.liveShow = !$scope.liveShow;
       $scope.advShow = 1;
       document.removeEventListener("visibilitychange",$scope._visibilityChange);
+      window.removeEventListener("unload",$scope._refreshWindow);
     }else{
       this.navCtrl.pop();
     }
@@ -160,6 +172,7 @@ export class LiveDetailPage {
   //观看直播
   livePlay(){
     document.addEventListener("visibilitychange",$scope._visibilityChange);
+    window.addEventListener("unload",$scope._refreshWindow);
     if($scope.sowing.is_open == 0){
       this.goP.presentToast("直播尚未开始");
     }else{
