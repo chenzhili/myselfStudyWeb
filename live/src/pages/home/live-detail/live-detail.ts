@@ -30,6 +30,10 @@ export class LiveDetailPage {
     $scope.type = this.navParams.get("class");
     $scope.sowing.main_logo = this.navParams.get('item').main_logo;
     $scope.sowing.visit_logo = this.navParams.get('item').visit_logo;
+    /*获取设备*/
+    let u = navigator.userAgent;
+    $scope.isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1;
+    $scope.isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
     this.getDetail();
     this.getAdLive();
     this._adv();
@@ -46,6 +50,9 @@ export class LiveDetailPage {
   //用户进行页面刷新的时候
   _refreshWindow(){
     if($scope.liveShow){
+      if($scope.isAndroid){
+        document.removeEventListener("visibilitychange",$scope._visibilityChange);
+      }
       let payload = {
         id: $scope.liveId,
         op:"out"
@@ -129,7 +136,12 @@ export class LiveDetailPage {
       $scope.liveShow = !$scope.liveShow;
       $scope.advShow = 1;
       document.removeEventListener("visibilitychange",$scope._visibilityChange);
-      window.removeEventListener("unload",$scope._refreshWindow);
+      if($scope.isAndroid){
+        window.removeEventListener("beforeunload",$scope._refreshWindow);
+      }
+      if($scope.isiOS){
+        window.removeEventListener("unload",$scope._refreshWindow);
+      }
     }else{
       this.navCtrl.pop();
     }
@@ -172,7 +184,12 @@ export class LiveDetailPage {
   //观看直播
   livePlay(){
     document.addEventListener("visibilitychange",$scope._visibilityChange);
-    window.addEventListener("unload",$scope._refreshWindow);
+    if($scope.isAndroid){
+      window.addEventListener("beforeunload",$scope._refreshWindow);
+    }
+    if($scope.isiOS){
+      window.addEventListener("unload",$scope._refreshWindow);
+    }
     if($scope.sowing.is_open == 0){
       this.goP.presentToast("直播尚未开始");
     }else{
