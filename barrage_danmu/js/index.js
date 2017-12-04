@@ -152,7 +152,48 @@ window.onload = function(){
     };
     debounce.addEventListener("scroll",debounceFun(fun,1000));
 };
-
+let n = localStorage.getItem("n") || 0;
+let u = navigator.userAgent, app = navigator.appVersion;
+let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+let isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+console.log(n);
+if(isAndroid){
+    window.addEventListener("beforeunload",(e)=>{
+     document.removeEventListener("visibilitychange",change);
+     n++;
+     localStorage.setItem("n",n);
+     // e.stopPropagation();
+     });
+}
+if(isiOS){
+    window.addEventListener("unload",(e)=>{
+        n++;
+        localStorage.setItem("n",n);
+        // e.stopPropagation();
+    });
+}
+function change(){
+    n++;
+    localStorage.setItem("n",n);
+    // e.stopPropagation();
+}
+document.addEventListener("visibilitychange",change);
+/*ios上不识别 beforeunload 事件 ，只能识别 unload事件*/
+/*android上 在刷新页面的时候，会识别 visibilitychange 和 bbeforeunload(unload)两个事件都会触发,ios 上不会触发visibilitychange事件*/
+/*
+//ios
+window.addEventListener("unload",(e)=>{
+    n++;
+    localStorage.setItem("n",n);
+    e.stopPropagation();
+});
+//android
+window.addEventListener("beforeunload",(e)=>{
+    document.removeEventListener("visibilitychange",change);
+    n++;
+    localStorage.setItem("n",n);
+    e.stopPropagation();
+});*/
 /*请求接口*/
 function getData(){
     return new Promise(function(resolve,reject){
