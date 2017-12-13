@@ -8,10 +8,11 @@
         .wrapper{
             display:grid;
             grid-template-columns: 33% 33% 33%;
-            grid-template-rows:40px 40px 40px;
+            grid-template-rows: 3fr 5fr 2fr;
+            height:100px;
         }
         .item{
-            line-height:40px;
+            /*line-height:40px;*/
             text-align:center;
             color:#fff;
         }
@@ -37,16 +38,60 @@
         .item6{
             background-color:#FD9A5C;
         }
+        .sub_container{
+            display:grid;
+            grid-template-columns:200px 100px 20px;
+        }
+        .sub_item{
+            background-color:#000;
+        }
+        .container_area{
+            display:grid;
+            grid-template-columns: 25% 25% 25% 25%;
+            grid-template-rows:auto;
+            grid-gap: 5px;
+            grid-template-areas:  /*这里一定要注意的是，声明的 grid-area 名称 必须是连续的，并且 不允许出现 不连续的（不能重复出现）*/
+            "head . sidebar sidebar"
+            "action action foot foot";
+        }
+        .header{
+            grid-area:head;
+            background-color:#2076E1;
+        }
+        .footer{
+            grid-area:foot;
+            background-color:#5BBB5D;
+        }
+        .action{
+            grid-area:action;
+            background-color:#FFDB00;
+        }
+        .sidebar{
+            grid-area:sidebar;
+            background-color:#C93D3D;
+        }
     </style>
 </head>
 <body>
     <div class="wrapper">
         <div class="item item1">1</div>
         <div class="item item2">2</div>
-        <div class="item item3">3</div>
+        <div class="item item3">
+            <div class="sub_container">
+                <div class="sub_item">1</div>
+                <div class="sub_item">1</div>
+                <div class="sub_item">1</div>
+            </div>
+        </div>
         <div class="item item4">4</div>
         <div class="item item5">5</div>
         <div class="item item6">6</div>
+    </div>
+    <div class="container_area">
+        <div class="header">1</div>
+        <div class="footer">2</div>
+        <div class="action">3</div>
+        <div class="sidebar">4</div>
     </div>
 </body>
 </html>
