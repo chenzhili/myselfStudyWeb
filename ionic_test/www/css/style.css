@@ -65,7 +65,7 @@
   padding-right:5px;
   font-size:12px;
 }
-.apply input, .apply select, .apply textarea{
+.apply input, .apply select, .apply textarea,.apply .apply_change_x5{
   display: inline-block;
   padding-left:5px;
   padding-right:5px;
@@ -140,3 +140,36 @@
 
 /*简单的广告轮播*/
 .dash-items{width:100%;background-color:#ff0;height:20px;text-align:center;}
+
+.apply_change_x5{
+  display:inline-block;
+  border:1px solid #ddd;
+  height: 30px;
+  padding-left: 6px;
+  line-height:30px;
+}
+.apply_x5_container{
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  z-index:10;
+  background:rgba(0,0,0,.1);
+}
+.apply_x5_list{
+  position:absolute;
+  z-index:100;
+  width:90%;
+  top:50%;
+  left:50%;
+  transform:translateX(-50%) translateY(-50%);
+}
+.apply_x_container_hide{
+  position:absolute;
+  z-index:99;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+}

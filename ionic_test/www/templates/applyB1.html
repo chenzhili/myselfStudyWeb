@@ -20,7 +20,21 @@
     </div>
     <div class="apply">
       <span>申请类型</span>
-      <input type="text" ng-model="userMessage.type"  style="height:30px;" readonly>
+      <!--<input type="text" ng-model="userMessage.type"  style="height:30px;" readonly>-->
+      <div class="apply_change_x5" ng-click="applyType()" ng-repeat="apply in applyList" ng-show="apply.id == applied">{{apply.name}}</div>
+      <div class="apply_x5_container" ng-show="appliedShow">
+        <div class="apply_x_container_hide" ng-click="containerIsShow()"></div>
+        <div class="apply_x5_list">
+          <!--<label class="item item-radio" ng-repeat="item in applyList" ng-click="appliedHide(item)">
+            <input type="radio" name="radio-group" ng-model="applied" ng-value="item.id">
+            <div class="radio-content">
+              <div class="item-content disable-pointer-events">{{item.name}}</div>
+              <i class="radio-icon disable-pointer-events icon ion-checkmark"></i>
+            </div>
+          </label>-->
+          <!--<ion-radio ng-model="applied" ng-value="item.id" ng-repeat="item in applyList" ng-click="appliedHide(item)">{{item.name}}</ion-radio>-->
+        </div>
+      </div>
     </div>
     <div class="apply" style="margin-bottom:30px;">
       <span style="align-self: flex-start;">申请内容</span>

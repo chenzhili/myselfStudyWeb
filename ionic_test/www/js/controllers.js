@@ -537,6 +537,44 @@ angular.module('starter.controllers', [])
     function judgeType(){
       return location.href.split("#")[1].slice(1);
     }
+
+    /*修补x5内核的问题*/
+    $scope.applyList = [{
+      id:1,
+      name:"客户改造申请"
+    },
+      {
+        id:2,
+        name:"维修"
+      },
+      {
+        id:18,
+        name:"采暖用户认定"
+      }];
+    var fregment = document.createDocumentFragment();
+    for(var i=0;i<$scope.applyList.length;i++){
+      var label = document.createElement("label");
+      label.className = "item item-radio";
+      label.innerHTML = '<input type="radio" name="radio-group" ng-model="applied" ng-value="item.id">'+
+        '<div class="radio-content">'+
+        '<div class="item-content disable-pointer-events">'+$scope.applyList[i]["name"]+'</div>'+
+      '<i class="radio-icon disable-pointer-events icon ion-checkmark"></i>'+
+        '</div>';
+      fregment.appendChild(label);
+    }
+    document.getElementsByClassName("apply_x5_list")[0].appendChild(fregment);
+    $scope.applied = 1;
+    $scope.appliedShow = false;
+    $scope.applyType = function(){
+      $scope.appliedShow = !$scope.appliedShow;
+    };
+    $scope.appliedHide = function(item){
+      $scope.appliedShow = !$scope.appliedShow;
+      $scope.applied = item.id;
+    };
+    $scope.containerIsShow = function(){
+      $scope.appliedShow = !$scope.appliedShow;
+    }
   })
   .controller("account2Ctrl",function($scope){
     $scope.state = 0;
