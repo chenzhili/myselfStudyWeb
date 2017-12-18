@@ -147,6 +147,8 @@
   height: 30px;
   padding-left: 6px;
   line-height:30px;
+  background:url("../img/down_list.png") no-repeat calc(100% - 10px) center;
+  background-size:10px;
 }
 .apply_x5_container{
   position:absolute;

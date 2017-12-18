@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>flex布局方式</title>
+    <style>
+        /*
+            对于 flex 有三个版本，现在用的是 最新的版本，其他有些 可用 autoprefix 插件 补全
+
+            flex container（flex容器）的注意点：
+                所有的column-*属性在flex container（flex容器）上都不会有效果
+                ::first-line 与 ::first-letter伪类在flex container（flex容器）上不会被应用。
+
+            flex item（flex项）的注意点：
+                float,clear和vertical-align在flex item（flex项）上都不会起作用，也不会让它脱离文档流。
+        */
+        /*
+        *******************flex 的主要理念 是将容器中的所有子元素设置在一行中*************
+        flex的父容器的包括的属性：
+            display: flex (理解为 块级 flex) / inline-flex （行内 flex）
+
+
+            flex-direction: row(默认值)/ row-reverse / column / column  （设置 主轴的方向）
+            flex-wrap: no-wrap (默认值) / wrap / wrap-reverse （flex 容器 一 单行还是多行布局 flex item 项）
+            两个属性的简写：flex-flow:row nowrap (默认值)
+
+            justify-content: flex-start(默认值) / flex-center / flex-end / space-between / space-around / space-evenly (沿着 主轴的对齐方式)
+            （与 grid 中 相同属性的 用法 不同 ，这个是对于 item 项，而 grid 是对于 内容的作用，不是对于 网格项 的作用 ，用的 justify-items）
+            align-items: stretch (默认值) / flex-start / center / flex-end / baseline(基线对齐)
+            align-content: stretch (默认值) / flex-start / center / flex-end / space-between / space-around / space-evenly
+            (注意：这个属性只有当 flex container（flex容器）有多行 flex item（flex项）时才生效，如果只有一行，那么这个属性没有效果)
+
+
+        flex-item 项 对应的属性：
+            order: 默认值为 0  （可以在不改变 html 的情况下 控制 他们的排列顺序）
+
+            （这三个的计算方式 参考文章：
+                1.https://www.cnblogs.com/ghfjj/p/6529733.html
+                2.https://zhuanlan.zhihu.com/p/24372279 （更详细）
+                ）
+            flex-grow : 子项的扩展 比例，默认值为 0 ， 当 flex 的 父容器有 剩余空间的时候才会起作用
+            flex-shrink:子项的收缩比例，默认值为 1 ，当 flex 的 父容器 的 空间不足时
+            flex-basis:指定 flex item（flex项）的初始主要大小，在 flex-grow 和 flex-shrink 伸缩比例分配剩余空间之前，默认值是 auto
+            (
+            注意:flex-basis和width为auto值，那最后的空间就是根据内容多少来定的，内容多占据的水平空间就多。
+                Flex-basis计算逻辑 (在显示器上auto，实际计算的值)
+                    如果子元素有flex-basis，就算作子元素的原始width（不包括边框和补边）。
+                    如果子元素没有flex-basis，但有width属性，则使用width作为flex-basis。
+                    如果flex-basis:content，表示默认使用元素内容大宽度
+            )
+
+            flex:flex-grow的value flex-shrink的value flex-basis的value; (上面的简写) (默认值 ：0 1 auto)
+            有几个特殊的值：
+                flex: 1,    则其计算值为 flex: 1 1 0%；
+                flex: auto, 则其计算值为 flex: 1 1 auto；
+                flex: none, 则其计算值为 flex: 0 0 auto；
+
+
+            对于计算方式的值 看上面的 第二篇文章，大致的总结下：
+            1、对于 在一行时， 有 剩余空间的时候 flex-grow 起作用，就是 把 多的空间 用 对应的值 进行 加权平均；
+                如： a-item  flex-grow:2; b-item flex-grow:3; c-item flex-grow:1; 剩余空间为 60；
+                    权重6：2+3+1
+                    a-item增加的： 2/权重6*60 = 20；
+                    b-item增加的： 2/权重6*60 = 20；
+                    c-item增加的： 2/权重6*60 = 20；
+            2、对于 在一行时，容器的空间 小于 子项的总和是 flex-shrink 起作用，这个需要用 对应的 flex-basis（没有指定就是 width）的权重进行 比例收缩；
+                如： a-item flex-grow:2;flow-basis:300px;
+                     b-item flex-grow:3;flow-basis:100px;
+                     c-item flex-grow:1;flow-basis:200px;
+                     多出的空间为 60；
+
+                     权重 h = 300*2+100*3+200*1 = 1100;
+                     a-item需要减去的：60*2*300/1100;
+                     其他的同理
+
+
+
+            align-self:auto(默认值)
+        */
+        .init_flex_container{
+            display:flex;
+            /*flex-direction:row;
+            flex-wrap:wrap;*/
+            height:200px;
+            flex-flow:row nowrap; /*简写*/
+            justify-content:space-around;
+            /*align-items:flex-end;*/
+            align-content:flex-end;
+        }
+        .init_flex_item1{
+            background-color:#ff0;
+            /*width:20px;*/
+            /*flex:2;*/
+            /*flex-grow:2;*/
+            /*flex-basis:30px;*/
+            flex:2 2 500px;
+        }
+        .init_flex_item2{
+            background-color:#f00;
+            /*flex:8;*/
+            /*width:80px;*/
+            /*flex-grow:2;*/
+            order:1;
+            /*flex-basis:100px;*/
+            flex:none;
+        }
+        .init_flex_item3{
+            background-color:#0f0;
+            /*width:100%;*/ /*这个100% 也要与 flex-wrap:nowrap;一起使用，才会成多行，不然 不换行的优先级要高一些*/
+            /*flex-grow:1;*/
+            /*flex:auto;*/
+            /*flex-grow:0;*/
+            flex:1 1 400px;
+        }
+        .aa:after{
+            content:"";
+            display:table;
+            clear:left;
+        }
+    </style>
+</head>
+<body>
+    <div class="init_flex_container">
+        <div class="init_flex_item2">
+            2
+        </div>
+        <div class="init_flex_item3">
+            3
+        </div>
+        <div class="init_flex_item1">1</div>
+    </div>
+    <div class="aa" style="margin-top:100px;">
+        <div style="float:left;width:50px;height:50px;border:1px solid #f00;"></div>
+    </div>
+    <div style="width:100px;height:100px;background-color:#ff0;"></div>
+</body>
+</html>
