@@ -1,5 +1,263 @@
 angular.module('starter.controllers', [])
 
+  /*自己做的滑动 验证 功能*/
+.controller("UserRegisterCtrl",['$scope','$state','$ionicHistory','$ionicModal','$ionicTabsDelegate','$ionicLoading',
+  function($scope,$state,$ionicHistory,$ionicModal,$ionicTabsDelegate,$ionicLoading){
+  $scope.user = {
+    phone: '',
+    qq: '',
+    name: '',
+    password: '',
+    passwordTwo: '',
+    op: 'register',
+    msg: '',
+    code: ''
+  };
+
+  $scope.png = {
+    state:false,
+    /*验证没上的时候的 抖动效果*/
+    notState:false,
+    id:"",
+    topPng:0, //图片离 上面的距离
+    leftPng:0, //图片离 左面的距离
+    i:0,  //系数
+    validateVa:document.getElementsByClassName("validate_validate")[0],
+    changLeft:0,
+    barDom:document.getElementsByClassName("validate_bar")[0]
+  };
+
+  $scope.register = register;
+  $scope.sendMsg = sendMsg;
+  $scope.focus = focus;
+  $scope.blur = blur;
+  init();
+  function init() {
+    randomPNG();
+  }
+
+  //表单验证
+  function formValidation() {
+    console.log("hehe");
+  }
+
+  //记录原始的宽高
+  /*
+   序号      距离左边的距离     距离上面边的距离       原图大小         抠图的大小
+   1           410                 269                 750*438          102*100
+   2           527                 119
+   3           164                 74
+   4           626                 120
+
+   5           344                 297                    750*438
+   6           630                 304
+   7           344                 254
+   8           309                 40
+
+   9           165                 274                     750*438
+   10          295                 93
+   12          516                 276
+   13          627                 23
+
+   14          271                 288                     760*441
+   15          562                 279
+   16          596                 107
+   17          278                 56
+   * */
+  $scope.pngList ={
+    1: {id: 1, left: 410, top: 269, origin_width: 750, origin_height: 438},
+    2: {id: 2, left: 527, top: 119, origin_width: 750, origin_height: 438},
+    3:  {id: 3, left: 164, top: 74, origin_width: 750, origin_height: 438},
+    4:  {id: 4, left: 626, top: 120, origin_width: 750, origin_height: 438},
+
+    5: {id: 5, left: 344, top: 297, origin_width: 750, origin_height: 438},
+    6:  {id: 6, left: 630, top: 304, origin_width: 750, origin_height: 438},
+    7:  {id: 7, left: 344, top: 254, origin_width: 750, origin_height: 438},
+    8:  {id: 8, left: 309, top: 40, origin_width: 750, origin_height: 438},
+
+    9:  {id: 9, left: 165, top: 274, origin_width: 750, origin_height: 438},
+    10:  {id: 10, left: 295, top: 93, origin_width: 750, origin_height: 438},
+    12:  {id: 12, left: 516, top: 269, origin_width: 750, origin_height: 438},
+    13: {id: 13, left: 627, top: 23, origin_width: 750, origin_height: 438},
+
+    14:  {id: 14, left: 271, top: 288, origin_width: 760, origin_height: 441},
+    15: {id: 15, left: 562, top: 279, origin_width: 760, origin_height: 441},
+    16: {id: 16, left: 596, top: 107, origin_width: 760, origin_height: 441},
+    17: {id: 17, left: 278, top: 56, origin_width: 760, origin_height: 441}
+  };
+  function randomPNG(){
+    var validateBg = document.getElementsByClassName("validate_bg")[0];
+    $scope.png.id = parseInt(Math.random()*17+1);
+    $scope.png.id = $scope.png.id == 11?1:$scope.png.id;
+    Promise.all([judgeIMG(validateBg),judgeIMG($scope.png.validateVa)])
+      .then(function(data){
+        $scope.png.width = parseFloat(getComputedStyle(validateBg).width);
+
+        // console.log($scope.png.width);
+        // console.log($scope.png.id);
+        $scope.png.i = $scope.png.width/$scope.pngList[$scope.png.id].origin_width;
+        // console.log($scope.png.i);
+
+        $scope.png.validateVa.style.width = $scope.png.validateVa.naturalWidth*$scope.png.i+"px";
+        $scope.png.validateVa.style.height = $scope.png.validateVa.naturalHeight*$scope.png.i+"px";
+        $scope.png.validateVa.style.top = $scope.pngList[$scope.png.id].top*$scope.png.i + 10 + "px";
+
+        $scope.png.leftPng = $scope.pngList[$scope.png.id].left*$scope.png.i +10;
+
+        // validateVa.style.left = $scope.png.leftPng + 10 + "px";
+
+      }).catch(function(){
+      console.log("未加载完成");
+
+    });
+  }
+
+  /*对于动作的操作*/
+  $scope.imgDrag = function(e){
+    var el = e.target;
+    // console.log(parseFloat(getComputedStyle($scope.png.barDom).width) - parseFloat(getComputedStyle(el).width));
+    if(parseFloat(el.style.left) < 0){
+      el.style.left = 0;
+      $scope.png.validateVa.style.left = "10px";
+    }else if(parseInt(el.style.left) > (parseFloat(getComputedStyle($scope.png.barDom).width) - parseFloat(getComputedStyle(el).width))){
+      el.style.left = parseFloat(getComputedStyle($scope.png.barDom).width) - parseFloat(getComputedStyle(el).width) -2 + "px";
+      $scope.png.validateVa.style.left = parseFloat(getComputedStyle($scope.png.barDom).width) - parseFloat(getComputedStyle(el).width)-2+10 +"px";
+    }else{
+      el.style.left = $scope.png.changLeft + e.gesture.deltaX + "px";
+      $scope.png.validateVa.style.left = $scope.png.changLeft + e.gesture.deltaX + 10 + "px";
+    }
+  };
+  $scope.imgTouch = function(e){
+    var el = e.target;
+    $scope.png.changLeft = parseFloat(getComputedStyle(el).left);
+
+  };
+  $scope.imgRelease = function(e){
+    var el = e.target;
+    if(parseFloat(el.style.left) < 0){
+      el.style.left = 0;
+      $scope.png.validateVa.style.left = "10px";
+    }else if(parseInt(el.style.left) > (parseFloat(getComputedStyle($scope.png.barDom).width) - parseFloat(getComputedStyle(el).width))){
+      el.style.left = parseFloat(getComputedStyle($scope.png.barDom).width) - parseFloat(getComputedStyle(el).width) -2 + "px";
+      $scope.png.validateVa.style.left = parseFloat(getComputedStyle($scope.png.barDom).width) - parseFloat(getComputedStyle(el).width)-2+10 +"px";
+    }else{
+      el.style.left = $scope.png.changLeft + e.gesture.deltaX + "px";
+      $scope.png.validateVa.style.left = $scope.png.changLeft + e.gesture.deltaX +10 + "px";
+    }
+
+    /*判断是否要 获取验证码*/
+    if(parseFloat($scope.png.validateVa.style.left) <= $scope.png.leftPng+5 && parseFloat($scope.png.validateVa.style.left) >= $scope.png.leftPng-5){
+      $scope.png.state = !$scope.png.state;
+      console.log("发送验证码成功");
+      try{
+        yikeTaishan.sendMsg($scope.user.phone,$scope.user.op)
+          .then(function (data) {
+            console.log(data.result.result);
+            if(data.status == 1){
+              $scope.user.msg=data.result.msg;
+              var sendMsg=document.body.querySelector('#send-msg');
+              settime(sendMsg);
+            }
+            el.style.left = 0;
+            $scope.png.validateVa.style.left = "10px";
+          }).catch(function(err){
+          console.log(err);
+          el.style.left = 0;
+          $scope.png.validateVa.style.left = "10px";
+        });
+      }catch(err){
+        console.log(err);
+      }
+      randomPNG();
+    }else{
+      $scope.png.notState = !$scope.png.notState;
+      el.style.left = 0;
+      $scope.png.validateVa.style.left = "10px";
+      setTimeout(function(){
+        $scope.png.notState = !$scope.png.notState;
+      },12)
+    }
+  };
+  /*删除 验证*/
+  $scope.validateDelete = function(){
+    $scope.png.state = !$scope.png.state;
+    document.getElementsByClassName("validate_circle")[0].style.left = 0;
+    $scope.png.validateVa.style.left = "10px";
+    randomPNG();
+  };
+  /*刷新重新获取*/
+  $scope.validateRefresh = function(){
+    randomPNG();
+  };
+  /*判断图片是否加载完成*/
+  function judgeIMG(img){
+    return new Promise(function(resolve,reject){
+      img.onload = function(){
+        resolve();
+      };
+      img.onerror = function(){
+        reject();
+      }
+    });
+  }
+
+  //发送短信验证码
+  function sendMsg() {
+    if($scope.user.phone == '' || $scope.user.phone==null){
+      console.log('请先输入手机号');
+      return false;
+    }
+    $scope.png.state = !$scope.png.state;
+    /*if($scope.user.phone == '' || $scope.user.phone==null){
+     console.log('请先输入手机号');
+     return false;
+     }
+     yikeTaishan.sendMsg($scope.user.phone,$scope.user.op)
+     .then(function (data) {
+     console.log(data.result.result);
+     if(data.status == 1){
+     $scope.user.msg=data.result.msg;
+     var sendMsg=document.body.querySelector('#send-msg');
+     settime(sendMsg);
+     }
+     }).catch(function(err){
+     console.log(err);
+     });*/
+  }
+  var countdown=60;
+  //倒计时
+  function settime(obj) {
+    if (countdown == 0) {
+      obj.removeAttribute("disabled");
+      obj.innerHTML="获取验证码";
+      countdown = 60;
+      return;
+    } else {
+      obj.setAttribute("disabled", true);
+      obj.innerHTML="重新发送(" + countdown + ")";
+      countdown--;
+    }
+    setTimeout(function() {
+        settime(obj) }
+      ,1000)
+  }
+  //注册
+  function register() {
+    var suc=formValidation();
+    if(suc){
+      $ionicLoading.show({
+        template: '<ion-spinner icon="bubbles"></ion-spinner>'
+      });
+      yikeTaishan.register($scope.user.phone,'',$scope.user.qq,$scope.user.name,$scope.user.password,$scope.user.op)
+        .then(function (data) {
+          console.log(data.result.result);
+          if( data.status ==1 ){
+            $state.go('login');
+          }
+        })
+    }
+  }
+}])
 .controller('DashCtrl', function($scope,$timeout,$ionicScrollDelegate) {
   $(document).ready(function(){
     var friend={

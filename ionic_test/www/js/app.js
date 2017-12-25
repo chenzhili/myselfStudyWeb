@@ -148,6 +148,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','o
       templateUrl:"templates/tab-account.html",
       controller: 'AccountCtrl'
     })
+    ///*自己做的滑动 验证 功能*/
+    .state('register', {
+      url: '/register',
+      templateUrl: 'templates/user-register.html',
+      controller:'UserRegisterCtrl'
+    })
     .state('tab.chat-detail', {
       url: '/chats/:chatId',
       views: {
