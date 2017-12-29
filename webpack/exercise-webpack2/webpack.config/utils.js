@@ -28,7 +28,7 @@ function getEntry(files, replaces){
     for (let i = 0; i < files.length; i++) {
         let filename = files[i];
         replaces.map((replace) => {
-            filename = filename.replace(replace, '')
+            filename = filename.replace(replace, ''); /*这步骤是为了去处 www 的文件路径*/
         });
         entry[filename] = files[i]
     }

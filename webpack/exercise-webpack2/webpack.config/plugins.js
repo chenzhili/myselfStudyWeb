@@ -17,6 +17,7 @@ for(let key in html){
     let opt = {
         filename:key,
         template:html[key],
+        inject:false,  /*这个可让 js 不用一 script 标签的形式注入 进 html*/
         minify:{
             removeComments:true,
             collapseWhitespace:false

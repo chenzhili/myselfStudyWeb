@@ -12,7 +12,7 @@ module.exports = {
     entry:entry["entry"],
     output:{
         path:path.join(__dirname,"asset"),
-        filename:"[name].js"
+        filename:"[name]" /*在遍历的时候就有 后缀了没必要 再加 后缀*/
     },
     module:{
         rules:[
