@@ -1,4 +1,9 @@
 body{
-	background-color:#f00;
+	background-color:#ff0;
 	color:#fff;
+}
+.img_css{
+	width:100px;
+	height:100px;
+	background:url("./img/css.png") no-repeat 100% 100%;
 }

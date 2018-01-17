@@ -32,3 +32,31 @@
  			hash:true, //由于 浏览器会缓存 js ，有了 hash值，每次打包引用 就不会用 缓存的代码了
  			template:"当做模板HTML的路径"
  		});
+2018/1/17
+	1、对于图片在webpack中的处理
+		用到的 loader： url-loader 和 file-loader
+		url-loader是为了 生成 base64 的 内嵌 图片编码 **这个中 包含了 file-loader
+		*******
+		 (但是安装的时候 两者都要安装，可能是 引用了file-loader而已，代码不存在)
+		 *****
+		file-loader是为了 处理图片 的 路径引用，由于默认 编译的 图片名字会和 原名字不同
+		{
+		test:/\.(png|jpg|gif)/,
+		use:[
+			{
+			loader:"url-loader",
+			options:{
+				limit:大小以 b 为单位,
+				outputPath:imgs/ (输出到 哪个文件夹 下面)
+		}
+		}
+		]
+	}
+	2、提取 css 为 单独的文件，并且解决 img 的引用问题 (通过在 输出口 加入 publicPath 指定 公共的 绝对路径引用 就可以了)
+		plugin： extract-text-webpack-plugin 需要安装
+		const extractTextPlugin = require("extract-text-webapck-plugin");
+		new extractTextPlugin("生成的css路径")
+	3、在html中 引入图片，导致编译时候不会编译对应的引入的图片
+		由于 webpack 官网 不提倡 用 img 引入图片，所以导致这块有个盲区
+		国内有个人开发了一个插件可以使用
+		html-withimg-loader 来进行识别
