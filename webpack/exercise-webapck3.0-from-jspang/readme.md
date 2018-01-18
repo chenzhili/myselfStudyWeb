@@ -60,3 +60,27 @@
 		由于 webpack 官网 不提倡 用 img 引入图片，所以导致这块有个盲区
 		国内有个人开发了一个插件可以使用
 		html-withimg-loader 来进行识别
+
+2018/1/18
+	1、less 文件的 打包编译 和 分离（主要是对于 提取css的写法，要理解不同的写法，并且用不同的写法写）
+		*********一直有一个问题，就是把 css 分离成 多个文件，按需加载，没有实现******
+		这个 less 需要 安装less 和 less-loader
+		npm install less --save-dev 
+		npm install less-loader --save-dev
+	2、sass的扩展名 为 scss，编译 和 分离 独立的 文件
+		npm install node-sass sass-loader --save-dev
+	3、对于 c3 导致 浏览器兼容问题 加前缀的问题 postcss
+		npm install postcss-loader autoprefixer --save-dev
+		在项目根目录 添加 postcss.config.js
+	4、消除 无用的 css （情况：可能为框架的，还有自己冗余的）
+		purifycss 插件
+		npm i -D purifycss-webpack purify-css 等价于
+		npm install --save-dev purifycss-webpack purify-css
+
+		const glob = require("glob");
+		const purifyCssPlugin = require("purifycss-webpack");
+
+		new purifyCssPlugin({
+				paths:glob.sync(path.join(__dirname,'src/*.html'))
+		})	
+		*****purifyCssPlugin这个插件要依赖 extract-text-webpack-plugin下 才能成功

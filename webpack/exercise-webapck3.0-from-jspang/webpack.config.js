@@ -41,6 +41,27 @@ module.exports = {
 			},{
 				test:/\.(htm|html)$/i,
 				loader:"html-withimg-loader" //处理在 html中 的 图片的引用
+			},
+			{
+				test:/\.less/,
+				use:extractTextPlugin.extract({
+					fallback:"style-loader",
+					use:[
+						{
+							loader:"css-loader"
+						},
+						{
+							loader:"less-loader"
+						}
+					]
+				})
+			},
+			{
+				test:/\.scss/,
+				use:extractTextPlugin.extract({
+					fallback:"style-loader",
+					use:"css-loader!sass-loader"
+				})
 			}
 		]
 	},
