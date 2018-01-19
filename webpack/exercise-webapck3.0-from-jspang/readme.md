@@ -67,11 +67,14 @@
 		这个 less 需要 安装less 和 less-loader
 		npm install less --save-dev 
 		npm install less-loader --save-dev
+
 	2、sass的扩展名 为 scss，编译 和 分离 独立的 文件
 		npm install node-sass sass-loader --save-dev
+
 	3、对于 c3 导致 浏览器兼容问题 加前缀的问题 postcss
 		npm install postcss-loader autoprefixer --save-dev
 		在项目根目录 添加 postcss.config.js
+		
 	4、消除 无用的 css （情况：可能为框架的，还有自己冗余的）
 		purifycss 插件
 		npm i -D purifycss-webpack purify-css 等价于

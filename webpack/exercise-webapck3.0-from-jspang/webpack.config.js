@@ -1,7 +1,10 @@
 const path = require("path");
+const glob = require("glob"); //用于处理多余css 轮询查找的 node模块
+
 const uglifyPlugin = require("uglifyjs-webpack-plugin");
 const htmlPlugin = require("html-webpack-plugin");
 const extractTextPlugin = require("extract-text-webpack-plugin");
+const purifycssPlugin = require("purifycss-webpack");
 module.exports = {
 	entry:{
 		entry:"./src/entry.js",
@@ -10,7 +13,7 @@ module.exports = {
 	output:{
 		path:path.resolve(__dirname,"dist"),
 		filename:"[name].js",
-		publicPath:"http://192.168.0.106:8787/" //可以指定所有静态文件的 公共路径 （相当于就是服务器的绝对路径）
+		publicPath:"http://192.168.1.110:8787/" //可以指定所有静态文件的 公共路径 （相当于就是服务器的绝对路径）
 	},
 	module:{
 		rules:[
@@ -19,7 +22,7 @@ module.exports = {
 				// use:["style-loader","css-loader"] //一定要注意书写顺序，先解析 css 里的语法，在是内联到html
 				use: extractTextPlugin.extract({
 		          fallback: "style-loader",
-		          use: "css-loader"
+		          use: "css-loader!postcss-loader"
 		        })
 			},
 			{
@@ -75,11 +78,14 @@ module.exports = {
 			template:"./src/index.html",
 			hash:true
 		}),
-		new extractTextPlugin("css/style.css")
+		new extractTextPlugin("css/style.css"),
+		new purifycssPlugin({
+			paths:glob.sync(path.join(__dirname,'src/*.html'))   //这个插件很重要了，用于 减少体积，排除无用的 css
+		})
 	],
 	devServer:{
 		contentBase:path.resolve(__dirname,"dist"),
-		host:"192.168.0.106",
+		host:"192.168.1.110",
 		compress:true, //服务器压缩
 		port:8787,
 		open:true
