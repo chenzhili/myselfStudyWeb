@@ -5,7 +5,20 @@ const uglifyPlugin = require("uglifyjs-webpack-plugin");
 const htmlPlugin = require("html-webpack-plugin");
 const extractTextPlugin = require("extract-text-webpack-plugin");
 const purifycssPlugin = require("purifycss-webpack");
+
+const webpack = require("webpack");
+
+/*对于 开发和生产环境并行开发的简单 实例*/
+let publicPath;
+console.log(encodeURIComponent(process.env.type));
+if(!process.env.type){
+	publicPath = "192.168.0.106";
+}else{
+	publicPath = process.env.type == "dev"?"192.168.0.106":"myself.com";
+}
+
 module.exports = {
+	devtool:"eval-source-map",
 	entry:{
 		entry:"./src/entry.js",
 		entry2:"./src/entry2.js"
@@ -13,7 +26,7 @@ module.exports = {
 	output:{
 		path:path.resolve(__dirname,"dist"),
 		filename:"[name].js",
-		publicPath:"http://192.168.1.110:8787/" //可以指定所有静态文件的 公共路径 （相当于就是服务器的绝对路径）
+		publicPath:`http://${publicPath}:8787/` //可以指定所有静态文件的 公共路径 （相当于就是服务器的绝对路径）
 	},
 	module:{
 		rules:[
@@ -65,6 +78,17 @@ module.exports = {
 					fallback:"style-loader",
 					use:"css-loader!sass-loader"
 				})
+			},
+			{
+				test:/\.(js|jsx)$/,
+				use:{
+					loader:"babel-loader",
+					// 提出到 .babelrc 文件中
+					/*options:{
+						presets:["env","react"]
+					}*/
+				},
+				exclude:/node_modules/
 			}
 		]
 	},
@@ -81,13 +105,22 @@ module.exports = {
 		new extractTextPlugin("css/style.css"),
 		new purifycssPlugin({
 			paths:glob.sync(path.join(__dirname,'src/*.html'))   //这个插件很重要了，用于 减少体积，排除无用的 css
-		})
+		}),
+		new webpack.ProvidePlugin({
+			$:"jquery"
+		}),
+		new webpack.BannerPlugin("this is a studying project")
 	],
 	devServer:{
 		contentBase:path.resolve(__dirname,"dist"),
-		host:"192.168.1.110",
+		host:publicPath,
 		compress:true, //服务器压缩
 		port:8787,
 		open:true
+	},
+	watchOptions:{
+		poll:1000,
+		aggregateTimeout:500,
+		ignored:/node_modules/
 	}
 }

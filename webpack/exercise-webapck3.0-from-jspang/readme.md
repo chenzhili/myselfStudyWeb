@@ -87,3 +87,81 @@
 				paths:glob.sync(path.join(__dirname,'src/*.html'))
 		})	
 		*****purifyCssPlugin这个插件要依赖 extract-text-webpack-plugin下 才能成功
+2018/1/21
+	1、babel转换es6
+		npm install babel-core babel-loader babel-preset-es2015 babel-preset-react --save-dev
+		官方说： babel-preset-es2015 过时了，并且不能转换 es7 es8
+		提供了一个新的：
+			npm install --save-dev babel-preset-env
+
+			这就需要改：
+			.babelrc
+			{
+				"presets":["react","env"]
+			}
+
+		webpack.config.js
+		{
+			test:/\.(js|jsx)$/,
+			use:{
+				loader:"babel-loader",
+				//由于对于 babel的配置可能会有很多，最好别吧 options 配置在 webpack中，而是建立个新文件 .babelrc存放配置
+				<!-- options:{
+					presets:["es2015","react"]
+				} -->
+			},
+			exclude:/node_modules/
+		}
+		.babelrc
+		{
+			"presets":["react","es2015"]
+		}
+
+	2、打包后的代码调试 （上线就不用了这个选项了）
+		原理就是map对比；
+		source-map 生成独立文件 map 打包比较慢 错误提示包括了 行 列
+		cheap-module-source-map 独立文件 错误提示只有行
+		eval-source-map 有安全隐患，生成map在 生成的文件不会生成独立文件（在入口文件里） 只在开发阶段用  错误提示包括了 行 列
+		cheap-module-eval-source-map 跟上面的不同：错误提示只有列
+
+	3、开发环境和生产环境的并行
+		下载 package.json 生产环境的依赖包的命令为：
+		npm install --production
+		************ 一般放到 生产环境的依赖的包，都是属于在 正式项目中 代码需要依赖的库，比如局query，Vue，react等；打包依赖的loader和 plugin不需要放到生产环境，因为在打包好代码后，就没有用了；这个一定要区分好 不同的插件依赖在不同的环境下面******************
+		在 package.json 中的 scripts中传值的写法：
+		例子：
+		package.js文件
+			window下
+			"build":"set type=build&webpack"
+			mac或者 Linux
+			"build":"export type=build&&webpack"
+		webpack.config.js文件
+			获取参数用node的写法：
+			console.log(encodeURIComponent(process.env.type));
+			if(process.env.type == "build"){
+				//做在这个条件下的 打包编译
+			}
+
+	4、模块化配置
+		应用就是 对于 将 开发环境和生产环境的 模块化以及 把 loader和plugins提出来都有用
+
+	5、优雅打包第三方类库
+		用jQuery练习
+		两种方法：
+			1、就是直接在入口的js中 以es6的语法直接 引用，但是对于架构者，不想去管这种 里面代码的问题用第二种
+			2、用 插件的方式,ProvidePlugin插件，这个是webpack自带的插件
+			const webpack = require("webpack");
+
+			new webpack.ProvidePlugin({
+				$:"jquery"
+			})
+
+	6、watch的正确使用方法
+		webapck --watch的配置项在 webpack.config.js的配置
+
+		watchOptions:{
+			poll:1000,//检测修改的时间，一秒检测一次修改的问题件，以毫秒为单位
+			aggregateTimeout:500,//就是防止 重复按 ctrl+s（保存）进行编译打包，导致资源消耗和速度减慢，这个就是在500毫秒的间隔只会一次打包，防止多次打包
+			ignored:/node_modules/ //不检测的文件
+		}
+	7、对于 BannerPlugin 对于 打包文件可以追加一句注释，作为版权
