@@ -14,7 +14,7 @@ console.log(encodeURIComponent(process.env.type));
 if(!process.env.type){
 	publicPath = "192.168.0.106";
 }else{
-	publicPath = process.env.type == "dev"?"192.168.0.106":"myself.com";
+	publicPath = process.env.type == "dev"?"192.168.0.106":"myself.com"; 
 }
 
 module.exports = {

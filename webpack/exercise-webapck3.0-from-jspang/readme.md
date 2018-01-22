@@ -1,4 +1,5 @@
 对于webpack的学习；
+<!-- 有一个问题，在看 用的时候，如果有多个 html 和 css 文件想编译成多个对应的问题件的方法 -->
 2018/1/15
 	********注意一个问题，官方建议我们不要全局安装 webpack版本，因为编译的时候 默认优先用 全局
 		在用局部的，所以导致如果webpack项目版本不一样的项目就会编译出错；
@@ -165,3 +166,26 @@
 			ignored:/node_modules/ //不检测的文件
 		}
 	7、对于 BannerPlugin 对于 打包文件可以追加一句注释，作为版权
+2018/1/22 (今天没写，明天写)
+	1、webpack优化
+		I、较少js的大小，就是减小对于引用库的大小
+		引用第三方库用 在 webpack.config.js 配置 ProvidePlugin 插件引用 三方库，项目中没引用就不会打包
+		例子：jQuery的
+		第一步：修改 入口文件
+			entry:{jquery:jquery,vue:vue}
+		第二部：引用plugin，webpack自带的 （就是把对应的 第三方库 抽离出来成单独文件）
+			new webpack.optimize.CommonsChunkPlugin({
+				name:["jquery","vue"],
+				filename:"assets/js/[name].min.[ext]",
+				minChunks:2
+			});
+	2、集中拷贝静态资源 
+		npm install --save-dev copy-webpack-plugin
+		const copyWebpackPlugin = require("copy-webpack-plugin");
+
+		new copyWebpackPlugin([{
+			from:__dirname+"/src/public",
+			to:"./public"	
+		}]);
+	3、对于 在 启动服务器后，不自动热更新的解决办法
+		new webpack.HotModuleReplacementPlugin()
