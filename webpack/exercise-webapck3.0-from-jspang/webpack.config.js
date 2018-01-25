@@ -5,6 +5,7 @@ const uglifyPlugin = require("uglifyjs-webpack-plugin");
 const htmlPlugin = require("html-webpack-plugin");
 const extractTextPlugin = require("extract-text-webpack-plugin");
 const purifycssPlugin = require("purifycss-webpack");
+const copyPlugin = require("copy-webpack-plugin");
 
 const webpack = require("webpack");
 
@@ -21,7 +22,8 @@ module.exports = {
 	devtool:"eval-source-map",
 	entry:{
 		entry:"./src/entry.js",
-		entry2:"./src/entry2.js"
+		entry2:"./src/entry2.js",
+		jquery:"jquery"
 	},
 	output:{
 		path:path.resolve(__dirname,"dist"),
@@ -109,7 +111,16 @@ module.exports = {
 		new webpack.ProvidePlugin({
 			$:"jquery"
 		}),
-		new webpack.BannerPlugin("this is a studying project")
+		new webpack.BannerPlugin("this is a studying project"),
+		new webpack.optimize.CommonsChunkPlugin({
+			name:["jquery"],
+			filename:"assets/js/[name].min.js",
+			minChunks:2
+		}),
+		new copyPlugin([{
+			from:"src/static_doc",
+			to:"static"
+		}])
 	],
 	devServer:{
 		contentBase:path.resolve(__dirname,"dist"),

@@ -26,7 +26,7 @@
  		插件用  html-webpack-plugin (这个比 4 是需要自己安装的)
  		npm install --save-dev html-webpack-plugin
  		const htmlPlugin = require("html-webpack-plugin");
- 		new htmlPlugin({
+ 		new htmlPlugin({ 
  			minify:{
  				removeAttributeQuotes:true //省略 属性中的 引号
  			},
@@ -166,7 +166,7 @@
 			ignored:/node_modules/ //不检测的文件
 		}
 	7、对于 BannerPlugin 对于 打包文件可以追加一句注释，作为版权
-2018/1/22 (今天没写，明天写)
+2018/1/22 (今天没写，明天写 2018/1/25写了)
 	1、webpack优化
 		I、较少js的大小，就是减小对于引用库的大小
 		引用第三方库用 在 webpack.config.js 配置 ProvidePlugin 插件引用 三方库，项目中没引用就不会打包
@@ -174,6 +174,7 @@
 		第一步：修改 入口文件
 			entry:{jquery:jquery,vue:vue}
 		第二部：引用plugin，webpack自带的 （就是把对应的 第三方库 抽离出来成单独文件）
+		********有一个比这个插件更好的 DllReferencePlugin 但是现在还没到那么深，没看 ***********
 			new webpack.optimize.CommonsChunkPlugin({
 				name:["jquery","vue"],
 				filename:"assets/js/[name].min.[ext]",
@@ -189,3 +190,24 @@
 		}]);
 	3、对于 在 启动服务器后，不自动热更新的解决办法
 		new webpack.HotModuleReplacementPlugin()
+
+最后自己总结觉得哪些重要的概念:
+2018/1/25
+	1、整个webpack的配置 入口，出口，module下的rules（loader）,plugins，本地起的服务器
+	2、对于在本地启动服务器时，不能使用 webpack的 uglify压缩入口文件会出错
+	3、上传服务器的时候，要用到 webpack --watch 这个需要配置一下，防止一些重复 编译导致的 编译事件的延长
+		watchOptions:{
+			poll:1000,//检测修改的时间，一秒检测一次修改的问题件，以毫秒为单位
+			aggregateTimeout:500,//就是防止 重复按 ctrl+s（保存）进行编译打包，导致资源消耗和速度减慢，这个就是在500毫秒的间隔只会一次打包，防止多次打包
+			ignored:/node_modules/ //不检测的文件
+		}
+	4、对于 loader中特别注意 css 的操作
+		I、在提取css插件的使用，一定要记住过个loader的 顺序
+		II、对于 postcss 的运用，需要创建 postcss.config.js
+		III、对于 提取 css 文件的时候，图片的 路径发生 问题，这时候就在 输出口 加一个 publicPath 公共路径 （就是服务器的绝对路径）
+	5、loader中还要注意；
+		I、由于 webpack 官网 不建议使用 html 中引用 图片，所以官网没有提供对应的loader，这个时候需要引入 html-withimg-loader
+	6、我觉得比较重要的 插件的使用；
+		I、对于 css ，由于 开发 版本的不同，肯能中有 不需要的 css 代码，这时候用 purifycss-webpack 插件 用 node的glob去 遍历 html看怎么引用
+		II、对于 第三方js库 引用，提取出来作为单独文件，用 webpack 内置的 plugin  new webpack.optimize.CommonsChunkPlugin(配置参数)
+		III、就是对于 第三方库 的应用方式 ，用插件 new webpack.ProviderPlugin(配置参数);
