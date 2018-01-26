@@ -156,6 +156,34 @@
                 <button onClick={this.deleteRow.bind(this, id)}>Delete Row</button> （这个是 隐式的 传入，就是不用写出来, 传入方式是最后传入）
 
     */
+2018/1/26
+    1、组合的 运用场景，就是指 在 组件 也可以当做 一个 闭合的 标签使用，中间可以嵌套 子标签；
+        I、就是通过 react 内置的 this.props.children 获取 里面的 子元素，统一 渲染到 dom 页面上，如果 不写 不会获取 子元素的内容
+        II、在test.js中同时看到了一个 函数吧 React.Children 这个里面封装了 es5 中的 map 和 forEach 等 函数，来进行 遍历操作
+        III、组合除了用 子元素的方式，还有如
+            function SplitPane(props) {
+              return (
+                <div className="SplitPane">
+                  <div className="SplitPane-left">
+                    {props.left}
+                  </div>
+                  <div className="SplitPane-right">
+                    {props.right}
+                  </div>
+                </div>
+              );
+            }
 
+            function App() {
+              return (
+                <SplitPane
+                  left={
+                    <Contacts />
+                  }
+                  right={
+                    <Chat />
+                  } />
+              );
+            }
 
 */

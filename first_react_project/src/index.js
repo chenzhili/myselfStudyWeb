@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import "./2018_1_26_test.js"
 
 /*class Square extends React.Component {
     render(){
@@ -14,7 +15,7 @@ import './index.css';
 // 上面的简单写法
 function Square(props){  //这里的参数是 props
     return (
-        <button className="square" onClick={props.Click}> {/*!//这种写法就传不了值进来*/}
+        <button className="square" onClick={props.Click}> {/*!//这种写法就传不了值进来*/} 
             {props.value}
         </button>
     )
@@ -135,12 +136,40 @@ class Game extends React.Component {
     }
 }
 
+class Form extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            value:""
+        }
+    }
+    handleSubmit = (e)=>{
+        e.preventDefault();
+        console.log(this.state.value);
+    };
+    handleChange = (e)=>{
+        console.log(1);
+        this.setState({value:e.target.value})
+    };
+    render(){
+        return (
+            <form onSubmit={this.handleSubmit}>
+                <label>
+                    Name:
+                    <input type="text" value={this.state.value} onChange={this.handleChange} />
+                </label>
+                <input type="submit" value="Submit" />
+            </form>
+        );
+    };
+}
+
 // ========================================
 
-ReactDOM.render(
-    <Game />,
+/*ReactDOM.render(
+    <Form />,
     document.getElementById('root')
-);
+);*/
 
 /*function tick() {
     const element = (
@@ -156,3 +185,4 @@ ReactDOM.render(
 }
 
 setInterval(tick, 1000);*/
+ 
