@@ -5,7 +5,7 @@ window.onload = function(){
         container_floor.className = `floor_container${key} barrage`;
         let width = parseFloat(getComputedStyle(container_floor).width);
         container_floor.style.right = -width+"px";
-        container_floor.style.animationDuration = width*0.025+"s";
+        container_floor.style.animationDuration = width*0.025+"s"; 
     }
     /*js实现弹幕*/
     class Barrage{

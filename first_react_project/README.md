@@ -185,5 +185,57 @@
                   } />
               );
             }
-
+2018/1/28
+    1、对于组件的 输入的 props 检查类型
+        I、这个只在 开发环境下使用
+        II、这个需要引入对应的 prop-types 库
+        用法：
+            import PropTypes from "prop-types";
+            function Fun(props){
+                return (
+                    <h1>{props.name}</h1>
+                );
+            }
+            Fun.propTypes = {
+                name:propTypes.string
+            }
+            let a = 1;
+            ReactDOM.render(
+                <Fun name={a}/>,
+                document.getElementById("root")
+            );
+        III、可以个 props的属性设置默认值
+            Fun.defaultProps = {
+                name:1
+            }
+    2、获取真是的 DOM 节点
+    *******主要就是针对ref的操作和理解：
+        1、ref 中 是以回调函数的方式存在
+        2、会在 组件渲染为 DOM 树 和 组件 清楚的时候执行，传入的参数一个为 对应的值 ，一个为 null
+    *********
+        I、就是在 DOM 元素上 填写 ref 属性，获取的是当前的DOM 元素
+        II、将 ref 属性 加载 组件上，是获取 组件对应的实例
+        III、这个是属于一种需求场景，在父组件想得到子组件中的 DOM 元素
+            class ChildDOM extends React.Component{
+                render(){
+                    return(
+                        <input ref={this.props.dom}/>
+                    );
+                }
+            }
+            class ParetnDOM extends React.Component{
+                componentDidMount(){
+                    console.log(this.childEle);
+                }
+                render(){
+                    return (
+                        <ChildDOM dom={el=>{this.childEle=el;}}/>
+                    );
+                }
+            }
 */
+2018/1/29
+    1、表单的处理
+    2.受控组件 和 不可控组件
+        受控组件：就是把 input的 值改变用 react的 state来保存value的值，并且 用 onChange 事件进行 控制；两者缺一不可
+        不受控组件：就是不用 上面的方式，用 原声的 ref获取 DOM 节点的值

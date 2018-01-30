@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import "./2018_1_26_test.js"
+// import "./2018_1_26_test.js"
+import "./2018_1_28_test.js"
 
 /*class Square extends React.Component {
     render(){
