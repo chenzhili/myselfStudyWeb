@@ -14,3 +14,8 @@ for(var i=0;i<arr.length;i++){
 	}
 }
 console.log(arr);
+let a = Symbol("a");
+let b = Symbol.for("a");
+let c = Symbol.for("a");
+console.log(a === b);
+console.log(b === c);
