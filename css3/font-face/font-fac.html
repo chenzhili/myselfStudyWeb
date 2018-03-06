@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>font-face的理解</title>
+    <style>
+        @font-face{
+            font-family:"st";
+            src:local("宋体"),
+                local("PingFang SC");/*苹果中用的*/
+        }
+        /* 特殊的字体用法 */
+        @font-face {
+            font-family: BASE;
+            src: local('PingFang SC'),
+            local("Microsoft Yahei");
+        }
+        @font-face {
+            font-family: quote;
+            src: local('SimSun');    
+            unicode-range: U+201c, U+201d;
+        }
+        .first{
+            font-family:"宋体"
+        }
+        .second{
+            font-family:"st";
+        }
+        .special{
+            font-family: quote, BASE;
+        }
+    </style>
+</head>
+<body>
+    <p class="first">试一试</p>
+    <p class="second">对比试一波</p>
+    <p class="special">对于"引号"在页面显示需要用到特殊的字体的时候的应用</p>
+</body>
+</html>
