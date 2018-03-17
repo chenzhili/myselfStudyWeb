@@ -1,0 +1,7 @@
+<!--pages/testStructrue/testStructrue.wxml-->
+<view class="container">
+  <view>{{obj.name}}</view>
+  <view>{{obj.age}}</view>
+  <view wx:for="{{obj.arr}}" wx:keys="index">
+  {{item}}</view>
+</view>

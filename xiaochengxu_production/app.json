@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/testStructrue/testStructrue",
     "pages/home/home",
     "pages/lottery/lottery",
     "pages/movements/movements",
@@ -32,7 +33,8 @@
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "cc_pk10",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "black",
+    "navigationStyle":"custom"
   },
   "tabBar": {
     "color": "#444",
