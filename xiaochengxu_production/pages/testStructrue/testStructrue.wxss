@@ -1,9 +1,5 @@
 /* pages/testStructrue/testStructrue.wxss */
 .container{
-  position:absolute;
-  width:60%;
-  height:50%;
-  top:50%;
-  left:50%;
-  transform:translateX(-50%) translatY(-50%);
+  position:fixed;
+  top:0;
 }

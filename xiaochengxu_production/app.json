@@ -30,11 +30,11 @@
     "pages/news/details/details"
   ],
   "window": {
+    "navigationStyle": "custom",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "cc_pk10",
-    "navigationBarTextStyle": "black",
-    "navigationStyle":"custom"
+    "navigationBarTextStyle": "black"
+    
   },
   "tabBar": {
     "color": "#444",
