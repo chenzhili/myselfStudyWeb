@@ -765,4 +765,29 @@
 		***********
 			对于数组遍历：for..in 不合适，for循环 太复杂，用 forEach替换时，不能用 break、continue退出循环，从而用 for...of简单并且可以 退出循环
 		**********
+2018/3/21
+	1、generator 函数（生成器函数）
+		原理：在生成器函数中，执行时，只是生成一个 可 遍历的 函数；调用 next才是遍历 值；并且遍历是通过 遇到 yield 就会停止，并且会执行 yield紧跟着的表达式；
+		I、对于 yield的用法
+			1）只能在 generator中出现
+
+			2）在另一个表达式中用到了，需要加上 圆括号
+
+			3）yield表达式用作函数参数或放在赋值表达式的右边，可以不加括号
+
+		II、理解 yield表达式本身没有返回，下次 next的参数时上个 yield 表达式 的返回；（注意是 yield 表达式的返回）
+			例子：
+				function* foo(x) {
+					var y = 2 * (yield (x + 1));
+					var z = yield (y / 3);
+					return (x + y + z);
+				}
+				var b = foo(5);
+				b.next() // { value:6, done:false }
+				b.next(12) // { value:8, done:false }
+				b.next(13) // { value:42, done:true }
+		III、生成器函数 用 () 返回的是一个 对应的 遍历器对象;可以通过 for of进行遍历；但是要注意 只会 遍历 done 为 false的，如果 done 为 true就会 停止遍历，并且遍历不包括 done 为true的；
+			而实际 done 为 true，有两种情况
+				1_就是 return 语句返回
+				2_就是 没有 yiled 返回数据了
 
