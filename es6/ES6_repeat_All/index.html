@@ -1,23 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>study es6</title>
+	<title>简单实现react.js</title>
 	<style>
-		a{
-			display:inline-block;
-			width:100px;
+		#root{
+			display:flex;
+			width:200px;
+			position:absolute;
+			left:0;
+			right:0;
 			height:40px;
-			background-color:#f00;
-			color:#fff;
-			margin-left:-5px;
+		}
+		.item{
+			flex:1;
+			color:#f00;
+			text-align:center;
+		}
+		.item:last-child{
+			color:#000;
 		}
 	</style>
 </head>
 <body>
-	<div>
-		<a href="">aa</a>
-		<a href="">aa</a>
-		<a href="">aa</a>
+	<div id="root">
+		<!-- <div class="item">赞 1</div>
+		<div class="item">顶 1</div> -->
 	</div>
 <script type="text/javascript" src="dist/index.js"></script>
 </body>
