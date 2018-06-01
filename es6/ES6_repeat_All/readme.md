@@ -822,3 +822,21 @@
 			counter =1;
 		***************
 
+2018/6/1
+	1、对于一个表达式引发的问题：
+		Function.prototype.apply.call(Math.floor,null,[1.22]);//1
+
+		对于此可以这样理解：
+		(Function.prototype.apply).call(Math.floor,null,[1.22]);
+
+		call和apply都是临时借用传入的第一个参数对象的this；
+
+		上面等价于：
+			Math.floor.apply(null,[1.22]);
+		等价于：
+			window.Math.floor(1.22);//1
+
+		这里当第一个参数 传入的是 null，undefined：
+			传入null/undefined的时候将执行js全局对象浏览器中是window，其他环境是global
+
+
